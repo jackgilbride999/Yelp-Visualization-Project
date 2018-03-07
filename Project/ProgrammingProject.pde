@@ -3,6 +3,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.io.FileReader;
 
+
 ArrayList<Review> reviews;
 
 void setup(){
@@ -23,9 +24,9 @@ void setup(){
         println("Time taken: " + millis());
 
         for(Review r : reviews){
-            if(r.userId.equals("3wB-JjsUjkvdNUDRnChsVg")){
-                println(r);
-            }
+            //if(r.userId.equals("3wB-JjsUjkvdNUDRnChsVg")){
+                println(r.toString());
+            //}
         }
     } catch (Exception e){
         println(e);
