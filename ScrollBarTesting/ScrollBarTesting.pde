@@ -23,7 +23,6 @@ void draw() {
   noStroke();
   scrollBar.draw();
   previousMouseY=mouseY;
-  mouseDifference=mouseY-scrollBar.getY();
   offsetFromTop=scrollBar.getY();
   rect(50, 50-offsetFromTop, 50, 50);
   rect(100, 200-offsetFromTop, 60, 40);
@@ -33,6 +32,7 @@ void draw() {
 void mousePressed() {
   if (scrollBar.getEvent(mouseX, mouseY)==SCROLLBAR_EVENT) {
     scrollBarPressed=true;
+     mouseDifference=mouseY-scrollBar.getY();
   }
 }
 
@@ -42,9 +42,6 @@ void mouseReleased() {
 
 void mouseDragged() {
   if (scrollBarPressed==true) {
-
-    //if (mouseY>previousMouseY && scrollBar.getY()+scrollBar.getHeight() < SCREEN_X ||
-    // mouseY<previousMouseY && scrollBar.getY()>0)
     scrollBar.setY(mouseY-mouseDifference);
     if (scrollBar.getY()<0)
       scrollBar.setY(0);
