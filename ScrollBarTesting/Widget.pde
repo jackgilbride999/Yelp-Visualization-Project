@@ -4,19 +4,18 @@ class Widget {
   private int event;
   private color widgetColor, labelColor, borderColor;
   private PFont widgetFont;
-  
-  Widget(){
-  }
+  boolean hasText;
 
   Widget(int x, int y, int width, int height, String label, 
     color widgetColor, PFont widgetFont, int event) {
     this(x, y, width, height, widgetColor, event);
     this.label=label; 
     this.widgetFont=widgetFont;
-    labelColor= BLACK;
+    labelColor= color(0);
+    hasText=true;
   }
-  
-    Widget(int x, int y, int width, int height, 
+
+  Widget(int x, int y, int width, int height, 
     color widgetColor, int event) {
     this.x=x; 
     this.y=y; 
@@ -24,21 +23,23 @@ class Widget {
     this.height= height;
     this.event=event; 
     this.widgetColor=widgetColor; 
-    borderColor=BLACK;
-    this.label="";
+    borderColor=color(0);
+    hasText=false;
   }
   void draw() {
     stroke(borderColor);
     fill(widgetColor);
     rect(x, y, width, height);
-    fill(labelColor);
-    text(label, x+10, y+height-10);
+    if (hasText) {
+      fill(labelColor);
+      text(label, x+10, y+height-10);
+    }
   }
   int getEvent(int mX, int mY) {
     if (mX>x && mX < x+width && mY >y && mY <y+height) {
       return event;
     }
-    return NULL_EVENT;
+    return 0;
   }
 
   int getX() {
@@ -56,31 +57,24 @@ class Widget {
   int getWidth() {
     return width;
   }
-  
-  void setX(int x){
+
+  void setX(int x) {
     this.x=x;
   }
-  
-  void setY(int y){
+
+  void setY(int y) {
     this.y=y;
   }
-  
-  void setHeight(int height){
+
+  void setHeight(int height) {
     this.height=height;
   }
-  
-  void setWidth(int width){
+
+  void setWidth(int width) {
     this.width=width;
   }
-  
-  void setBorderColor(color colorToSet){
-   borderColor = colorToSet; 
+
+  void setBorderColor(color colorToSet) {
+    borderColor = colorToSet;
   }
-}
-
-class ScrollBar extends Widget{
- ScrollBar(){
-   super(SCREEN_X-SCROLLBAR_WIDTH-1, 0, SCROLLBAR_WIDTH, SCROLLBAR_HEIGHT, color(123), SCROLLBAR_EVENT);
- }
-
 }
