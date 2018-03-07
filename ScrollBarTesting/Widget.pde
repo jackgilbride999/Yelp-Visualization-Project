@@ -65,6 +65,14 @@ class Widget {
     this.y=y;
   }
   
+  void setHeight(int height){
+    this.height=height;
+  }
+  
+  void setWidth(int width){
+    this.width=width;
+  }
+  
   void setBorderColor(color colorToSet){
    borderColor = colorToSet; 
   }
@@ -74,4 +82,5 @@ class ScrollBar extends Widget{
  ScrollBar(){
    super(SCREEN_X-SCROLLBAR_WIDTH-1, 0, SCROLLBAR_WIDTH, SCROLLBAR_HEIGHT, color(123), SCROLLBAR_EVENT);
  }
+
 }
