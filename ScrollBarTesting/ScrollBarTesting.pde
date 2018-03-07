@@ -1,21 +1,22 @@
+// demo program of how to use widget as scrollbar
 final int SCREEN_X=400;
 final int SCREEN_Y=400;
-final int SCROLLBAR_HEIGHT=50;
 final int SCROLLBAR_WIDTH=10;
 final int NULL_EVENT=0;
 final int SCROLLBAR_EVENT=6;
-final color BLACK = color(0);
-ScrollBar scrollBar;
+Widget scrollBar;
 int previousMouseY;
 int mouseDifference;
 boolean scrollBarPressed;
-int offsetFromTop;
+int offsetFromTop;   // have a variable like this when using scrollbar in a program
+int scrollBarHeight;
 void settings() {
   size(SCREEN_X, SCREEN_Y);
 }
 
 void setup() {
-  scrollBar = new ScrollBar();
+  scrollBarHeight=100; // test value for height of scrollbar
+  scrollBar = new Widget(SCREEN_X-SCROLLBAR_WIDTH-1, 0, SCROLLBAR_WIDTH, scrollBarHeight,  color(123), SCROLLBAR_EVENT); // how to call a scrollbar as a Widget
   offsetFromTop=0;
 }
 void draw() {
@@ -23,13 +24,13 @@ void draw() {
   noStroke();
   scrollBar.draw();
   previousMouseY=mouseY;
-  offsetFromTop=scrollBar.getY();
-  rect(50, 50-offsetFromTop, 50, 50);
+  offsetFromTop=scrollBar.getY();              // test shapes to show scrollbar working 
+  rect(50, 50-offsetFromTop, 50, 50);          // scrollbar works by subtracting "offset from top" from the original y position of whatever is on the screen
   rect(100, 200-offsetFromTop, 60, 40);
   ellipse(250, 500-offsetFromTop, 30, 30);
 }
 
-void mousePressed() {
+void mousePressed() {                                        // when these three mouse methods are used in the main program, make sure to have this code within them to control scrollbar
   if (scrollBar.getEvent(mouseX, mouseY)==SCROLLBAR_EVENT) {
     scrollBarPressed=true;
      mouseDifference=mouseY-scrollBar.getY();
