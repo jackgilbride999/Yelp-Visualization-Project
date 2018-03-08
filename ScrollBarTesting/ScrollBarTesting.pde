@@ -8,15 +8,15 @@ Widget scrollBar;
 int previousMouseY;
 int mouseDifference;
 boolean scrollBarPressed;
-int offsetFromTop;   // have a variable like this when using scrollbar in a program
-int scrollBarHeight;
+int offsetFromTop;       // have a variable like this when using scrollbar in a program
+int totalHeight;
 void settings() {
   size(SCREEN_X, SCREEN_Y);
 }
 
 void setup() {
-  scrollBarHeight=100; // test value for height of scrollbar
-  scrollBar = new Widget(SCREEN_X-SCROLLBAR_WIDTH-1, 0, SCROLLBAR_WIDTH, scrollBarHeight,  color(123), SCROLLBAR_EVENT); // how to call a scrollbar as a Widget
+  totalHeight = 1200; // test value for height of page to be scrolled, padd this into Scrollbar as seen on next line
+  scrollBar = new Scrollbar(SCREEN_X-SCROLLBAR_WIDTH-1, 0, SCROLLBAR_WIDTH, totalHeight,  color(123), SCROLLBAR_EVENT); // how to call Scrollbar object
   offsetFromTop=0;
 }
 void draw() {

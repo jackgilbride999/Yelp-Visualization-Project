@@ -6,6 +6,9 @@ class Widget {
   private PFont widgetFont;
   boolean hasText;
 
+  Widget() {
+  }
+
   Widget(int x, int y, int width, int height, String label, 
     color widgetColor, PFont widgetFont, int event) {
     this(x, y, width, height, widgetColor, event);
@@ -76,5 +79,15 @@ class Widget {
 
   void setBorderColor(color colorToSet) {
     borderColor = colorToSet;
+  }
+}
+
+class Scrollbar extends Widget {
+
+  Scrollbar(int x, int y, int width, int totalHeightOfPage, 
+    color widgetColor, int event) {
+    super(x,y,width,0,widgetColor,event); 
+    int ratio = totalHeightOfPage/SCREEN_X;
+    setHeight(SCREEN_X/ratio);
   }
 }
