@@ -5,7 +5,7 @@ void setup(){
     try {
         Class.forName("com.mysql.jdbc.Driver"); 
         String connectionUrl = "jdbc:mysql://yelpdatabase.cioogriagt5l.eu-west-1.rds.amazonaws.com/yelp?"
-                            + "user=root&password=Carrot!4!5&"
+                            + "user=root&password=programming4&"
                             + "autoReconnect=true&useSSL=false"; 
         java.sql.Connection connection = DriverManager.getConnection(connectionUrl); 
         System.out.println("Connected.");
