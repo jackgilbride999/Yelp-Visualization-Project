@@ -4,10 +4,13 @@ void setup(){
 
     try {
         Class.forName("com.mysql.jdbc.Driver"); 
-        String connectionUrl = "jdbc:mysql://yelpdatabase.cioogriagt5l.eu-west-1.rds.amazonaws.com/yelp?"
+        String connectionUrlAWS = "jdbc:mysql://yelpdatabase.cioogriagt5l.eu-west-1.rds.amazonaws.com/yelp?"
                             + "user=root&password=programming4&"
                             + "autoReconnect=true&useSSL=false"; 
-        java.sql.Connection connection = DriverManager.getConnection(connectionUrl); 
+        String connectionUrlCUSTOM = "jdbc:mysql://37.228.204.207/yelp?"
+                            + "user=root&password=programming4&"
+                            + "autoReconnect=true&useSSL=false"; 
+        java.sql.Connection connection = DriverManager.getConnection(connectionUrlCUSTOM); 
         System.out.println("Connected.");
       
         String nameSearch = "SELECT * FROM yelp_user WHERE name LIKE 'Luke' LIMIT 10";
