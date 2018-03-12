@@ -53,6 +53,7 @@ void setup() {
   }
   scrollBar = new ScrollBar();
   offsetFromTop=0;
+  println("total height: " + getTotalHeight(formatReviews(reviews)));
 
 }
 
@@ -153,11 +154,12 @@ ArrayList<String> formatReviews(ArrayList<Review> reviews) {
 int getTotalHeight(ArrayList<String> formattedReviews) {
   int totalHeight = 0;
   int lineHeight = 15;
+  int lines = 4;
 
   for (String str : formattedReviews)
   {
     String[] split = str.split("");
-    int lines = 4;
+    
     for (int i = 0; i < split.length; i++)
     {
       if (split[i].equals("\n"))
