@@ -14,7 +14,7 @@ final int SCROLLBAR_EVENT=6;
 final color BLACK = color(0);
 final int BORDER_OFFSET_Y = 20;
 
-ScrollBar scrollBar;
+Scrollbar scrollbar;
 int previousMouseY;
 int mouseDifference;
 boolean scrollBarPressed;
@@ -22,6 +22,7 @@ int offsetFromTop;
 PFont myFont;
 ArrayList<String> formattedReviewsList; 
 ArrayList<Review> reviews;
+int totalHeight;
 
 void settings() {
   size(SCREEN_X, SCREEN_Y);
@@ -51,30 +52,27 @@ void setup() {
   catch (Exception e) {
     println(e);
   }
-  scrollBar = new ScrollBar();
+  totalHeight = getTotalHeight(formatReviews(reviews));
+  scrollbar = new Scrollbar(10, totalHeight, color(120), SCROLLBAR_EVENT); // in theory the scrollbar works but there are so many reviews, that it is so small (invisible)
+                                                                           // feed in a test value in place of totalHeight if you want to test, i.e. 10000
   offsetFromTop=0;
-  println("total height: " + getTotalHeight(formatReviews(reviews)));
+  println("total height: " + totalHeight);
 
 }
-
-
-
-
 
 void draw() {
   background(255);
   noStroke();
-  scrollBar.draw();
   previousMouseY=mouseY;
-  offsetFromTop=scrollBar.getY() * 20;
+  offsetFromTop=scrollbar.getY() * 20;
   drawReviews();
-  
+  scrollbar.draw();
 }
 
 void mousePressed() {
-  if (scrollBar.getEvent(mouseX, mouseY)==SCROLLBAR_EVENT) {
+  if (scrollbar.getEvent(mouseX, mouseY)==SCROLLBAR_EVENT) {
     scrollBarPressed=true;
-    mouseDifference=mouseY-scrollBar.getY();
+    mouseDifference=mouseY-scrollbar.getY();
   }
 }
 
@@ -84,16 +82,17 @@ void mouseReleased() {
 
 void mouseDragged() {
   if (scrollBarPressed==true) {
-    scrollBar.setY(mouseY-mouseDifference);
-    if (scrollBar.getY()<0)
-      scrollBar.setY(0);
-    else if (scrollBar.getY()+scrollBar.getHeight()>SCREEN_Y)
-      scrollBar.setY(SCREEN_X-scrollBar.getHeight());
+    scrollbar.setY(mouseY-mouseDifference);
+    if (scrollbar.getY()<0)
+      scrollbar.setY(0);
+    else if (scrollbar.getY()+scrollbar.getHeight()>SCREEN_Y)
+      scrollbar.setY(SCREEN_X-scrollbar.getHeight());
   }
 }
 
 
 void drawReviews() {
+  fill(color(0));
   int reviewOffset = 0;
   int borderOffsetY = 20;
   int borderOffsetX = 10;
