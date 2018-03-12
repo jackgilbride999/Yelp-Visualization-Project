@@ -67,7 +67,7 @@ void draw() {
   scrollBar.draw();
   previousMouseY=mouseY;
   offsetFromTop=scrollBar.getY() * 20;
-  drawReviews(formattedReviewsList);
+  drawReviews();
   
 }
 
@@ -93,7 +93,7 @@ void mouseDragged() {
 }
 
 
-void drawReviews(ArrayList<String> formattedReviewList) {
+void drawReviews() {
   int reviewOffset = 0;
   int borderOffsetY = 20;
   int borderOffsetX = 10;
