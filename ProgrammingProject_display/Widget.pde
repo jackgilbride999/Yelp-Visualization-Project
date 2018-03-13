@@ -1,5 +1,5 @@
 class Widget {
-  private int x, y, width, height;
+ private int x, y, width, height;
   private String label; 
   private int event;
   private color widgetColor, labelColor, borderColor;
@@ -32,7 +32,7 @@ class Widget {
     fill(widgetColor);
     rect(x, y, width, height);
     fill(labelColor);
-    text(label, x+10, y+height-10);
+    text(label, x+10, y+height - 10);
   }
   int getEvent(int mX, int mY) {
     if (mX>x && mX < x+width && mY >y && mY <y+height) {
