@@ -1,4 +1,7 @@
-import java.util.Scanner; //<>// //<>// //<>// //<>//
+// scrollbar works but due to the huge list it is too small to be seen,  //<>//
+// change "totalHeight" in it's constructor if you need to see how it would look for a smaller list
+
+import java.util.Scanner; //<>// //<>// //<>//
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.io.FileReader;
@@ -23,6 +26,7 @@ PFont myFont;
 ArrayList<String> formattedReviewsList; 
 ArrayList<Review> reviews;
 int totalHeight;
+int scrollbarRatio;
 
 void settings() {
   size(SCREEN_X, SCREEN_Y);
@@ -55,6 +59,7 @@ void setup() {
   totalHeight = getTotalHeight(formatReviews(reviews));
   scrollbar = new Scrollbar(10, totalHeight, color(120), SCROLLBAR_EVENT); // in theory the scrollbar works but there are so many reviews, that it is so small (invisible)
                                                                            // feed in a test value in place of totalHeight if you want to test, i.e. 10000
+  scrollbarRatio = scrollbar.getRatio();
   offsetFromTop=0;
   println("total height: " + totalHeight);
 
@@ -64,7 +69,7 @@ void draw() {
   background(255);
   noStroke();
   previousMouseY=mouseY;
-  offsetFromTop=scrollbar.getY() * 20;
+  offsetFromTop=scrollbar.getY();
   drawReviews();
   scrollbar.draw();
 }
@@ -99,9 +104,9 @@ void drawReviews() {
   float lineHeight = textAscent() + textDescent();
   for (Review r : reviews)
   {
-    rect(borderOffsetX / 2, reviewOffset - offsetFromTop, SCREEN_X-10, 1);
-    text(r.getDate(), SCREEN_X-textWidth(r.getDate()), reviewOffset+ borderOffsetY -offsetFromTop);
-    text(r.getReview(), borderOffsetX, reviewOffset + borderOffsetY -offsetFromTop);
+    rect(borderOffsetX / 2, reviewOffset - scrollbarRatio*offsetFromTop, SCREEN_X-10, 1);
+    text(r.getDate(), SCREEN_X-textWidth(r.getDate()), reviewOffset+ borderOffsetY - scrollbarRatio*offsetFromTop);
+    text(r.getReview(), borderOffsetX, reviewOffset + borderOffsetY - scrollbarRatio*offsetFromTop);
 //  text(r.getNumberOfLines(), 250, reviewOffset + borderOffsetY -offsetFromTop);
     
     reviewOffset = reviewOffset + (r.getNumberOfLines() * (int)lineHeight) + borderOffsetY;
