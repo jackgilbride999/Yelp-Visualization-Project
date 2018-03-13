@@ -84,9 +84,13 @@ class Widget {
 
 class Scrollbar extends Widget {
 
-  Scrollbar(int x, int y, int width, int totalHeightOfPage, 
-    color widgetColor, int event) {
-    super(x,y,width,0,widgetColor,event); 
+  Scrollbar(int width, int totalHeightOfPage, 
+    color widgetColor, int event) {  
+    super.x=SCREEN_X-width;
+    super.y=0;
+    super.width = width;
+    super.widgetColor=widgetColor;
+    super.event=event;
     int ratio = totalHeightOfPage/SCREEN_X;
     setHeight(SCREEN_X/ratio);
   }
