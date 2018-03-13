@@ -1,8 +1,9 @@
 class Widget {
-  private int x, y, width, height;
+  protected int x, y, width, height;
   private String label; 
-  private int event;
-  private color widgetColor, labelColor, borderColor;
+  protected int event;
+  protected color widgetColor;
+  private color labelColor, borderColor;
   private PFont widgetFont;
   boolean hasText;
 
@@ -80,18 +81,22 @@ class Widget {
   void setBorderColor(color colorToSet) {
     borderColor = colorToSet;
   }
+  
 }
-
 class Scrollbar extends Widget {
-
+  int ratio;
   Scrollbar(int width, int totalHeightOfPage, 
     color widgetColor, int event) {  
-    super.x=SCREEN_X-width;
-    super.y=0;
-    super.width = width;
-    super.widgetColor=widgetColor;
-    super.event=event;
-    int ratio = totalHeightOfPage/SCREEN_X;
-    setHeight(SCREEN_X/ratio);
+    this.x=SCREEN_X-width;
+    this.y=0;
+    this.width = width;
+    this.widgetColor=widgetColor;
+    this.event=event;
+    this.ratio = totalHeightOfPage/SCREEN_Y;
+    setHeight(SCREEN_Y/ratio);
+  }
+  
+  public int getRatio(){
+    return this.ratio;
   }
 }
