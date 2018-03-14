@@ -1,18 +1,18 @@
+import controlP5.*;
+
 class Screen {
   ArrayList screenWidgets;
   color screenColor;
-  TextWidget focus; // points to the current searchbar being used by the user, points to null if none are being used
   int previousMouseY;            // added for scrollbar
   int mouseDifference;           // scrollbar
   boolean scrollbarPressed;      //    ""
   int scrollOffsetFromTop;       //    ""
   int totalHeight;               //    ""
   int ratio;                     //    ""
-  queries q = new queries();
+  
   Screen(color in_color) {
     screenWidgets=new ArrayList();
     screenColor=in_color;
-    focus = null;
   }
   void add(Widget w) {
     screenWidgets.add(w);
@@ -79,24 +79,5 @@ class Screen {
       else if (scrollbar.getY()+scrollbar.getHeight()>SCREEN_Y)
         scrollbar.setY(SCREEN_Y-scrollbar.getHeight());
     }
-  }
-
-  void focus(TextWidget searchbar) {
-    if(searchbar != null){
-      focus = searchbar;
-      focus.borderColor = color(200, 200, 200);
-      focus.cursorVisible = true;
-    }
-    else {
-      if(focus != null){
-        focus.borderColor = color(0, 0, 0);
-        focus.cursorVisible = false;
-        focus = searchbar;
-      }
-    }
-  }
-
-  TextWidget getFocus() {
-    return focus;
   }
 }
