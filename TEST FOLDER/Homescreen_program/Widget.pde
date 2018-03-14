@@ -41,22 +41,53 @@ class Widget {
   
 }
 
-class TextWidget extends Widget {
-  int maxlen;
+class TextWidget extends Widget {  
+  int cursorWidth;
+  private String text = "";
+  boolean showLabel = true;
   TextWidget(int x, int y, int width, int height, 
-    String label, color widgetColor, PFont font, int event, int
-    maxlen) {
+    String label, color widgetColor, PFont font, int event, int cursorWidth) {
     super(x, y, width, height, label, widgetColor, font, event); // changed this contructor to call super constructor with these variables,
                                                                  // rather than setting them all in this constructor and duplicating code
     labelColor=color(0); 
-    this.maxlen=maxlen;
+    this.cursorWidth = cursorWidth;
   }
   void append(char s) {
-    if (s==BACKSPACE) {
-      if (!label.equals(""))
-        label=label.substring(0, label.length()-1);
-    } else if (label.length() <maxlen)
-      label=label+str(s);
+    if(!text.equals("")){
+      if (s==BACKSPACE) {
+        if (!text.equals("")){
+          text=text.substring(0, text.length()-1);
+          if(text.equals("")) showLabel = true;
+        }
+      } 
+      else if (s==ENTER){
+        //query time
+      }
+      else if (textWidth(text) < this.width && (s==' ' || (s>='A' && s<='z')))
+        text=text+str(s);
+    }
+    else{
+      if (s!=BACKSPACE) {
+        if (textWidth(text) < this.width && (s==' ' || (s>='A' && s<='z'))){
+          text=text+str(s);
+          showLabel = false;
+        }
+      }
+    }
+  }
+  
+  void draw(int subFromY) {
+    stroke(borderColor);
+    fill(widgetColor);
+    rect(x, y-subFromY, width, height, 10, 10, 10, 10);
+    fill(labelColor);
+    
+    //Text
+    if(showLabel) text(label, x+10, y+height-10-subFromY);
+    else text(text, x+10, y+height-10);
+    
+    //Cursor
+    //rect(x+textWidth(text)+10, y+15, cursorWidth, height-20);
   }
 }
 

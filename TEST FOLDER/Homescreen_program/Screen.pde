@@ -19,6 +19,7 @@ class Screen {
 
   void draw() {
     background(screenColor);
+    
     for (int i = 0; i<screenWidgets.size(); i++) {
       Widget aWidget = (Widget)screenWidgets.get(i);
       aWidget.draw(ratio*scrollOffsetFromTop);
@@ -80,6 +81,7 @@ class Screen {
   }
 
   void focus(TextWidget searchbar) {
+    println("Focused");
     focus = searchbar;
   }
 
