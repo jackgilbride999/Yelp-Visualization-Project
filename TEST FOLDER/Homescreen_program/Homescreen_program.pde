@@ -54,6 +54,7 @@ void setup() {
     .setFont(searchFont)
     .setColorBackground(color(230,0,0))
     .setColorForeground(color(200,0,0))
+    .setColorActive(color(170,0,0))
     .setMouseOver(false)
     .setOpen(false)
     .setHeight(300)
