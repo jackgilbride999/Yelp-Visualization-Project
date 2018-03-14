@@ -18,7 +18,7 @@ class queries {
         + "user=root&password=Carrot!4!5&"
         + "autoReconnect=true&useSSL=false";
 
-      connection = DriverManager.getConnection(connectionUrlCUSTOM);
+      connection = DriverManager.getConnection(connectionUrlAWS);
       System.out.println("Connected.");
 
     }
@@ -92,6 +92,25 @@ class queries {
       ResultSet results = statement.executeQuery(businessNameQuery);
       while(results.next()){
         return results.getString("business_id");
+      }
+    } catch(Exception e){
+       e.printStackTrace();
+    }
+    return null;
+  }
+  
+  public Business getBusinessInfo(String business_id){
+    try{
+      String businessQuery = "SELECT * "+
+                            "FROM yelp_business " +
+                            "WHERE business_id " +
+                            "LIKE " + '"' + business_id + '"' +
+                            "LIMIT " + 1;
+      java.sql.Statement statement = connection.createStatement();
+      ResultSet results = statement.executeQuery(businessQuery);
+
+      while(results.next()){
+        return new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getInt("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories"));
       }
     } catch(Exception e){
        e.printStackTrace();
