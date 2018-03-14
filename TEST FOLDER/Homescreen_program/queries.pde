@@ -185,7 +185,27 @@ class queries {
       String businessQuery = "SELECT * "+
                             "FROM yelp_business " +
                             "WHERE categories " +
-                            "LIKE " +'"'+'%'+category+'%'+'"'
+                            "LIKE " +'"'+'%'+category+'%'+'"' +
+                            "LIMIT " + start + "," + limit;
+      java.sql.Statement statement = connection.createStatement();
+      ResultSet results = statement.executeQuery(businessQuery);
+
+      while(results.next()){
+        businesses.add(new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getInt("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories")));
+      }
+    } catch(Exception e){
+       e.printStackTrace();
+    }
+    return businesses;
+  }
+  
+  public ArrayList<Business> businessSearch(String name, int start, int limit){
+    ArrayList<Business> businesses = new ArrayList<Business>();
+    try{
+      String businessQuery = "SELECT * "+
+                            "FROM yelp_business " +
+                            "WHERE name " +
+                            "LIKE " +'"'+'%'+name+'%'+'"' +
                             "LIMIT " + start + "," + limit;
       java.sql.Statement statement = connection.createStatement();
       ResultSet results = statement.executeQuery(businessQuery);
