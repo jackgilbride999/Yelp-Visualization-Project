@@ -8,6 +8,7 @@ class Screen {
   int scrollOffsetFromTop;       //    ""
   int totalHeight;               //    ""
   int ratio;                     //    ""
+  queries q = new queries();
   Screen(color in_color) {
     screenWidgets=new ArrayList();
     screenColor=in_color;
