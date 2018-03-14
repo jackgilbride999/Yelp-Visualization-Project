@@ -1,102 +1,91 @@
 class Widget {
-  protected int x, y, width, height;
-  private String label; 
-  protected int event;
-  protected color widgetColor;
-  private color labelColor, borderColor;
-  private PFont widgetFont;
-  boolean hasText;
-
-  Widget() {
-  }
-
+  int x, y, width, height;
+  String label; 
+  int event;
+  color widgetColor, labelColor, borderColor;
+  PFont widgetFont;
   Widget(int x, int y, int width, int height, String label, 
     color widgetColor, PFont widgetFont, int event) {
-    this(x, y, width, height, widgetColor, event);
-    this.label=label; 
-    this.widgetFont=widgetFont;
-    labelColor= color(0);
-    hasText=true;
-  }
-
-  Widget(int x, int y, int width, int height, 
-    color widgetColor, int event) {
     this.x=x; 
     this.y=y; 
     this.width = width; 
     this.height= height;
-    this.event=event; 
+    this.label=label; 
+    this.event=event;
     this.widgetColor=widgetColor; 
+    this.widgetFont=widgetFont;
+    labelColor= color(0);
     borderColor=color(0);
-    hasText=false;
   }
   void draw() {
     stroke(borderColor);
     fill(widgetColor);
     rect(x, y, width, height);
-    if (hasText) {
-      fill(labelColor);
-      text(label, x+10, y+height-10);
-    }
+    fill(labelColor);
+    text(label, x+10, y+height-10);
   }
   int getEvent(int mX, int mY) {
     if (mX>x && mX < x+width && mY >y && mY <y+height) {
       return event;
     }
-    return 0;
+    return EVENT_NULL;
   }
-
-  int getX() {
-    return x;
+  
+  void mouseOver(){      // added these two methods for the sample code from slides to work
+    borderColor = color(255);
   }
-
-  int getY() {
-    return y;
-  }
-
-  int getHeight() {
-    return height;
-  }
-
-  int getWidth() {
-    return width;
-  }
-
-  void setX(int x) {
-    this.x=x;
-  }
-
-  void setY(int y) {
-    this.y=y;
-  }
-
-  void setHeight(int height) {
-    this.height=height;
-  }
-
-  void setWidth(int width) {
-    this.width=width;
-  }
-
-  void setBorderColor(color colorToSet) {
-    borderColor = colorToSet;
+  
+  void mouseNotOver(){
+    borderColor = color(0);
   }
   
 }
+
+class TextWidget extends Widget {
+  int maxlen;
+  TextWidget(int x, int y, int width, int height, 
+    String label, color widgetColor, PFont font, int event, int
+    maxlen) {
+    super(x, y, width, height, label, widgetColor, font, event); // changed this contructor to call super constructor with these variables,
+                                                                 // rather than setting them all in this constructor and duplicating code
+    labelColor=color(0); 
+    this.maxlen=maxlen;
+  }
+  void append(char s) {
+    if (s==BACKSPACE) {
+      if (!label.equals(""))
+        label=label.substring(0, label.length()-1);
+    } else if (label.length() <maxlen)
+      label=label+str(s);
+  }
+}
+
 class Scrollbar extends Widget {
   int ratio;
   Scrollbar(int width, int totalHeightOfPage, 
-    color widgetColor, int event) {  
-    this.x=SCREEN_X-width;
-    this.y=0;
-    this.width = width;
-    this.widgetColor=widgetColor;
-    this.event=event;
+    color widgetColor, int event) {
+    super(SCREEN_X-width, 0, width, 0, "", widgetColor, null, event); // again the super constructor for the class is called to stop code duplication
     this.ratio = totalHeightOfPage/SCREEN_Y;
     setHeight(SCREEN_Y/ratio);
   }
   
   public int getRatio(){
     return this.ratio;
+  }
+  
+  public void setHeight(int height){
+    this.height = height;
+  }
+  
+  public int getY(){
+    return y;
+  }
+  
+  public void setY(int y){
+    this.y = y;
+  }
+  
+  public int getHeight(){
+    return height;
   }
 }

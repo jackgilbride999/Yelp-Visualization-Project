@@ -2,7 +2,7 @@
 final int SCREEN_X=400;
 final int SCREEN_Y=400;
 final int SCROLLBAR_WIDTH=10;
-final int NULL_EVENT=0;
+final int EVENT_NULL=0;
 final int SCROLLBAR_EVENT=6;
 Scrollbar scrollbar;
 int previousMouseY;
