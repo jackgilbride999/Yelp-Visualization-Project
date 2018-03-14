@@ -24,7 +24,8 @@ void setup() {
 void draw() {
   background(255);
   noStroke();
-  scrollbar.draw();
+  scrollbar.draw(0); // have to pass a number to  widget(how far the scrollbar has to use it), but the scrollbar will override this 
+                     //so it can move other widgets but never 'move itself'
   previousMouseY=mouseY;
   offsetFromTop=scrollbar.getY();              // test shapes to show scrollbar working 
   rect(50, 50-(ratio*offsetFromTop), 50, 50);          // scrollbar works by subtracting ("offset from top" * ratio) from the original y position of whatever is on the screen
@@ -51,6 +52,6 @@ void mouseDragged() {
     if (scrollbar.getY()<0)
       scrollbar.setY(0);
     else if (scrollbar.getY()+scrollbar.getHeight()>SCREEN_Y)
-      scrollbar.setY(SCREEN_X-scrollbar.getHeight());
+      scrollbar.setY(SCREEN_Y-scrollbar.getHeight());
   }
 }

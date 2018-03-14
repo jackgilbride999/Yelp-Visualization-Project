@@ -17,12 +17,12 @@ class Widget {
     labelColor= color(0);
     borderColor=color(0);
   }
-  void draw() {
+  void draw(int subFromY) {
     stroke(borderColor);
     fill(widgetColor);
-    rect(x, y, width, height);
+    rect(x, y-subFromY, width, height);
     fill(labelColor);
-    text(label, x+10, y+height-10);
+    text(label, x+10, y+height-10-subFromY);
   }
   int getEvent(int mX, int mY) {
     if (mX>x && mX < x+width && mY >y && mY <y+height) {
@@ -87,5 +87,13 @@ class Scrollbar extends Widget {
   
   public int getHeight(){
     return height;
+  }
+  
+  public void draw(int subFromY){ // method overriding draw so the scrollbar doesn't "drag itself"
+    stroke(borderColor);
+    fill(widgetColor);
+    rect(x, y, width, height);
+    fill(labelColor);
+    text(label, x+10, y+height-10);
   }
 }

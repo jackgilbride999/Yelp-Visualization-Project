@@ -21,11 +21,15 @@ class Screen {
     background(screenColor);
     for (int i = 0; i<screenWidgets.size(); i++) {
       Widget aWidget = (Widget)screenWidgets.get(i);
-      aWidget.draw();
+      aWidget.draw(ratio*scrollOffsetFromTop);
     }
+    previousMouseY=mouseY;
+    Scrollbar scroll = (Scrollbar)screenWidgets.get(0);
+    ratio = scroll.getRatio();
+    scrollOffsetFromTop= scroll.getY();  
   } 
 
-  int getEvent(int mx, int my) {
+  int getEvent(int mx, int my) {          
     for (int i = 0; i<screenWidgets.size(); i++) {
       Widget aWidget = (Widget) screenWidgets.get(i);
       int event = aWidget.getEvent(mouseX, mouseY);
@@ -68,11 +72,10 @@ class Screen {
     Scrollbar scrollbar = (Scrollbar)screenWidgets.get(0);
     if (scrollbarPressed==true) {
       scrollbar.setY(mouseY-mouseDifference);
-      println("" +  scrollbar.getY());
       if (scrollbar.getY()<0)
         scrollbar.setY(0);
       else if (scrollbar.getY()+scrollbar.getHeight()>SCREEN_Y)
-        scrollbar.setY(SCREEN_X-scrollbar.getHeight());
+        scrollbar.setY(SCREEN_Y-scrollbar.getHeight());
     }
   }
 
