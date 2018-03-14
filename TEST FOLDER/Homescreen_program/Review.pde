@@ -13,7 +13,7 @@ class Review {
     private int reviewCool;
     
     private String business_name;
-
+    
     public Review(String review_id, String user_id, String business_id, int stars, String date, String text, int reviewUseful, int reviewFunny, int reviewCool) {
         this.review_id = review_id;
         this.user_id = user_id;
@@ -25,7 +25,7 @@ class Review {
         this.reviewFunny = reviewFunny;
         this.reviewCool = reviewCool;
     }
-
+    
     public String getUserId() {
         return user_id;
     }

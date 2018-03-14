@@ -8,7 +8,7 @@ class Screen {
   int scrollOffsetFromTop;       //    ""
   int totalHeight;               //    ""
   int ratio;                     //    ""
-  queries q = new queries();
+  queries q;
   Screen(color in_color) {
     screenWidgets=new ArrayList();
     screenColor=in_color;
@@ -82,8 +82,17 @@ class Screen {
   }
 
   void focus(TextWidget searchbar) {
-    println("Focused");
-    focus = searchbar;
+    if(searchbar != null){
+      focus = searchbar;
+      focus.borderColor = color(200, 200, 200);
+    }
+    else {
+      if(focus != null){
+        focus.borderColor = color(0, 0, 0);
+        focus = searchbar;
+      }
+    }
+    q = new queries();
   }
 
   TextWidget getFocus() {

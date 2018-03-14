@@ -63,6 +63,7 @@ class TextWidget extends Widget {
       else if (s==ENTER){
         //query time
         println(text + ": " + currentScreen.q.getBusinessID(text));
+        println(currentScreen.q.getBusinessInfo(currentScreen.q.getBusinessID(text)));
       }
       else if (textWidth(text) < this.width && (s==' ' || (s>='A' && s<='z')))
         text=text+str(s);
@@ -96,6 +97,14 @@ class TextWidget extends Widget {
     
     //Cursor
     //rect(x+textWidth(text)+10, y+15, cursorWidth, height-20);
+  }
+  
+  void mouseOver(){
+    
+  }
+  
+  void mouseNotOver(){
+    
   }
 }
 
