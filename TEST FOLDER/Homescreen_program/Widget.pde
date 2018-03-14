@@ -138,10 +138,6 @@ class Scrollbar extends Widget {
   }
   
   public void draw(int subFromY){ // method overriding draw so the scrollbar doesn't "drag itself"
-    stroke(borderColor);
-    fill(widgetColor);
-    rect(x, y, width, height);
-    fill(labelColor);
-    text(label, x+10, y+height-10);
+   super.draw(0);
   }
 }
