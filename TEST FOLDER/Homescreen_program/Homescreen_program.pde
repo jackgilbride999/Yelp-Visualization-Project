@@ -18,7 +18,8 @@ void settings() {
 void setup() {
   homeScreen = new Screen(color(255)); // setup new white Homescreen
   int searchbarHeight=40;
-  int searchbarWidth=3*SCREEN_Y/4;
+  int searchbarWidth =3*(SCREEN_X/4);
+  println(searchbarWidth);
   searchFont = loadFont("ArialMT-30.vlw");
   Scrollbar scrollbar = new Scrollbar(10, SCREEN_Y, color(150), SCROLLBAR_EVENT); // just adding a scrollbar incase we need it, by default it will not scroll and will just take up side of screen //<>//
   // the best way I can get the scrollbar to work is to know its index in a screen's widgetList, so for now just always add a scrollbar to any screen as the first element
