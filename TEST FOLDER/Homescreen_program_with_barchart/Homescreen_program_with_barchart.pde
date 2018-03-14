@@ -8,6 +8,7 @@ float max =0;
 
 // pass in arrayList from query function a graph is drawn
 
+
 final int SCREEN_X= 1244;
 final int SCREEN_Y=700;
 final int EVENT_NULL=0;
@@ -26,14 +27,7 @@ void settings() {
 }
 
 void setup() {
-  
-  
-  
-  
-  
-  
- 
-  for(int i =0; i < 7; i++) {
+   for(int i =0; i < 7; i++) {
   visitorsList.add(random(10,20));
   }
   
@@ -79,7 +73,6 @@ for (Float f : visitorsList) {
   // Bar layout
   barChart.transposeAxes(false);
   
-  
   homeScreen = new Screen(color(255)); // setup new white Homescreen
   int searchbarHeight=40;
   int searchbarWidth=3*SCREEN_Y/4;
@@ -102,7 +95,7 @@ for (Float f : visitorsList) {
 
 void draw() {
   currentScreen.draw();
-  
+    
   // bar chart  
   barChart.draw(15,5,width-1000,height-500); 
   
