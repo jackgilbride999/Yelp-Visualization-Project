@@ -85,10 +85,12 @@ class Screen {
     if(searchbar != null){
       focus = searchbar;
       focus.borderColor = color(200, 200, 200);
+      focus.cursorVisible = true;
     }
     else {
       if(focus != null){
         focus.borderColor = color(0, 0, 0);
+        focus.cursorVisible = false;
         focus = searchbar;
       }
     }

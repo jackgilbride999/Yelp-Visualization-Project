@@ -45,6 +45,7 @@ class TextWidget extends Widget {
   int cursorWidth;
   private String text = "";
   boolean showLabel = true;
+  boolean cursorVisible = false;
   TextWidget(int x, int y, int width, int height, 
     String label, color widgetColor, PFont font, int event, int cursorWidth) {
     super(x, y, width, height, label, widgetColor, font, event); // changed this contructor to call super constructor with these variables,
@@ -65,15 +66,20 @@ class TextWidget extends Widget {
       } 
       else if (s==ENTER){
         //query time
-        ArrayList<Business> businesses = currentScreen.q.categorySearch(text);
-        if(currentScreen.q.getBusinessID(text) != null){
-          println(text + ": " + currentScreen.q.getBusinessID(text));
-          println(currentScreen.q.getBusinessInfo(currentScreen.q.getBusinessID(text)));
-        }
-        else if(businesses != null){
-          for(Business b : businesses){
+        ArrayList<Business> businessesC = currentScreen.q.categorySearch(text, 0, 10);
+        ArrayList<Business> businessesN = currentScreen.q.businessSearch(text, 0, 10);
+        if(businessesC.size() != 0){
+          for(Business b : businessesC){
             println(b);
           }
+        }
+        else if(businessesN.size() != 0){
+          for(Business b : businessesN){
+            println(b);
+          }
+        }
+        else{
+          println("No results");
         }
       }
       else if (textWidth(text + 2*s) < this.width && (s==' ' || (s>='A' && s<='z')))
@@ -105,11 +111,13 @@ class TextWidget extends Widget {
     else {
       fill(labelColor);
       text(text, x+10, y+height-10);
-    }
-    textSize(12);
-    
+    }    
     //Cursor
-    //rect(x+textWidth(text)+10, y+15, cursorWidth, height-20);
+    if(cursorVisible) rect(x+textWidth(text)+10, y+10, cursorWidth, height-17);
+    
+    //reset text size
+    textSize(12);
+
   }
   
   void mouseOver(){
