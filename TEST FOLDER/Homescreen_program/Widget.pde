@@ -104,7 +104,7 @@ class TextWidget extends Widget {
     }
     else {
       fill(labelColor);
-      text(text, x+10, y+height-10);
+      text(text, x+10, y+height-10-subFromY);
     }
     textSize(12);
     

@@ -21,7 +21,7 @@ void setup() {
   int searchbarWidth =3*(SCREEN_X/4);
   println(searchbarWidth);
   searchFont = loadFont("ArialMT-30.vlw");
-  Scrollbar scrollbar = new Scrollbar(10, SCREEN_Y, color(150), SCROLLBAR_EVENT); // just adding a scrollbar incase we need it, by default it will not scroll and will just take up side of screen //<>//
+  Scrollbar scrollbar = new Scrollbar(10, SCREEN_Y*2, color(150), SCROLLBAR_EVENT); // just adding a scrollbar incase we need it, by default it will not scroll and will just take up side of screen //<>//
   // the best way I can get the scrollbar to work is to know its index in a screen's widgetList, so for now just always add a scrollbar to any screen as the first element
   TextWidget searchbar = new TextWidget(SCREEN_X/2-searchbarWidth/2, 20, searchbarWidth, searchbarHeight, "Enter the name of a buisiness...", color(200), searchFont, SEARCHBAR_EVENT, 2);
   test1 = new Widget(SCREEN_X/4-25, SCREEN_Y/2-25, 50, 50, "test 1", color(255, 0, 0), searchFont, TEST_EVENT1);
