@@ -51,8 +51,11 @@ class TextWidget extends Widget {
                                                                  // rather than setting them all in this constructor and duplicating code
     labelColor=color(0); 
     this.cursorWidth = cursorWidth;
+    println(width);
   }
   void append(char s) {
+    textSize(20);
+    println(textWidth(s + text));
     if(!text.equals("")){
       if (s==BACKSPACE) {
         if (!text.equals("")){
@@ -62,31 +65,41 @@ class TextWidget extends Widget {
       } 
       else if (s==ENTER){
         //query time
-        println(text + ": " + currentScreen.q.getBusinessID(text));
-        println(currentScreen.q.getBusinessInfo(currentScreen.q.getBusinessID(text)));
+        ArrayList<Business> businesses = currentScreen.q.categorySearch(text);
+        if(currentScreen.q.getBusinessID(text) != null){
+          println(text + ": " + currentScreen.q.getBusinessID(text));
+          println(currentScreen.q.getBusinessInfo(currentScreen.q.getBusinessID(text)));
+        }
+        else if(businesses != null){
+          for(Business b : businesses){
+            println(b);
+          }
+        }
       }
-      else if (textWidth(text) < this.width && (s==' ' || (s>='A' && s<='z')))
+      else if (textWidth(text + 2*s) < this.width && (s==' ' || (s>='A' && s<='z')))
         text=text+str(s);
     }
     else{
       if (s!=BACKSPACE) {
-        if (textWidth(text) < this.width && (s==' ' || (s>='A' && s<='z'))){
+        if (textWidth(text + 2*s) < this.width && (s==' ' || (s>='A' && s<='z'))){
           text=text+str(s);
           showLabel = false;
         }
       }
     }
+    textSize(12);
   }
   
   void draw(int subFromY) {
     stroke(borderColor);
     fill(widgetColor);
+    //text entry box
     rect(x, y-subFromY, width, height, 10, 10, 10, 10);
-    
+        
     //Text
     textSize(20);
     if(showLabel){
-      fill(labelColor-100);
+      fill(255);
       text(label, x+10, y+height-10-subFromY);
     }
     else {
@@ -100,11 +113,11 @@ class TextWidget extends Widget {
   }
   
   void mouseOver(){
-    
+    //Filler so the searchbar isn't effected
   }
   
   void mouseNotOver(){
-    
+    //Filler so the searchbar isn't effected
   }
 }
 
