@@ -1,7 +1,4 @@
-// scrollbar works but due to the huge list it is too small to be seen,  //<>//
-// change "totalHeight" in it's constructor if you need to see how it would look for a smaller list
-
-import java.util.Scanner; //<>// //<>// //<>//
+import java.util.Scanner; //<>// //<>// //<>// //<>//
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.io.FileReader;
@@ -16,8 +13,7 @@ final int NULL_EVENT=0;
 final int SCROLLBAR_EVENT=6;
 final color BLACK = color(0);
 final int BORDER_OFFSET_Y = 20;
-
-Scrollbar scrollbar;
+ScrollBar scrollBar;
 int previousMouseY;
 int mouseDifference;
 boolean scrollBarPressed;
@@ -25,8 +21,6 @@ int offsetFromTop;
 PFont myFont;
 ArrayList<String> formattedReviewsList; 
 ArrayList<Review> reviews;
-int totalHeight;
-int scrollbarRatio;
 
 void settings() {
   size(SCREEN_X, SCREEN_Y);
@@ -56,28 +50,29 @@ void setup() {
   catch (Exception e) {
     println(e);
   }
-  totalHeight = getTotalHeight(formatReviews(reviews));
-  scrollbar = new Scrollbar(10, totalHeight, color(120), SCROLLBAR_EVENT); // in theory the scrollbar works but there are so many reviews, that it is so small (invisible)
-                                                                           // feed in a test value in place of totalHeight if you want to test, i.e. 10000
-  scrollbarRatio = scrollbar.getRatio();
+  scrollBar = new ScrollBar();
   offsetFromTop=0;
-  println("total height: " + totalHeight);
 
 }
+
+
+
+
 
 void draw() {
   background(255);
   noStroke();
+  scrollBar.draw();
   previousMouseY=mouseY;
-  offsetFromTop=scrollbar.getY();
-  drawReviews();
-  scrollbar.draw();
+  offsetFromTop=scrollBar.getY() * 20;
+  drawReviews(formattedReviewsList);
+  
 }
 
 void mousePressed() {
-  if (scrollbar.getEvent(mouseX, mouseY)==SCROLLBAR_EVENT) {
+  if (scrollBar.getEvent(mouseX, mouseY)==SCROLLBAR_EVENT) {
     scrollBarPressed=true;
-    mouseDifference=mouseY-scrollbar.getY();
+    mouseDifference=mouseY-scrollBar.getY();
   }
 }
 
@@ -87,26 +82,25 @@ void mouseReleased() {
 
 void mouseDragged() {
   if (scrollBarPressed==true) {
-    scrollbar.setY(mouseY-mouseDifference);
-    if (scrollbar.getY()<0)
-      scrollbar.setY(0);
-    else if (scrollbar.getY()+scrollbar.getHeight()>SCREEN_Y)
-      scrollbar.setY(SCREEN_X-scrollbar.getHeight());
+    scrollBar.setY(mouseY-mouseDifference);
+    if (scrollBar.getY()<0)
+      scrollBar.setY(0);
+    else if (scrollBar.getY()+scrollBar.getHeight()>SCREEN_Y)
+      scrollBar.setY(SCREEN_X-scrollBar.getHeight());
   }
 }
 
 
-void drawReviews() {
-  fill(color(0));
+void drawReviews(ArrayList<String> formattedReviewList) {
   int reviewOffset = 0;
   int borderOffsetY = 20;
   int borderOffsetX = 10;
   float lineHeight = textAscent() + textDescent();
   for (Review r : reviews)
   {
-    rect(borderOffsetX / 2, reviewOffset - scrollbarRatio*offsetFromTop, SCREEN_X-10, 1);
-    text(r.getDate(), SCREEN_X-textWidth(r.getDate()), reviewOffset+ borderOffsetY - scrollbarRatio*offsetFromTop);
-    text(r.getReview(), borderOffsetX, reviewOffset + borderOffsetY - scrollbarRatio*offsetFromTop);
+    rect(borderOffsetX / 2, reviewOffset - offsetFromTop, SCREEN_X-10, 1);
+    text(r.getDate(), SCREEN_X-textWidth(r.getDate()), reviewOffset+ borderOffsetY -offsetFromTop);
+    text(r.getReview(), borderOffsetX, reviewOffset + borderOffsetY -offsetFromTop);
 //  text(r.getNumberOfLines(), 250, reviewOffset + borderOffsetY -offsetFromTop);
     
     reviewOffset = reviewOffset + (r.getNumberOfLines() * (int)lineHeight) + borderOffsetY;
@@ -153,6 +147,7 @@ ArrayList<String> formatReviews(ArrayList<Review> reviews) {
     }
     return formattedReviewList;
 }
+
 
 
 int getTotalHeight(ArrayList<String> formattedReviews) {
