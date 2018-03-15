@@ -47,7 +47,6 @@ void setup() {
     ;
     
     searchOptions = cp5.addScrollableList("Options")
-    .setDefaultValue(0)
     .addItem("By Category", 0)
     .addItem("By Name", 1)
     .addItem("By City", 2)
