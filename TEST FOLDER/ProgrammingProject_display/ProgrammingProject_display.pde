@@ -19,7 +19,6 @@ int mouseDifference;
 boolean scrollBarPressed;
 int offsetFromTop;
 PFont myFont;
-ArrayList<String> formattedReviewsList; 
 ArrayList<Review> reviews;
 
 void settings() {
@@ -43,7 +42,7 @@ void setup() {
     }
 
     println("Time taken: " + millis());
-    formattedReviewsList = formatReviews(reviews);
+    formatReviews(reviews);
     // Splits the review in order to format with a specific line length and then sets the review to the formatted review
     
   } 
@@ -65,7 +64,7 @@ void draw() {
   scrollBar.draw();
   previousMouseY=mouseY;
   offsetFromTop=scrollBar.getY() * 20;
-  drawReviews(formattedReviewsList);
+  drawReviews(reviews);
   
 }
 
@@ -91,7 +90,7 @@ void mouseDragged() {
 }
 
 
-void drawReviews(ArrayList<String> formattedReviewList) {
+void drawReviews(ArrayList<Review> reviews) {
   int reviewOffset = 0;
   int borderOffsetY = 20;
   int borderOffsetX = 10;
@@ -100,7 +99,7 @@ void drawReviews(ArrayList<String> formattedReviewList) {
   {
     rect(borderOffsetX / 2, reviewOffset - offsetFromTop, SCREEN_X-10, 1);
     text(r.getDate(), SCREEN_X-textWidth(r.getDate()), reviewOffset+ borderOffsetY -offsetFromTop);
-    text(r.getReview(), borderOffsetX, reviewOffset + borderOffsetY -offsetFromTop);
+    text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY -offsetFromTop);
 //  text(r.getNumberOfLines(), 250, reviewOffset + borderOffsetY -offsetFromTop);
     
     reviewOffset = reviewOffset + (r.getNumberOfLines() * (int)lineHeight) + borderOffsetY;
@@ -108,7 +107,7 @@ void drawReviews(ArrayList<String> formattedReviewList) {
 }
 
 
-ArrayList<String> formatReviews(ArrayList<Review> reviews) {
+void formatReviews(ArrayList<Review> reviews) {
   // Splits the review in order to format with a specific line length and then sets the review to the formatted review
   ArrayList<String> formattedReviewList = new ArrayList<String>();
  for (Review r : reviews) {
@@ -141,11 +140,10 @@ ArrayList<String> formatReviews(ArrayList<Review> reviews) {
         formattedReview = formattedReview + splitReview[i];
       }
       r.setNumberOfLines(lines);
-      r.setReview(formattedReview);
-      formattedReviewList.add(formattedReview);
+      r.setFormattedReview(formattedReview);
+ //     formattedReviewList.add(formattedReview);
       
     }
-    return formattedReviewList;
 }
 
 
