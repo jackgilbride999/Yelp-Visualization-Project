@@ -202,12 +202,12 @@ public void Options(int n) {
   println(selected);
 }
 
-public void buttonBusinessList(ArrayList<Business> businesses) {
+void buttonBusinessList(ArrayList<Business> businesses) {
   if (businessList != null)
   {
     for (Business b : businessList)
     {
-      cp5.addButton(b.getName())
+      cp5.addButton(b.getName() + ", " + b.getNeighborhood() + ", " + b.getCity() + "              Stars : " + b.getStars())
         .setValue(0)
         .setPosition((float)SCREEN_X/2-500, (float)yOffset + 80)
         .setSize(1000, 50);
