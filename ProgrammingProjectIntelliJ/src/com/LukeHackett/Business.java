@@ -1,19 +1,19 @@
 package com.LukeHackett;
 
 public class Business {
-    String business_id;
-    String name;
-    String neighborhood;
-    String address;
-    String city;
-    String state;
-    String postal_code;
-    double latitude;
-    double longitude;
-    int stars;
-    int review_count;
-    int is_open;
-    String categories;
+    private String business_id;
+    private String name;
+    private String neighborhood;
+    private String address;
+    private String city;
+    private String state;
+    private String postal_code;
+    private double latitude;
+    private double longitude;
+    private int stars;
+    private int review_count;
+    private int is_open;
+    private String categories;
 
     public Business(String business_id, String name, String neighborhood, String address, String city, String state, String postal_code, double latitude, double longitude, int stars, int review_count, int is_open, String categories) {
         this.business_id = business_id;

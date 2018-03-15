@@ -12,23 +12,23 @@ public class Main extends PApplet {
     public static final int EVENT_NULL = 0;
     public static final int SCROLLBAR_EVENT = 1;
 
-    final int TEST_EVENT1 = 3;
-    final int TEST_EVENT2 = 4;
-    final int TEST_EVENT3 = 5;
-    final int TEST_EVENT4 = 6;
+    private final int TEST_EVENT1 = 3;
+    private final int TEST_EVENT2 = 4;
+    private final int TEST_EVENT3 = 5;
+    private final int TEST_EVENT4 = 6;
 
-    Screen homeScreen;
-    Screen currentScreen;
-    Widget test1, test2, test3, test4;
+    private Screen homeScreen;
+    private Screen currentScreen;
+    private Widget test1, test2, test3, test4;
 
-    ControlP5 cp5;
-    Textfield searchBar;
-    ScrollableList searchOptions;
-    int selected = 0;
+    private ControlP5 cp5;
+    private Textfield searchBar;
+    private ScrollableList searchOptions;
+    private int selected = 0;
 
     queries q;
 
-    PFont searchFont;
+    private PFont searchFont;
 
     public static void main(String[] args) {
         PApplet.main("com.LukeHackett.Main");
@@ -183,6 +183,5 @@ public class Main extends PApplet {
 
     public void Options(int n) {
         selected = n;
-        System.out.println(selected);
     }
 }
