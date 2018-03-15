@@ -42,7 +42,7 @@ public class Main extends PApplet {
     public void setup() {
         q = new queries();
         cp5 = new ControlP5(this);
-        searchFont = loadFont("data/CenturyGothic-24.vlw");
+        searchFont = loadFont("C:\\Users\\lukeh\\Documents\\Tortoise-VPN\\CS1013-1718-4(Alt)\\ProgrammingProjectIntelliJ\\src\\main\\java\\data\\CenturyGothic-24.vlw");
 
         //Control P5 setup
         int searchbarHeight = 40;

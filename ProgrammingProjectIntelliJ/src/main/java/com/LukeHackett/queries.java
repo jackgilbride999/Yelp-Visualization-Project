@@ -50,7 +50,7 @@ class queries {
     }
 
     public ArrayList<Review> reviews(int start, int limit) {
-        ArrayList<Review> reviews = new ArrayList<>();
+        ArrayList<Review> reviews = new ArrayList<Review>();
         try {
             String businessQuery = "SELECT * " +
                     "FROM yelp_review " +
