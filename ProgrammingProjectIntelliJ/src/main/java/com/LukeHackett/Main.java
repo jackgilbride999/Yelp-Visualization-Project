@@ -26,7 +26,7 @@ public class Main extends PApplet {
     private ScrollableList searchOptions;
     private int selected = 0;
 
-    queries q;
+    queries qControl;
 
     private PFont searchFont;
 
@@ -40,9 +40,9 @@ public class Main extends PApplet {
 
     @Override
     public void setup() {
-        q = new queries();
+        qControl = new queries();
         cp5 = new ControlP5(this);
-        searchFont = loadFont("C:\\Users\\lukeh\\Documents\\Tortoise-VPN\\CS1013-1718-4(Alt)\\ProgrammingProjectIntelliJ\\src\\main\\java\\data\\CenturyGothic-24.vlw");
+        searchFont = loadFont("CenturyGothic-24.vlw");
 
         //Control P5 setup
         int searchbarHeight = 40;
@@ -97,13 +97,11 @@ public class Main extends PApplet {
 
         Scrollbar scrollbar = new Scrollbar(this, 10, SCREEN_Y, color(150), SCROLLBAR_EVENT); // just adding a scrollbar incase we need it, by default it will not scroll and will just take up side of screen
         // the best way I can get the scrollbar to work is to know its index in a screen's widgetList, so for now just always add a scrollbar to any screen as the first element
-        //TextWidget searchbar = new TextWidget(SCREEN_X/2-searchbarWidth/2, 20, searchbarWidth, searchbarHeight, "Enter the name of a buisiness...", color(200), searchFont, SEARCHBAR_EVENT, 2);
         test1 = new Widget(this, SCREEN_X / 4 - 25, SCREEN_Y / 2 - 25, 50, 50, "test 1", color(255, 0, 0), searchFont, TEST_EVENT1);
         test2 = new Widget(this, 3 * SCREEN_X / 4 - 25, SCREEN_Y / 2 - 25, 50, 50, "test 2", color(0, 255, 0), searchFont, TEST_EVENT2);
         test3 = new Widget(this, SCREEN_X / 4 - 25, 3 * SCREEN_Y / 4 - 25, 50, 50, "test 3", color(0, 0, 255), searchFont, TEST_EVENT3);
         test4 = new Widget(this, 3 * SCREEN_X / 4 - 25, 3 * SCREEN_Y / 4 - 25, 50, 50, "test 4", color(255, 255, 0), searchFont, TEST_EVENT4);
         homeScreen.add(scrollbar);
-        //homeScreen.add(searchbar);
         homeScreen.add(test1);
         homeScreen.add(test2);
         homeScreen.add(test3);
@@ -113,6 +111,7 @@ public class Main extends PApplet {
 
     public void draw() {
         currentScreen.draw();
+        cp5.draw();
     }
 
     public void mousePressed() {
@@ -154,7 +153,7 @@ public class Main extends PApplet {
 
     public void searchBar(String text) {
         if (selected == 0) {
-            ArrayList<Business> businessesC = q.categorySearch(text, 0, 10);
+            ArrayList<Business> businessesC = qControl.categorySearch(text, 0, 10);
             if (businessesC.size() != 0) {
                 for (Business b : businessesC) {
                     System.out.println(b.toString());
@@ -163,7 +162,7 @@ public class Main extends PApplet {
                 System.out.println("No results");
             }
         } else if (selected == 1) {
-            ArrayList<Business> businessesN = q.businessSearch(text, 0, 10);
+            ArrayList<Business> businessesN = qControl.businessSearch(text, 0, 10);
             if (businessesN.size() != 0) {
                 for (Business b : businessesN) {
                     System.out.println(b);
@@ -172,7 +171,7 @@ public class Main extends PApplet {
                 System.out.println("No results");
             }
         } else if (selected == 2) {
-            ArrayList<Business> businessesL = q.citySearch(text, 0, 10);
+            ArrayList<Business> businessesL = qControl.citySearch(text, 0, 10);
             if (businessesL.size() != 0) {
                 for (Business b : businessesL) {
                     System.out.println(b);
