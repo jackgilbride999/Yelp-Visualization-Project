@@ -35,6 +35,22 @@ public class Main extends PApplet {
     private ControlP5 businessScreenController;
     private Textfield searchBar;
     private Button backButton;
+    private Button nightLifeButton;
+    private Button beautyButton;
+    private Button sportsButton;
+    private Button automotiveButton;
+    private Button retaurantsButton;
+    private Button shoppingButton;
+
+
+    private PImage restaurantImage;
+    private PImage beautyImage;
+    private PImage sportsImage;
+    private PImage nightLifeImage;
+    private PImage automotiveImage;
+    private PImage shoppingImage;
+
+
     private ScrollableList searchOptions;
     private int selected = 0;
     private PImage backButtonImage;
@@ -61,6 +77,13 @@ public class Main extends PApplet {
         searchFont = loadFont("CenturyGothic-24.vlw");
 
         backButtonImage = loadImage("backButton.png");
+        shoppingImage = loadImage("72x72_shopping.png");
+        nightLifeImage = loadImage("72x72_nightlife.png");
+        sportsImage = loadImage("72x72_active_life.png");
+        beautyImage = loadImage("72x72_beauty.png");
+        automotiveImage = loadImage("72x72_automotive.png");
+        restaurantImage = loadImage("72x72_restaurants.png");
+
 
         //Control P5 setup
         int searchbarHeight = 40;
@@ -102,6 +125,40 @@ public class Main extends PApplet {
         backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
         backButton.setImage(backButtonImage);
 
+        beautyButton = homeScreenController.addButton("beautyButton")
+                .setSize(110,110)
+                .setPosition(SCREEN_X/2 - (72/2) - 250 - 72,SCREEN_Y/2 - 100)
+                .setImage(beautyImage);
+
+        sportsButton = homeScreenController.addButton("sportsButton")
+                .setSize(110,110)
+                .setPosition(SCREEN_X/2 - (72/2),SCREEN_Y/2 - 100)
+                .setImage(sportsImage);
+
+        retaurantsButton = homeScreenController.addButton("restaurantsButton")
+                .setSize(110,110)
+                .setPosition(SCREEN_X/2 + (72/2) + 250,SCREEN_Y/2 - 100)
+                .setImage(restaurantImage);
+
+
+        shoppingButton = homeScreenController.addButton("shoppingButton")
+                .setSize(110,110)
+                .setPosition(SCREEN_X/2 - (72/2) - 250 - 72,SCREEN_Y/2 + 100)
+                .setImage(shoppingImage);
+
+
+        automotiveButton = homeScreenController.addButton("autoButton")
+                .setSize(110,110)
+                .setPosition(SCREEN_X/2 - (72/2),SCREEN_Y/2 + 100)
+                .setImage(automotiveImage);
+
+        nightLifeButton = homeScreenController.addButton("nightlifeButton")
+                .setSize(110,110)
+                .setPosition(SCREEN_X/2 + (72/2) + 250,SCREEN_Y/2 + 100)
+                .setImage(nightLifeImage);
+
+
+
         // .setImage()
 
         homeScreenController.setAutoDraw(false);
@@ -121,6 +178,7 @@ public class Main extends PApplet {
                 .setPaddingTop(10);
 
         //End Control P5 setup
+
 
 
         homeScreen = new Screen(this, color(255)); // setup new white Homescreen
@@ -171,9 +229,9 @@ public class Main extends PApplet {
                 break;
             case TEST_EVENT2:
                 println("test button 2 pressed!");
-                businessList = qControl.businessSearch("Nightlife", 0, 10);
-                buttonBusinessList(businessList);
-                println(businessList);
+               // businessList = qControl.businessSearch("Nightlife", 0, 10);
+              //  buttonBusinessList(businessList);
+              //  println(businessList);
                 break;
             case TEST_EVENT3:
                 println("test button 3 pressed!");
@@ -205,6 +263,7 @@ public class Main extends PApplet {
     }
 
     public void searchBar(String text) {
+
         currentController = SEARCH_RESULT_SCREEN;
         if (selected == 0) {
             ArrayList<Business> businessesC = qControl.categorySearch(text, 0, 10);
@@ -246,11 +305,43 @@ public class Main extends PApplet {
         selected = n;
     }
 
-    public void backButton(){
+    public void backButton() {
         currentController = HOME_SCREEN;
+    }
+    public void beautyButton() {
+        currentController = SEARCH_RESULT_SCREEN;
+        businessList = qControl.businessSearch("Beauty", 0, 10);
+        buttonBusinessList(businessList);
+    }
+    public void autoButton() {
+        currentController = SEARCH_RESULT_SCREEN;
+        businessList = qControl.businessSearch("Automotive", 0, 10);
+        buttonBusinessList(businessList);
+    }
+    public void shoppingButton() {
+        currentController = SEARCH_RESULT_SCREEN;
+        businessList = qControl.businessSearch("Shopping", 0, 10);
+        buttonBusinessList(businessList);
+    }
+    public void nightlifeButton() {
+        currentController = SEARCH_RESULT_SCREEN;
+        businessList = qControl.businessSearch("nightlife", 0, 10);
+        buttonBusinessList(businessList);
+    }
+    public void restaurantsButton() {
+        currentController = SEARCH_RESULT_SCREEN;
+        businessList = qControl.businessSearch("Restaurant", 0, 10);
+        buttonBusinessList(businessList);
+    }
+    public void sportsButton() {
+        currentController = SEARCH_RESULT_SCREEN;
+        businessList = qControl.businessSearch("sports", 0, 10);
+        buttonBusinessList(businessList);
     }
 
     void buttonBusinessList(ArrayList<Business> businesses) {
+      //  searchResultController = new ControlP5(this);
+       // background(255);
         if (businessList != null) {
             for (Business b : businessList) {
                 searchResultController.addButton(b.getName() + ", " + b.getNeighborhood() + ", " + b.getCity() + "              Stars : " + b.getStars())
