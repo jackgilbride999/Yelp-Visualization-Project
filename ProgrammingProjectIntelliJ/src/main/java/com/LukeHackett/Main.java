@@ -1,12 +1,9 @@
 package com.LukeHackett;
 
-import com.google.maps.GeoApiContext;
 import processing.core.*;
 import controlP5.*;
 
 import java.util.ArrayList;
-
-import static com.google.maps.GeolocationApi.geolocate;
 
 public class Main extends PApplet {
 
@@ -79,6 +76,8 @@ public class Main extends PApplet {
                 .setBarHeight(40)
                 .setItemHeight(40)
                 .setPosition(SCREEN_X / 2 + 3 * (SCREEN_X / 4) / 2 - 200, 20);
+
+        cp5.setAutoDraw(false);
 
         Label label = searchOptions.getCaptionLabel();
         label.toUpperCase(false);
