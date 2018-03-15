@@ -1,9 +1,12 @@
 package com.LukeHackett;
 
+import com.google.maps.GeoApiContext;
 import processing.core.*;
 import controlP5.*;
 
 import java.util.ArrayList;
+
+import static com.google.maps.GeolocationApi.geolocate;
 
 public class Main extends PApplet {
 
