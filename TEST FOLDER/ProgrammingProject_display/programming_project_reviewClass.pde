@@ -26,6 +26,7 @@ class Review {
   private int reviewFunny;
   private int reviewCool;
   private int numberOfLines;
+  private String formattedReview;
   
  // for each object we need an array of parameters eg userId at array[0], name at array[1]
   String[] stringParameters = new String[10];
@@ -116,6 +117,12 @@ public int getNumberOfLines() {
 }
 public void setNumberOfLines(int numberOfLines) {
   this.numberOfLines = numberOfLines; 
+}
+public void setFormattedReview(String review) {
+  this.formattedReview = review;
+}
+public String getFormattedReview() {
+  return this.formattedReview;
 }
 
 
