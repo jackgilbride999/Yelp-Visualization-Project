@@ -139,12 +139,12 @@ public class Business {
     public String toString() {
         return "Business: " +
                 "business_id=" + business_id +
-                ", name='" + name +
-                ", neighborhood='" + neighborhood +
-                ", address='" + address +
-                ", city='" + city +
-                ", state='" + state +
-                ", postal_code='" + postal_code +
+                ", name=" + name +
+                ", neighborhood=" + neighborhood +
+                ", address=" + address +
+                ", city=" + city +
+                ", state=" + state +
+                ", postal_code=" + postal_code +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
                 ", stars=" + stars +

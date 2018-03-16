@@ -122,6 +122,25 @@ class queries {
         return null;
     }
 
+    public Business getBusinessInfoName(String business_name) {
+        try {
+            String businessQuery = "SELECT * " +
+                    "FROM yelp_business " +
+                    "WHERE name " +
+                    "LIKE " + '"' + '%' + business_name + '%' + '"' +
+                    "LIMIT " + 1;
+            java.sql.Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(businessQuery);
+
+            while (results.next()) {
+                return new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getInt("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public String getUserName(String user_id) {
         try {
             String userNameQuery = "SELECT name " +
