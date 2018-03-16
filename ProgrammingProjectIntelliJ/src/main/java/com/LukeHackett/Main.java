@@ -293,4 +293,8 @@ public class Main extends PApplet {
             yOffset = 0;
         }
     }
+
+    public void controlEvent(ControlEvent event) {
+        System.out.println(event.getLabel());
+    }
 }
