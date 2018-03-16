@@ -49,12 +49,13 @@ class queries {
         return businesses;
     }
 
-    public ArrayList<Review> reviews(int start, int limit) {
+    public ArrayList<Review> reviews(String business_id) {
         ArrayList<Review> reviews = new ArrayList<Review>();
         try {
             String businessQuery = "SELECT * " +
                     "FROM yelp_review " +
-                    "LIMIT " + start + "," + limit;
+                    "WHERE business_id " +
+                    "LIKE " + '"' + business_id + '"';
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessQuery);
 
