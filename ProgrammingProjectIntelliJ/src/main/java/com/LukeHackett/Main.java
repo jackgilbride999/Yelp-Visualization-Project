@@ -176,15 +176,12 @@ public class Main extends PApplet {
 
     public void draw() {
         background(255);
-        if(currentController == HOME_SCREEN)
-        {
-            fill(0,169,154);
-            noStroke();
-            rect(0,0,SCREEN_X, 340);
-            image(testLogo,SCREEN_X/2 - 400, -90);
-        }
         switch (currentController) {
             case HOME_SCREEN:
+                fill(0,169,154);
+                noStroke();
+                rect(0,0,SCREEN_X, 340);
+                image(testLogo,SCREEN_X/2 - 400, -90);
                 homeScreenController.draw();
                 break;
             case SEARCH_RESULT_SCREEN:
@@ -299,6 +296,7 @@ public class Main extends PApplet {
             String business = event.getLabel().split(",")[0];
             Business b = qControl.getBusinessInfo(qControl.getBusinessID(business));
             System.out.println(b);
+            currentController = BUSINESS_SCREEN;
         }
     }
 }
