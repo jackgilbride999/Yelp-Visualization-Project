@@ -20,7 +20,7 @@ public class Main extends PApplet {
     final int BORDER_OFFSET_Y = 10;
 
     private int currentController;
-    ArrayList<Business> businessList;
+    private int currentSearch = 0;
     int yOffset;
 
     private ControlP5 homeScreenController;
@@ -28,6 +28,9 @@ public class Main extends PApplet {
     private ControlP5 businessScreenController;
     private Textfield searchBar;
     private Button backButton;
+    private Button forwardButton;
+    private Button homeButton;
+    private Button backButtonBusiness;
     private Button nightLifeButton;
     private Button beautyButton;
     private Button sportsButton;
@@ -47,10 +50,11 @@ public class Main extends PApplet {
 
     private Business selectedBusiness;
 
-
     private ScrollableList searchOptions;
     private int selected = 0;
     private PImage backButtonImage;
+    private PImage forwardButtonImage;
+    private PImage homeButtonImage;
 
     queries qControl;
 
@@ -74,8 +78,10 @@ public class Main extends PApplet {
         searchFont = createFont("OpenSans-Regular", 28);
 
         backButtonImage = loadImage("backButton.png");
+        forwardButtonImage = loadImage("forwardButton.png");
+        homeButtonImage = loadImage("home.png");
         shoppingImage = loadImage("72x72_shopping.png");
-        nightLifeImage = loadImage("72x72_nightlife.png");
+        nightLifeImage = loadImage("72x72_nightlife.png");//
         sportsImage = loadImage("72x72_active_life.png");
         beautyImage = loadImage("72x72_beauty.png");
         automotiveImage = loadImage("72x72_automotive.png");
@@ -149,26 +155,6 @@ public class Main extends PApplet {
                 .setItemHeight(40)
                 .setPosition(SCREEN_X / 2 + 3 * (SCREEN_X / 4) / 2 - 200, 250);
 
-        //Search screen setup
-        backButton = searchResultController.addButton("backButton")
-                .setSize(50, 50)
-                .setPosition(10,10);
-        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
-        backButton.setImage(backButtonImage);
-
-        //Business screen setup
-        backButton = businessScreenController.addButton("backButton")
-                .setValue(0)
-                .setSize(50, 50)
-                .setPosition(10,10);
-        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
-        backButton.setImage(backButtonImage);
-
-        //Setup current draw screens
-        homeScreenController.setAutoDraw(false);
-        searchResultController.setAutoDraw(false);
-        businessScreenController.setAutoDraw(false);
-
         Label label = searchOptions.getCaptionLabel();
         label.toUpperCase(false);
         label.getStyle()
@@ -179,6 +165,38 @@ public class Main extends PApplet {
         label.getStyle()
                 .setPaddingLeft(20)
                 .setPaddingTop(10);
+
+        //Search screen setup
+        backButton = searchResultController.addButton("backButton")
+                .setSize(50, 50)
+                .setPosition(SCREEN_X - 120,SCREEN_Y - 60);
+        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
+        backButton.setImage(backButtonImage);
+
+        forwardButton = searchResultController.addButton("forwardButton")
+                .setSize(50, 50)
+                .setPosition(SCREEN_X - 60,SCREEN_Y - 60);
+        forwardButtonImage.resize(forwardButton.getWidth(), forwardButton.getHeight());
+        forwardButton.setImage(forwardButtonImage);
+
+        homeButton = searchResultController.addButton("homeButton")
+                .setSize(70, 70)
+                .setPosition(10,10);
+        homeButtonImage.resize(homeButton.getWidth(), homeButton.getHeight());
+        homeButton.setImage(homeButtonImage);
+
+        //Business screen setup
+        backButtonBusiness = businessScreenController.addButton("backButton")
+                .setValue(0)
+                .setSize(50, 50)
+                .setPosition(10,10);
+        backButtonImage.resize(backButtonBusiness.getWidth(), backButtonBusiness.getHeight());
+        backButtonBusiness.setImage(backButtonImage);
+
+        //Setup current draw screens
+        homeScreenController.setAutoDraw(false);
+        searchResultController.setAutoDraw(false);
+        businessScreenController.setAutoDraw(false);
 
         //End Control P5 setup
     }
@@ -208,12 +226,10 @@ public class Main extends PApplet {
     }
 
     public void searchBar(String text) {
-
         currentController = SEARCH_RESULT_SCREEN;
         if (selected == 0) {
             ArrayList<Business> businessesC = qControl.categorySearch(text, 0, 10);
-            businessList = businessesC;
-            buttonBusinessList();
+            buttonBusinessList(businessesC);
             if (businessesC.size() != 0) {
                 for (Business b : businessesC) {
                     System.out.println(b.toString());
@@ -223,8 +239,7 @@ public class Main extends PApplet {
             }
         } else if (selected == 1) {
             ArrayList<Business> businessesN = qControl.businessSearch(text, 0, 10);
-            businessList = businessesN;
-            buttonBusinessList();
+            buttonBusinessList(businessesN);
             if (businessesN.size() != 0) {
                 for (Business b : businessesN) {
                     System.out.println(b);
@@ -234,8 +249,7 @@ public class Main extends PApplet {
             }
         } else if (selected == 2) {
             ArrayList<Business> businessesL = qControl.citySearch(text, 0, 10);
-            businessList = businessesL;
-            buttonBusinessList();
+            buttonBusinessList(businessesL);
             if (businessesL.size() != 0) {
                 for (Business b : businessesL) {
                     System.out.println(b);
@@ -251,53 +265,69 @@ public class Main extends PApplet {
     public void backButton() {
         switch(currentController) {
             case SEARCH_RESULT_SCREEN:
-                currentController = HOME_SCREEN;
+                if(currentSearch != 0){
+                    currentSearch -= 10;
+                    ArrayList<Business>businessList = qControl.businessSearch("sports", currentSearch, 10);
+                    buttonBusinessList(businessList);
+                }
                 break;
             case BUSINESS_SCREEN:
                 currentController = SEARCH_RESULT_SCREEN;
                 break;
         }
     }
+    public void forwardButton(){
+        if(searchResultController.getAll().size() == 13) {
+            currentSearch += 10;
+            ArrayList<Business> businessList = qControl.businessSearch("sports", currentSearch, 10);
+            buttonBusinessList(businessList);
+        }
+    }
+    public void homeButton(){
+        currentController = HOME_SCREEN;
+    }
     public void beautyButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        businessList = qControl.businessSearch("Beauty", 0, 10);
-        buttonBusinessList();
+        ArrayList<Business>businessList = qControl.businessSearch("Beauty", 0, 10);
+        buttonBusinessList(businessList);
     }
     public void autoButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        businessList = qControl.businessSearch("Automotive", 0, 10);
-        buttonBusinessList();
+        ArrayList<Business>businessList = qControl.businessSearch("Automotive", 0, 10);
+        buttonBusinessList(businessList);
     }
     public void shoppingButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        businessList = qControl.businessSearch("Shopping", 0, 10);
-        buttonBusinessList();
+        ArrayList<Business>businessList = qControl.businessSearch("Shopping", 0, 10);
+        buttonBusinessList(businessList);
     }
     public void nightlifeButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        businessList = qControl.businessSearch("nightlife", 0, 10);
-        buttonBusinessList();
+        ArrayList<Business>businessList = qControl.businessSearch("nightlife", 0, 10);
+        buttonBusinessList(businessList);
     }
     public void restaurantsButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        businessList = qControl.businessSearch("Restaurant", 0, 10);
-        buttonBusinessList();
+        ArrayList<Business>businessList = qControl.businessSearch("Restaurant", 0, 10);
+        buttonBusinessList(businessList);
     }
     public void sportsButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        businessList = qControl.businessSearch("sports", 0, 10);
-        buttonBusinessList();
+        ArrayList<Business>businessList = qControl.businessSearch("sports", 0, 10);
+        buttonBusinessList(businessList);
     }
-    public void buttonBusinessList() {
+    public void buttonBusinessList(ArrayList<Business> businessList) {
         List<ControllerInterface<?>> elements = searchResultController.getAll();
         for(ControllerInterface e : elements){
-            if(!e.getName().equals("backButton")){
+            if(!e.getName().equals("backButton")
+                    && !e.getName().equals("forwardButton")
+                    && !e.getName().equals("homeButton")){
                 searchResultController.remove(e.getName());
             }
         }
 
-        if (this.businessList != null) {
-            for (Business b : this.businessList) {
+        if (businessList != null) {
+            for (Business b : businessList) {
                 searchResultController.addButton(b.getBusiness_id())
                         .setValueSelf(10)
                         .setLabel(b.getName() + ", " + b.getCity())
