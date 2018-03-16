@@ -280,7 +280,7 @@ public class Main extends PApplet {
             for (Business b : businessList) {
                 searchResultController.addButton(b.getBusiness_id())
                         .setLabel(b.getName() + ", " + b.getNeighborhood() + ", " + b.getCity() + "              Stars : " + b.getStars())
-                        .setValue(0)
+                        .setValue(10)
                         .setPosition((float) SCREEN_X / 2 - 500, (float) yOffset + 80)
                         .setSize(1000, 50)
                         .setFont(searchFont)
@@ -295,6 +295,10 @@ public class Main extends PApplet {
     }
 
     public void controlEvent(ControlEvent event) {
-        System.out.println(event.getLabel());
+        if(event.getValue() == 10){
+            String business = event.getLabel().split(",")[0];
+            Business b = qControl.getBusinessInfo(qControl.getBusinessID(business));
+            System.out.println(b);
+        }
     }
 }

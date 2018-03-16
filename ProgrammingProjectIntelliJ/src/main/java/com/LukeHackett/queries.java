@@ -90,7 +90,7 @@ class queries {
             String businessNameQuery = "SELECT business_id " +
                     "FROM yelp_business " +
                     "WHERE name " +
-                    "LIKE " + '\'' + '"' + business_name + '"' + '\'' +
+                    "LIKE " + '"' + '%' + business_name + '%' + '"' +
                     " LIMIT " + 1;
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessNameQuery);
