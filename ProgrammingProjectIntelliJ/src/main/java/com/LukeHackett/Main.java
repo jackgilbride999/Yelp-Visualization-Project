@@ -16,7 +16,7 @@ public class Main extends PApplet {
     public static final int SEARCH_RESULT_SCREEN = 1;
     public static final int BUSINESS_SCREEN = 2;
     public static final int BORDER_OFFSET_Y = 10;
-    public static final int LINE_LENGTH = (SCREEN_X)/15;
+    public static final int LINE_LENGTH = 150;
 
     private int currentController;
     private int currentSearch = 0;
@@ -202,12 +202,33 @@ public class Main extends PApplet {
             case BUSINESS_SCREEN:
                 fill(0,169,154);
                 noStroke();
-                rect(0,0,SCREEN_X, 500);
+                rect(0,0,SCREEN_X, 500-offsetFromTop);
                 businessScreenController.draw();
                 fill(255);
-                text(selectedBusiness.getName(), 100,100);
-                drawReviews(reviews, 10, 505);
+                text(selectedBusiness.getName(), 100,100-offsetFromTop);
+                drawReviews(reviews, 10, 510);
                 break;
+        }
+    }
+    //dont mind all of this, this is just a temporary scollable feature until the scrollbar is integrated
+    public void keyPressed() {
+        //when "w" is pressed
+        if(key == 119 && offsetFromTop >= 0 && offsetFromTop <= (getTotalHeight(reviews) + 700 - SCREEN_Y))
+        {
+            offsetFromTop = offsetFromTop + 20;
+            println(offsetFromTop);
+            println((getTotalHeight(reviews) + 700));
+        }
+        //when "s" is pressed
+        else if(key == 115 && offsetFromTop >= 0 && offsetFromTop <= (offsetFromTop + getTotalHeight(reviews) + 700 - SCREEN_Y))
+        {
+            offsetFromTop = offsetFromTop - 20;
+            println(offsetFromTop);
+            println((getTotalHeight(reviews) + 700));
+        }
+        else if(offsetFromTop <= 0)
+        {
+            offsetFromTop = 0;
         }
     }
 
@@ -460,5 +481,27 @@ public class Main extends PApplet {
             //     formattedReviewList.add(formattedReview);
 
         }
+    }
+
+    int getTotalHeight(ArrayList<Review> reviews) {
+        int totalHeight = 0;
+        int lineHeight = 15;
+        int lines = 4;
+
+        for (Review r: reviews)
+        {
+            String[] split = r.getFormattedReview().split("");
+
+            for (int i = 0; i < split.length; i++)
+            {
+                if (split[i].equals("\n"))
+                {
+                    lines++;
+                }
+            }
+            totalHeight = lines * lineHeight + BORDER_OFFSET_Y;
+
+        }
+        return totalHeight;
     }
 }
