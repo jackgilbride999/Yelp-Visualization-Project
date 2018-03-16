@@ -142,9 +142,7 @@ class queries {
         try {
             String userNameQuery = "SELECT name " +
                     "FROM yelp_user " +
-                    "WHERE user_id " +
-                    "LIKE " + '"' + user_id + '"' +
-                    " LIMIT " + 1;
+                    "WHERE MATCH (user_id) AGAINST('" + user_id + "')";
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(userNameQuery);
             while (results.next()) {

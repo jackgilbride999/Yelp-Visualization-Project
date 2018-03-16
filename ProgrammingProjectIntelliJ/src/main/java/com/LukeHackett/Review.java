@@ -15,6 +15,7 @@ public class Review {
     private String formattedReview;
 
     private String business_name;
+    private String user_name;
 
     public Review(String review_id, String user_id, String business_id, int stars, String date, String text, int reviewUseful, int reviewFunny, int reviewCool) {
         this.review_id = review_id;
@@ -98,6 +99,14 @@ public class Review {
 
     public String getBusinessName() {
         return business_name;
+    }
+
+    public String getUser_name() {
+        return user_name;
+    }
+
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
     public int getNumberOfLines() {
