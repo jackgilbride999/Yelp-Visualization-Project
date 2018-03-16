@@ -11,6 +11,8 @@ public class Review {
     private int reviewUseful;
     private int reviewFunny;
     private int reviewCool;
+    private int numberOfLines;
+    private String formattedReview;
 
     private String business_name;
 
@@ -96,6 +98,19 @@ public class Review {
 
     public String getBusinessName() {
         return business_name;
+    }
+
+    public int getNumberOfLines() {
+        return numberOfLines;
+    }
+    public void setNumberOfLines(int numberOfLines) {
+        this.numberOfLines = numberOfLines;
+    }
+    public void setFormattedReview(String review) {
+        this.formattedReview = review;
+    }
+    public String getFormattedReview() {
+        return this.formattedReview;
     }
 
     @java.lang.Override

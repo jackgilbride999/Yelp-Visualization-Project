@@ -16,11 +16,13 @@ public class Main extends PApplet {
     public static final int SEARCH_RESULT_SCREEN = 1;
     public static final int BUSINESS_SCREEN = 2;
     public static final int BORDER_OFFSET_Y = 10;
+    public static final int LINE_LENGTH = SCREEN_X-100;
 
     private int currentController;
     private int currentSearch = 0;
     private int selected = 0;
     private int yOffset;
+    private int offsetFromTop = 0;
 
     private ControlP5 homeScreenController;
     private ControlP5 searchResultController;
@@ -390,6 +392,62 @@ public class Main extends PApplet {
             selectedBusiness = qControl.getBusinessInfoName(business);
             System.out.println(selectedBusiness);
             currentController = BUSINESS_SCREEN;
+        }
+    }
+
+    void drawReviews(ArrayList<Review> reviews) {
+        int reviewOffset = 0;
+        int borderOffsetY = 20;
+        int borderOffsetX = 10;
+        float lineHeight = textAscent() + textDescent();
+        for (Review r : reviews)
+        {
+            rect(borderOffsetX / 2, reviewOffset - offsetFromTop, SCREEN_X-10, 1);
+            text(r.getDate(), SCREEN_X-textWidth(r.getDate()), reviewOffset+ borderOffsetY -offsetFromTop);
+            text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY -offsetFromTop);
+//  text(r.getNumberOfLines(), 250, reviewOffset + borderOffsetY -offsetFromTop);
+
+            reviewOffset = reviewOffset + (r.getNumberOfLines() * (int)lineHeight) + borderOffsetY;
+        }
+    }
+
+
+    void formatReviews(ArrayList<Review> reviews) {
+        // Splits the review in order to format with a specific line length and then sets the review to the formatted review
+        ArrayList<String> formattedReviewList = new ArrayList<String>();
+        for (Review r : reviews) {
+            String[] splitReview = r.getReview().split("");
+            String formattedReview = r.getBusinessName() + "\n";
+            for (int i = 0; i<r.getStars(); i++)
+            {
+                formattedReview = formattedReview + " * ";
+            }
+            formattedReview = formattedReview + "\n" + r.getBusiness_id() + ":" + "\n";
+            boolean toNextLine = false;
+            int lines = 4;
+            for (int i = 0; i < splitReview.length; i++)
+            {
+                // Checks to see if line length has exceeded
+                if ((i % LINE_LENGTH == 0) && (i != 0))
+                {
+                    toNextLine = true;
+                }
+                // If line lenght has been exceeded it will put a new line at the next whitespace
+                if (toNextLine && splitReview[i].equals(" "))
+                {
+                    splitReview[i] = "\n";
+                    toNextLine = false;
+                }
+                if (splitReview[i].equals("\n"))
+                {
+                    lines++;
+                }
+                formattedReview = formattedReview + splitReview[i];
+            }
+            r.setNumberOfLines(lines);
+            r.setFormattedReview(formattedReview);
+            //     formattedReviewList.add(formattedReview);
+
         }
     }
 }
