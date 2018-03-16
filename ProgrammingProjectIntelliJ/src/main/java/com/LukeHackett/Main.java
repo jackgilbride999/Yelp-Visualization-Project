@@ -158,13 +158,13 @@ public class Main extends PApplet {
         Label label = searchOptions.getCaptionLabel();
         label.toUpperCase(false);
         label.getStyle()
-                .setPaddingLeft(20)
+                .setPaddingLeft(5)
                 .setPaddingTop(10);
         label = searchOptions.getValueLabel();
         label.toUpperCase(false);
         label.getStyle()
-                .setPaddingLeft(20)
-                .setPaddingTop(10);
+                .setPaddingLeft(5)
+                .setPaddingTop(20-(int)(textAscent()+textDescent()/2));
 
         //Business screen setup
         backButtonBusiness = businessScreenController.addButton("backButton")
@@ -377,13 +377,13 @@ public class Main extends PApplet {
         Label label = searchOptionsSearch.getCaptionLabel();
         label.toUpperCase(false);
         label.getStyle()
-                .setPaddingLeft(20)
-                .setPaddingTop(10);
+                .setPaddingLeft(5)
+                .setPaddingTop(20-(int)(textAscent()+textDescent()/2));
         label = searchOptionsSearch.getValueLabel();
         label.toUpperCase(false);
         label.getStyle()
-                .setPaddingLeft(20)
-                .setPaddingTop(10);
+                .setPaddingLeft(5)
+                .setPaddingTop(20-(int)(textAscent()+textDescent()/2));
     }
 
     public void controlEvent(ControlEvent event) {
