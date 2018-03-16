@@ -391,6 +391,9 @@ public class Main extends PApplet {
             String business = event.getLabel().split(",")[0];
             selectedBusiness = qControl.getBusinessInfoName(business);
             System.out.println(selectedBusiness);
+//            ArrayList<Review> reviews = qControl.reviews(selectedBusiness.getBusiness_id());
+//            println(reviews);
+
             currentController = BUSINESS_SCREEN;
         }
     }
