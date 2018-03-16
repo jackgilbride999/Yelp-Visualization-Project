@@ -206,7 +206,7 @@ public class Main extends PApplet {
                 businessScreenController.draw();
                 fill(255);
                 text(selectedBusiness.getName(), 100,100);
-                drawReviews(reviews, 10, 600);
+                drawReviews(reviews, 10, 505);
                 break;
         }
     }
@@ -411,8 +411,8 @@ public class Main extends PApplet {
         float lineHeight = textAscent() + textDescent();
         for (Review r : reviews)
         {
-            fill(0,169,154);
-            rect(borderOffsetX / 2, reviewOffset - offsetFromTop, SCREEN_X-10, (r.getNumberOfLines() * (int)lineHeight) + borderOffsetY);
+            fill(175, 255, 248);
+            rect(borderOffsetX / 2, reviewOffset - offsetFromTop, SCREEN_X-10, (r.getNumberOfLines() * (int)lineHeight) + borderOffsetY - 5);
             fill(0);
             text(r.getDate(), SCREEN_X-textWidth(r.getDate()), reviewOffset+ borderOffsetY -offsetFromTop);
             text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY -offsetFromTop);
