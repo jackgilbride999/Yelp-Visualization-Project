@@ -20,7 +20,7 @@ class queries {
                     + "user=root&password=Carrot!4!5&"
                     + "autoReconnect=true&useSSL=false";
 
-            connection = DriverManager.getConnection(connectionUrlAWS);
+            connection = DriverManager.getConnection(connectionUrlCUSTOM);
             System.out.println("Connected.");
 
         } catch (Exception e) {
@@ -51,8 +51,7 @@ class queries {
         try {
             String businessQuery = "SELECT * " +
                     "FROM yelp_review " +
-                    "WHERE business_id " +
-                    "LIKE " + '"' + business_id + '"';
+                    "WHERE MATCH(business_id) AGAINST(" + '\'' + business_id + '\'' + ')';
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessQuery);
 
