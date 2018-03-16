@@ -279,8 +279,8 @@ public class Main extends PApplet {
         if (businessList != null) {
             for (Business b : businessList) {
                 searchResultController.addButton(b.getBusiness_id())
+                        .setValueSelf(10)
                         .setLabel(b.getName() + ", " + b.getNeighborhood() + ", " + b.getCity() + "              Stars : " + b.getStars())
-                        .setValue(10)
                         .setPosition((float) SCREEN_X / 2 - 500, (float) yOffset + 80)
                         .setSize(1000, 50)
                         .setFont(searchFont)
