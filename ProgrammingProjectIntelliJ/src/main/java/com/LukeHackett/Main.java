@@ -93,6 +93,13 @@ public class Main extends PApplet {
         backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
         backButton.setImage(backButtonImage);
 
+        backButton = businessScreenController.addButton("backButton")
+                .setValue(0)
+                .setSize(50, 50)
+                .setPosition(10,10);
+        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
+        backButton.setImage(backButtonImage);
+
         beautyButton = homeScreenController.addButton("beautyButton")
                 .setSize(110,110)
                 .setPosition(SCREEN_X/2 - (72/2) - 250 - 72,SCREEN_Y/2)
@@ -188,6 +195,9 @@ public class Main extends PApplet {
                 searchResultController.draw();
                 break;
             case BUSINESS_SCREEN:
+                fill(0,169,154);
+                noStroke();
+                rect(0,0,SCREEN_X, 340);
                 businessScreenController.draw();
                 break;
         }
@@ -237,7 +247,14 @@ public class Main extends PApplet {
     }
 
     public void backButton() {
-        currentController = HOME_SCREEN;
+        switch(currentController) {
+            case SEARCH_RESULT_SCREEN:
+                currentController = HOME_SCREEN;
+                break;
+            case BUSINESS_SCREEN:
+                currentController = SEARCH_RESULT_SCREEN;
+                break;
+        }
     }
     public void beautyButton() {
         currentController = SEARCH_RESULT_SCREEN;
