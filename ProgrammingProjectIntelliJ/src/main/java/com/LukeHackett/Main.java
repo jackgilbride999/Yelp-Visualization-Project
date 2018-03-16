@@ -12,21 +12,25 @@ public class Main extends PApplet {
     public static final int SCREEN_Y = 800;
     public static final int EVENT_NULL = 0;
     public static final int SCROLLBAR_EVENT = 1;
-
     public static final int HOME_SCREEN = 0;
     public static final int SEARCH_RESULT_SCREEN = 1;
     public static final int BUSINESS_SCREEN = 2;
-
-    final int BORDER_OFFSET_Y = 10;
+    public static final int BORDER_OFFSET_Y = 10;
 
     private int currentController;
     private int currentSearch = 0;
-    int yOffset;
+    private int selected = 0;
+    private int yOffset;
 
     private ControlP5 homeScreenController;
     private ControlP5 searchResultController;
     private ControlP5 businessScreenController;
+
     private Textfield searchBar;
+    private Textfield searchBarSearch;
+    private ScrollableList searchOptions;
+    private ScrollableList searchOptionsSearch;
+
     private Button backButton;
     private Button forwardButton;
     private Button homeButton;
@@ -35,9 +39,8 @@ public class Main extends PApplet {
     private Button beautyButton;
     private Button sportsButton;
     private Button automotiveButton;
-    private Button retaurantsButton;
+    private Button restaurantsButton;
     private Button shoppingButton;
-
 
     private PImage restaurantImage;
     private PImage beautyImage;
@@ -45,19 +48,14 @@ public class Main extends PApplet {
     private PImage nightLifeImage;
     private PImage automotiveImage;
     private PImage shoppingImage;
-
     private PImage testLogo;
-
-    private Business selectedBusiness;
-
-    private ScrollableList searchOptions;
-    private int selected = 0;
     private PImage backButtonImage;
     private PImage forwardButtonImage;
     private PImage homeButtonImage;
 
-    queries qControl;
+    private Business selectedBusiness;
 
+    queries qControl;
 
     private PFont searchFont;
 
@@ -104,7 +102,7 @@ public class Main extends PApplet {
                 .setPosition(SCREEN_X/2 - (72/2),SCREEN_Y/2)
                 .setImage(sportsImage);
 
-        retaurantsButton = homeScreenController.addButton("restaurantsButton")
+        restaurantsButton = homeScreenController.addButton("restaurantsButton")
                 .setSize(110,110)
                 .setPosition(SCREEN_X/2 + (72/2) + 250,SCREEN_Y/2)
                 .setImage(restaurantImage);
@@ -156,34 +154,18 @@ public class Main extends PApplet {
                 .setPosition(SCREEN_X / 2 + 3 * (SCREEN_X / 4) / 2 - 200, 250);
 
         Label label = searchOptions.getCaptionLabel();
+        label.setFont(searchFont);
         label.toUpperCase(false);
-        label.getStyle()
-                .setPaddingLeft(20)
-                .setPaddingTop(10);
+        label.align(ControlP5.CENTER, CENTER);
+        label.getStyle().setPaddingLeft(-10);
+        /*
+        Label label = searchOptions.getCaptionLabel();
+        label.toUpperCase(false);
+        label.align(ControlP5.CENTER, ControlP5.CENTER);
         label = searchOptions.getValueLabel();
         label.toUpperCase(false);
-        label.getStyle()
-                .setPaddingLeft(20)
-                .setPaddingTop(10);
-
-        //Search screen setup
-        backButton = searchResultController.addButton("backButton")
-                .setSize(50, 50)
-                .setPosition(SCREEN_X - 120,SCREEN_Y - 60);
-        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
-        backButton.setImage(backButtonImage);
-
-        forwardButton = searchResultController.addButton("forwardButton")
-                .setSize(50, 50)
-                .setPosition(SCREEN_X - 60,SCREEN_Y - 60);
-        forwardButtonImage.resize(forwardButton.getWidth(), forwardButton.getHeight());
-        forwardButton.setImage(forwardButtonImage);
-
-        homeButton = searchResultController.addButton("homeButton")
-                .setSize(70, 70)
-                .setPosition(10,10);
-        homeButtonImage.resize(homeButton.getWidth(), homeButton.getHeight());
-        homeButton.setImage(homeButtonImage);
+        label.align(ControlP5.CENTER, ControlP5.CENTER);
+        */
 
         //Business screen setup
         backButtonBusiness = businessScreenController.addButton("backButton")
@@ -212,6 +194,9 @@ public class Main extends PApplet {
                 homeScreenController.draw();
                 break;
             case SEARCH_RESULT_SCREEN:
+                fill(0,169,154);
+                noStroke();
+                rect(0,0,SCREEN_X, 75);
                 searchResultController.draw();
                 break;
             case BUSINESS_SCREEN:
@@ -277,7 +262,7 @@ public class Main extends PApplet {
         }
     }
     public void forwardButton(){
-        if(searchResultController.getAll().size() == 13) {
+        if(searchResultController.getAll().size() == 15) {
             currentSearch += 10;
             ArrayList<Business> businessList = qControl.businessSearch("sports", currentSearch, 10);
             buttonBusinessList(businessList);
@@ -317,31 +302,89 @@ public class Main extends PApplet {
         buttonBusinessList(businessList);
     }
     public void buttonBusinessList(ArrayList<Business> businessList) {
+
         List<ControllerInterface<?>> elements = searchResultController.getAll();
         for(ControllerInterface e : elements){
-            if(!e.getName().equals("backButton")
-                    && !e.getName().equals("forwardButton")
-                    && !e.getName().equals("homeButton")){
-                searchResultController.remove(e.getName());
-            }
+            searchResultController.remove(e.getName());
         }
 
         if (businessList != null) {
             for (Business b : businessList) {
                 searchResultController.addButton(b.getBusiness_id())
                         .setValueSelf(10)
-                        .setLabel(b.getName() + ", " + b.getCity())
+                        .setLabel(b.getName())
                         .setPosition((float) SCREEN_X / 2 - 500, (float) yOffset + 80)
                         .setSize(1000, 50)
                         .setFont(searchFont)
                         .setColorBackground(color(0, 169, 154))
                         .setColorForeground(color(0,135,122))
-                        .setColorActive(color(0, 100, 100));
+                        .setColorActive(color(0, 100, 100))
+                        .getCaptionLabel().align(ControlP5.LEFT, ControlP5.LEFT);
 
                 yOffset = yOffset + 50 + BORDER_OFFSET_Y;
             }
             yOffset = 0;
         }
+
+        backButton = searchResultController.addButton("backButton")
+                .setSize(50, 50)
+                .setPosition(SCREEN_X - 120,SCREEN_Y - 60);
+        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
+        backButton.setImage(backButtonImage);
+
+        forwardButton = searchResultController.addButton("forwardButton")
+                .setSize(50, 50)
+                .setPosition(SCREEN_X - 60,SCREEN_Y - 60);
+        forwardButtonImage.resize(forwardButton.getWidth(), forwardButton.getHeight());
+        forwardButton.setImage(forwardButtonImage);
+
+        homeButton = searchResultController.addButton("homeButton")
+                .setSize(60, 60)
+                .setPosition(10,10);
+        homeButtonImage.resize(homeButton.getWidth(), homeButton.getHeight());
+        homeButton.setImage(homeButtonImage);
+
+        int searchbarHeight = 40;
+        int searchbarWidth = 3 * (SCREEN_X / 4);
+        searchBarSearch = searchResultController.addTextfield("searchBar")
+                .setCaptionLabel("")
+                .setColorBackground(color(255, 255, 255))
+                .setPosition(SCREEN_X / 2 - searchbarWidth / 2, 20)
+                .setSize(searchbarWidth - 200, searchbarHeight)
+                .setFont(searchFont)
+                .setFocus(false)
+                .setColor(color(0, 0, 0))
+                .setColorCursor(color(0, 0, 0))
+                .setColor(color(0, 0, 0))
+                .setColorActive(color(0, 0, 0))
+        ;
+
+        searchOptionsSearch = searchResultController.addScrollableList("Options")
+                .addItem("By Category", 0)
+                .addItem("By Name", 1)
+                .addItem("By City", 2)
+                .setFont(searchFont)
+                .setColorBackground(color(0, 145, 135))
+                .setColorForeground(color(0,135,122))
+                .setColorActive(color(0, 100, 100))
+                .setMouseOver(false)
+                .setOpen(false)
+                .setHeight(300)
+                .setWidth(200)
+                .setBarHeight(40)
+                .setItemHeight(40)
+                .setPosition(SCREEN_X / 2 + 3 * (SCREEN_X / 4) / 2 - 200, 20);
+
+        Label label = searchOptionsSearch.getCaptionLabel();
+        label.toUpperCase(false);
+        label.getStyle()
+                .setPaddingLeft(20)
+                .setPaddingTop(10);
+        label = searchOptionsSearch.getValueLabel();
+        label.toUpperCase(false);
+        label.getStyle()
+                .setPaddingLeft(20)
+                .setPaddingTop(10);
     }
 
     public void controlEvent(ControlEvent event) {
