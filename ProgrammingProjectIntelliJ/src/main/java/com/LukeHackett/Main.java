@@ -111,7 +111,7 @@ public class Main extends PApplet {
                 .addItem("By Name", 1)
                 .addItem("By City", 2)
                 .setFont(searchFont)
-                .setColorBackground(color(0, 169, 154))
+                .setColorBackground(color(0, 145, 135))
                 .setColorForeground(color(0,135,122))
                 .setColorActive(color(0, 100, 100))
                 .setMouseOver(false)
