@@ -16,7 +16,7 @@ public class Main extends PApplet {
     public static final int SEARCH_RESULT_SCREEN = 1;
     public static final int BUSINESS_SCREEN = 2;
     public static final int BORDER_OFFSET_Y = 10;
-    public static final int LINE_LENGTH = SCREEN_X-100;
+    public static final int LINE_LENGTH = (SCREEN_X)/15;
 
     private int currentController;
     private int currentSearch = 0;
@@ -56,6 +56,7 @@ public class Main extends PApplet {
     private PImage homeButtonImage;
 
     private Business selectedBusiness;
+    private ArrayList<Review> reviews;
 
     queries qControl;
 
@@ -205,6 +206,7 @@ public class Main extends PApplet {
                 businessScreenController.draw();
                 fill(255);
                 text(selectedBusiness.getName(), 100,100);
+                drawReviews(reviews, 10, 600);
                 break;
         }
     }
@@ -391,21 +393,27 @@ public class Main extends PApplet {
             String business = event.getLabel().split(",")[0];
             selectedBusiness = qControl.getBusinessInfoName(business);
             System.out.println(selectedBusiness);
-//            ArrayList<Review> reviews = qControl.reviews(selectedBusiness.getBusiness_id());
-//            println(reviews);
-
+            reviews = qControl.reviews(selectedBusiness.getBusiness_id());
+            //println(reviews);
+            formatReviews(reviews);
+            for(Review r : reviews)
+            {
+                println(r.getFormattedReview());
+            }
             currentController = BUSINESS_SCREEN;
         }
     }
 
-    void drawReviews(ArrayList<Review> reviews) {
-        int reviewOffset = 0;
+    void drawReviews(ArrayList<Review> reviews, int xStart, int yStart) {
+        int reviewOffset = yStart;
         int borderOffsetY = 20;
-        int borderOffsetX = 10;
+        int borderOffsetX = xStart;
         float lineHeight = textAscent() + textDescent();
         for (Review r : reviews)
         {
-            rect(borderOffsetX / 2, reviewOffset - offsetFromTop, SCREEN_X-10, 1);
+            fill(0,169,154);
+            rect(borderOffsetX / 2, reviewOffset - offsetFromTop, SCREEN_X-10, (r.getNumberOfLines() * (int)lineHeight) + borderOffsetY);
+            fill(0);
             text(r.getDate(), SCREEN_X-textWidth(r.getDate()), reviewOffset+ borderOffsetY -offsetFromTop);
             text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY -offsetFromTop);
 //  text(r.getNumberOfLines(), 250, reviewOffset + borderOffsetY -offsetFromTop);
