@@ -44,6 +44,8 @@ public class Main extends PApplet {
 
     private PImage testLogo;
 
+    private Business selectedBusiness;
+
 
     private ScrollableList searchOptions;
     private int selected = 0;
@@ -199,6 +201,8 @@ public class Main extends PApplet {
                 noStroke();
                 rect(0,0,SCREEN_X, 500);
                 businessScreenController.draw();
+                fill(255);
+                text(selectedBusiness.getName(), 100,100);
                 break;
         }
     }
@@ -311,8 +315,8 @@ public class Main extends PApplet {
     public void controlEvent(ControlEvent event) {
         if(event.getValue() == 10){
             String business = event.getLabel().split(",")[0];
-            Business b = qControl.getBusinessInfo(qControl.getBusinessID(business));
-            System.out.println(b);
+            selectedBusiness = qControl.getBusinessInfo(qControl.getBusinessID(business));
+            System.out.println(selectedBusiness);
             currentController = BUSINESS_SCREEN;
         }
     }
