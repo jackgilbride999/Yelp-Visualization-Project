@@ -213,14 +213,14 @@ public class Main extends PApplet {
     //dont mind all of this, this is just a temporary scollable feature until the scrollbar is integrated
     public void keyPressed() {
         //when "w" is pressed
-        if(key == 119 && offsetFromTop >= 0 && offsetFromTop <= (getTotalHeight(reviews) + 700 - SCREEN_Y))
+        if(key == 'w' && offsetFromTop >= 0 && offsetFromTop <= (getTotalHeight(reviews) + 700))
         {
             offsetFromTop = offsetFromTop + 20;
             println(offsetFromTop);
             println((getTotalHeight(reviews) + 700));
         }
         //when "s" is pressed
-        else if(key == 115 && offsetFromTop >= 0 && offsetFromTop <= (offsetFromTop + getTotalHeight(reviews) + 700 - SCREEN_Y))
+        else if(key == 's' && offsetFromTop >= 0 && offsetFromTop <= (offsetFromTop + getTotalHeight(reviews) + 700))
         {
             offsetFromTop = offsetFromTop - 20;
             println(offsetFromTop);
@@ -417,10 +417,6 @@ public class Main extends PApplet {
             reviews = qControl.reviews(selectedBusiness.getBusiness_id());
             //println(reviews);
             formatReviews(reviews);
-            for(Review r : reviews)
-            {
-                println(r.getFormattedReview());
-            }
             currentController = BUSINESS_SCREEN;
         }
     }
@@ -435,7 +431,7 @@ public class Main extends PApplet {
             fill(175, 255, 248);
             rect(borderOffsetX / 2, reviewOffset - offsetFromTop, SCREEN_X-10, (r.getNumberOfLines() * (int)lineHeight) + borderOffsetY - 5);
             fill(0);
-            text(r.getDate(), SCREEN_X-textWidth(r.getDate()), reviewOffset+ borderOffsetY -offsetFromTop);
+            text(r.getDate(), SCREEN_X-textWidth(r.getDate()) - 20, reviewOffset+ borderOffsetY -offsetFromTop);
             text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY -offsetFromTop);
 //  text(r.getNumberOfLines(), 250, reviewOffset + borderOffsetY -offsetFromTop);
 
@@ -449,7 +445,7 @@ public class Main extends PApplet {
         ArrayList<String> formattedReviewList = new ArrayList<String>();
         for (Review r : reviews) {
             String[] splitReview = r.getReview().split("");
-            String formattedReview = r.getBusinessName() + "\n";
+            String formattedReview = "";
             for (int i = 0; i<r.getStars(); i++)
             {
                 formattedReview = formattedReview + " * ";
