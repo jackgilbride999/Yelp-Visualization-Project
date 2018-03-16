@@ -414,10 +414,20 @@ public class Main extends PApplet {
         if(event.getValue() == 10){
             String business = event.getLabel().split(",")[0];
             selectedBusiness = qControl.getBusinessInfoName(business);
+            selectedBusiness.setName(qControl.getBusinessName(selectedBusiness.getBusiness_id()));
             System.out.println(selectedBusiness);
             reviews = qControl.reviews(selectedBusiness.getBusiness_id());
-            //println(reviews);
+
+            for(Review r : reviews)
+            {
+                r.setUser_name(qControl.getUserName(r.getUserId()));
+                r.setBusinessName(selectedBusiness.getName());
+            }
             formatReviews(reviews);
+            for(Review r : reviews)
+            {
+                println(r.getFormattedReview());
+            }
             currentController = BUSINESS_SCREEN;
         }
     }
@@ -434,7 +444,6 @@ public class Main extends PApplet {
             fill(0);
             text(r.getDate(), SCREEN_X-textWidth(r.getDate()) - 20, reviewOffset+ borderOffsetY -offsetFromTop);
             text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY -offsetFromTop);
-//  text(r.getNumberOfLines(), 250, reviewOffset + borderOffsetY -offsetFromTop);
 
             reviewOffset = reviewOffset + (r.getNumberOfLines() * (int)lineHeight) + borderOffsetY;
         }
@@ -461,7 +470,7 @@ public class Main extends PApplet {
                 {
                     toNextLine = true;
                 }
-                // If line lenght has been exceeded it will put a new line at the next whitespace
+                // If line length has been exceeded it will put a new line at the next whitespace
                 if (toNextLine && splitReview[i].equals(" "))
                 {
                     splitReview[i] = "\n";
