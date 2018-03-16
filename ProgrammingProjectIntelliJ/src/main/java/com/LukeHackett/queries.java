@@ -1,8 +1,5 @@
 package com.LukeHackett;
 
-import com.LukeHackett.Business;
-import com.LukeHackett.Review;
-
 import java.sql.*;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;

@@ -154,18 +154,15 @@ public class Main extends PApplet {
                 .setPosition(SCREEN_X / 2 + 3 * (SCREEN_X / 4) / 2 - 200, 250);
 
         Label label = searchOptions.getCaptionLabel();
-        label.setFont(searchFont);
         label.toUpperCase(false);
-        label.align(ControlP5.CENTER, CENTER);
-        label.getStyle().setPaddingLeft(-10);
-        /*
-        Label label = searchOptions.getCaptionLabel();
-        label.toUpperCase(false);
-        label.align(ControlP5.CENTER, ControlP5.CENTER);
+        label.getStyle()
+                .setPaddingLeft(20)
+                .setPaddingTop(10);
         label = searchOptions.getValueLabel();
         label.toUpperCase(false);
-        label.align(ControlP5.CENTER, ControlP5.CENTER);
-        */
+        label.getStyle()
+                .setPaddingLeft(20)
+                .setPaddingTop(10);
 
         //Business screen setup
         backButtonBusiness = businessScreenController.addButton("backButton")
