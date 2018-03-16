@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class Main extends PApplet {
 
     public static final int SCREEN_X = 1244;
-    public static final int SCREEN_Y = 700;
+    public static final int SCREEN_Y = 800;
     public static final int EVENT_NULL = 0;
     public static final int SCROLLBAR_EVENT = 1;
 
@@ -50,6 +50,8 @@ public class Main extends PApplet {
     private PImage automotiveImage;
     private PImage shoppingImage;
 
+    private PImage testLogo;
+
 
     private ScrollableList searchOptions;
     private int selected = 0;
@@ -83,6 +85,8 @@ public class Main extends PApplet {
         beautyImage = loadImage("72x72_beauty.png");
         automotiveImage = loadImage("72x72_automotive.png");
         restaurantImage = loadImage("72x72_restaurants.png");
+        testLogo = loadImage("testLogo_white_2.png");
+
 
 
         //Control P5 setup
@@ -92,7 +96,7 @@ public class Main extends PApplet {
 
         searchBar = homeScreenController.addTextfield("searchBar")
                 .setColorBackground(color(255, 255, 255))
-                .setPosition(SCREEN_X / 2 - searchbarWidth / 2, 20)
+                .setPosition(SCREEN_X / 2 - searchbarWidth / 2, 250)
                 .setSize(searchbarWidth - 200, searchbarHeight)
                 .setFont(searchFont)
                 .setFocus(false)
@@ -116,7 +120,7 @@ public class Main extends PApplet {
                 .setWidth(200)
                 .setBarHeight(40)
                 .setItemHeight(40)
-                .setPosition(SCREEN_X / 2 + 3 * (SCREEN_X / 4) / 2 - 200, 20);
+                .setPosition(SCREEN_X / 2 + 3 * (SCREEN_X / 4) / 2 - 200, 250);
 
         backButton = searchResultController.addButton("backButton")
                 .setValue(0)
@@ -127,34 +131,34 @@ public class Main extends PApplet {
 
         beautyButton = homeScreenController.addButton("beautyButton")
                 .setSize(110,110)
-                .setPosition(SCREEN_X/2 - (72/2) - 250 - 72,SCREEN_Y/2 - 100)
+                .setPosition(SCREEN_X/2 - (72/2) - 250 - 72,SCREEN_Y/2)
                 .setImage(beautyImage);
 
         sportsButton = homeScreenController.addButton("sportsButton")
                 .setSize(110,110)
-                .setPosition(SCREEN_X/2 - (72/2),SCREEN_Y/2 - 100)
+                .setPosition(SCREEN_X/2 - (72/2),SCREEN_Y/2)
                 .setImage(sportsImage);
 
         retaurantsButton = homeScreenController.addButton("restaurantsButton")
                 .setSize(110,110)
-                .setPosition(SCREEN_X/2 + (72/2) + 250,SCREEN_Y/2 - 100)
+                .setPosition(SCREEN_X/2 + (72/2) + 250,SCREEN_Y/2)
                 .setImage(restaurantImage);
 
 
         shoppingButton = homeScreenController.addButton("shoppingButton")
                 .setSize(110,110)
-                .setPosition(SCREEN_X/2 - (72/2) - 250 - 72,SCREEN_Y/2 + 100)
+                .setPosition(SCREEN_X/2 - (72/2) - 250 - 72,SCREEN_Y/2 + 190)
                 .setImage(shoppingImage);
 
 
         automotiveButton = homeScreenController.addButton("autoButton")
                 .setSize(110,110)
-                .setPosition(SCREEN_X/2 - (72/2),SCREEN_Y/2 + 100)
+                .setPosition(SCREEN_X/2 - (72/2),SCREEN_Y/2 + 190)
                 .setImage(automotiveImage);
 
         nightLifeButton = homeScreenController.addButton("nightlifeButton")
                 .setSize(110,110)
-                .setPosition(SCREEN_X/2 + (72/2) + 250,SCREEN_Y/2 + 100)
+                .setPosition(SCREEN_X/2 + (72/2) + 250,SCREEN_Y/2 + 190)
                 .setImage(nightLifeImage);
 
 
@@ -199,6 +203,13 @@ public class Main extends PApplet {
 
     public void draw() {
         background(255);
+        if(currentController == HOME_SCREEN)
+        {
+            fill(0,169,154);
+            noStroke();
+            rect(0,0,SCREEN_X, 340);
+            image(testLogo,SCREEN_X/2 - 400, -90);
+        }
         switch (currentController) {
             case HOME_SCREEN:
                 homeScreenController.draw();
@@ -344,7 +355,8 @@ public class Main extends PApplet {
        // background(255);
         if (businessList != null) {
             for (Business b : businessList) {
-                searchResultController.addButton(b.getName() + ", " + b.getNeighborhood() + ", " + b.getCity() + "              Stars : " + b.getStars())
+                searchResultController.addButton(b.getBusiness_id())
+                        .setLabel(b.getName() + ", " + b.getNeighborhood() + ", " + b.getCity() + "              Stars : " + b.getStars())
                         .setValue(0)
                         .setPosition((float) SCREEN_X / 2 - 500, (float) yOffset + 80)
                         .setSize(1000, 50)
@@ -352,6 +364,8 @@ public class Main extends PApplet {
                         .setColorBackground(color(0, 169, 154))
                         .setColorForeground(color(0,135,122))
                         .setColorActive(color(0, 100, 100));
+
+
 
                 yOffset = yOffset + 50 + BORDER_OFFSET_Y;
             }
