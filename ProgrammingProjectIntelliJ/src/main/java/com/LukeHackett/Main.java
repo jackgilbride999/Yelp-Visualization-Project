@@ -212,19 +212,20 @@ public class Main extends PApplet {
     }
     //dont mind all of this, this is just a temporary scollable feature until the scrollbar is integrated
     public void keyPressed() {
+        int totalHeight = 0;
         //when "w" is pressed
-        if(key == 'w' && offsetFromTop >= 0 && offsetFromTop <= (getTotalHeight(reviews) + 700))
+        if(key == 'w' && offsetFromTop >= 0 && offsetFromTop <= (getTotalHeight(reviews)-SCREEN_Y))
         {
             offsetFromTop = offsetFromTop + 20;
             println(offsetFromTop);
-            println((getTotalHeight(reviews) + 700));
+            println((getTotalHeight(reviews) - SCREEN_Y));
         }
         //when "s" is pressed
-        else if(key == 's' && offsetFromTop >= 0 && offsetFromTop <= (offsetFromTop + getTotalHeight(reviews) + 700))
+        else if(key == 's' && offsetFromTop >= 0 && offsetFromTop <= (getTotalHeight(reviews)-SCREEN_Y))
         {
             offsetFromTop = offsetFromTop - 20;
             println(offsetFromTop);
-            println((getTotalHeight(reviews) + 700));
+            println((getTotalHeight(reviews) - SCREEN_Y));
         }
         else if(offsetFromTop <= 0)
         {
@@ -500,4 +501,5 @@ public class Main extends PApplet {
         }
         return totalHeight;
     }
+
 }
