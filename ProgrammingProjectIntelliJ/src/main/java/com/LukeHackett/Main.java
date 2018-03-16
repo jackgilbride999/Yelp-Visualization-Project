@@ -82,26 +82,11 @@ public class Main extends PApplet {
         restaurantImage = loadImage("72x72_restaurants.png");
         testLogo = loadImage("testLogo_white_2.png");
 
-
-
         //Control P5 setup
         int searchbarHeight = 40;
         int searchbarWidth = 3 * (SCREEN_X / 4);
-        println(searchbarWidth);
 
-        backButton = searchResultController.addButton("backButton")
-                .setSize(50, 50)
-                .setPosition(10,10);
-        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
-        backButton.setImage(backButtonImage);
-        //adds the backbutton to the business screen
-        backButton = businessScreenController.addButton("backButton")
-                .setValue(0)
-                .setSize(50, 50)
-                .setPosition(10,10);
-        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
-        backButton.setImage(backButtonImage);
-
+        //Home screen setup
         beautyButton = homeScreenController.addButton("beautyButton")
                 .setSize(110,110)
                 .setPosition(SCREEN_X/2 - (72/2) - 250 - 72,SCREEN_Y/2)
@@ -164,8 +149,22 @@ public class Main extends PApplet {
                 .setItemHeight(40)
                 .setPosition(SCREEN_X / 2 + 3 * (SCREEN_X / 4) / 2 - 200, 250);
 
-        // .setImage()
+        //Search screen setup
+        backButton = searchResultController.addButton("backButton")
+                .setSize(50, 50)
+                .setPosition(10,10);
+        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
+        backButton.setImage(backButtonImage);
 
+        //Business screen setup
+        backButton = businessScreenController.addButton("backButton")
+                .setValue(0)
+                .setSize(50, 50)
+                .setPosition(10,10);
+        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
+        backButton.setImage(backButtonImage);
+
+        //Setup current draw screens
         homeScreenController.setAutoDraw(false);
         searchResultController.setAutoDraw(false);
         businessScreenController.setAutoDraw(false);
@@ -246,11 +245,9 @@ public class Main extends PApplet {
             }
         }
     }
-
     public void Options(int n) {
         selected = n;
     }
-
     public void backButton() {
         switch(currentController) {
             case SEARCH_RESULT_SCREEN:
@@ -291,8 +288,7 @@ public class Main extends PApplet {
         businessList = qControl.businessSearch("sports", 0, 10);
         buttonBusinessList();
     }
-
-    void buttonBusinessList() {
+    public void buttonBusinessList() {
         List<ControllerInterface<?>> elements = searchResultController.getAll();
         for(ControllerInterface e : elements){
             if(!e.getName().equals("backButton")){
