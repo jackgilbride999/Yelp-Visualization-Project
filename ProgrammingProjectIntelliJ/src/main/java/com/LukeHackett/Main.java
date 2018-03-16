@@ -92,7 +92,7 @@ public class Main extends PApplet {
                 .setPosition(10,10);
         backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
         backButton.setImage(backButtonImage);
-
+        //adds the backbutton to the business screen
         backButton = businessScreenController.addButton("backButton")
                 .setValue(0)
                 .setSize(50, 50)
@@ -197,7 +197,7 @@ public class Main extends PApplet {
             case BUSINESS_SCREEN:
                 fill(0,169,154);
                 noStroke();
-                rect(0,0,SCREEN_X, 340);
+                rect(0,0,SCREEN_X, 500);
                 businessScreenController.draw();
                 break;
         }
