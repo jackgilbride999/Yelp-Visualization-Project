@@ -95,7 +95,7 @@ class DbAccess {
   {
          ArrayList<Float> starsList= new ArrayList<Float>();
          
-         String query = "SELECT stars FROM yelp_review WHERE business_id = '"+businessId+"' ORDER BY date LIMIT 12";
+         String query = "SELECT stars FROM yelp_review WHERE business_id = '"+businessId+"' LIMIT 12";
         // set the query string as your needed query
         ResultSet results = getQueryResult(query);
      try {
