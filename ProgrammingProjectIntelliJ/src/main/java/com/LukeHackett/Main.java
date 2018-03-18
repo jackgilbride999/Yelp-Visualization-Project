@@ -449,7 +449,6 @@ public class Main extends PApplet {
         }
     }
 
-
     void formatReviews(ArrayList<Review> reviews) {
         // Splits the review in order to format with a specific line length and then sets the review to the formatted review
         ArrayList<String> formattedReviewList = new ArrayList<String>();
