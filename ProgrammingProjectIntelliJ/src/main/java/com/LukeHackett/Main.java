@@ -24,6 +24,8 @@ public class Main extends PApplet {
     private int yOffset;
     private int offsetFromTop = 0;
 
+    private boolean connected = false;
+
     private ControlP5 homeScreenController;
     private ControlP5 searchResultController;
     private ControlP5 businessScreenController;
@@ -72,7 +74,7 @@ public class Main extends PApplet {
 
     @Override
     public void setup() {
-        qControl = new queries();
+        qControl = null;
         homeScreenController = new ControlP5(this);
         searchResultController = new ControlP5(this);
         businessScreenController = new ControlP5(this);
@@ -90,145 +92,66 @@ public class Main extends PApplet {
         testLogo = loadImage("testLogo_white_2.png");
 
         //Control P5 setup
-        int searchbarHeight = 40;
-        int searchbarWidth = 3 * (SCREEN_X / 4);
-
-        //Home screen setup
-        beautyButton = homeScreenController.addButton("beautyButton")
-                .setSize(110,110)
-                .setPosition(SCREEN_X/2 - (72/2) - 250 - 72,SCREEN_Y/2)
-                .setPosition(SCREEN_X/2 - (72/2) - 250 - 72,SCREEN_Y/2)
-                .setImage(beautyImage);
-
-        sportsButton = homeScreenController.addButton("sportsButton")
-                .setSize(110,110)
-                .setPosition(SCREEN_X/2 - (72/2),SCREEN_Y/2)
-                .setImage(sportsImage);
-
-        restaurantsButton = homeScreenController.addButton("restaurantsButton")
-                .setSize(110,110)
-                .setPosition(SCREEN_X/2 + (72/2) + 250,SCREEN_Y/2)
-                .setImage(restaurantImage);
-
-
-        shoppingButton = homeScreenController.addButton("shoppingButton")
-                .setSize(110,110)
-                .setPosition(SCREEN_X/2 - (72/2) - 250 - 72,SCREEN_Y/2 + 190)
-                .setImage(shoppingImage);
-
-
-        automotiveButton = homeScreenController.addButton("autoButton")
-                .setSize(110,110)
-                .setPosition(SCREEN_X/2 - (72/2),SCREEN_Y/2 + 190)
-                .setImage(automotiveImage);
-
-        nightLifeButton = homeScreenController.addButton("nightlifeButton")
-                .setSize(110,110)
-                .setPosition(SCREEN_X/2 + (72/2) + 250,SCREEN_Y/2 + 190)
-                .setImage(nightLifeImage);
-
-        searchBar = homeScreenController.addTextfield("searchBar")
-                .setCaptionLabel("")
-                .setColorBackground(color(255, 255, 255))
-                .setPosition(SCREEN_X / 2 - searchbarWidth / 2, 250)
-                .setSize(searchbarWidth - 200, searchbarHeight)
-                .setFont(searchFont)
-                .setFocus(false)
-                .setColor(color(0, 0, 0))
-                .setColorCursor(color(0, 0, 0))
-                .setColor(color(0, 0, 0))
-                .setColorActive(color(0, 0, 0))
-        ;
-
-        searchOptions = homeScreenController.addScrollableList("Options")
-                .addItem("By Category", 0)
-                .addItem("By Name", 1)
-                .addItem("By City", 2)
-                .setFont(searchFont)
-                .setColorBackground(color(0, 145, 135))
-                .setColorForeground(color(0,135,122))
-                .setColorActive(color(0, 100, 100))
-                .setMouseOver(false)
-                .setOpen(false)
-                .setHeight(300)
-                .setWidth(200)
-                .setBarHeight(40)
-                .setItemHeight(40)
-                .setPosition(SCREEN_X / 2 + 3 * (SCREEN_X / 4) / 2 - 200, 250);
-
-        Label label = searchOptions.getCaptionLabel();
-        label.toUpperCase(false);
-        label.getStyle()
-                .setPaddingLeft(5)
-                .setPaddingTop(10);
-        label = searchOptions.getValueLabel();
-        label.toUpperCase(false);
-        label.getStyle()
-                .setPaddingLeft(5)
-                .setPaddingTop(20-(int)(textAscent()+textDescent()/2));
-
-        //Business screen setup
-        backButtonBusiness = businessScreenController.addButton("backButton")
-                .setValue(0)
-                .setSize(50, 50)
-                .setPosition(10,10);
-        backButtonImage.resize(backButtonBusiness.getWidth(), backButtonBusiness.getHeight());
-        backButtonBusiness.setImage(backButtonImage);
-
-        //Setup current draw screens
+        setupHomeScreen();
+        setupBusinessScreen();
         homeScreenController.setAutoDraw(false);
         searchResultController.setAutoDraw(false);
         businessScreenController.setAutoDraw(false);
-
         //End Control P5 setup
     }
 
     public void draw() {
-        background(255);
-        switch (currentController) {
-            case HOME_SCREEN:
-                fill(0,169,154);
-                noStroke();
-                rect(0,0,SCREEN_X, 340);
-                image(testLogo,SCREEN_X/2 - 400, -90);
-                homeScreenController.draw();
-                break;
-            case SEARCH_RESULT_SCREEN:
-                fill(0,169,154);
-                noStroke();
-                rect(0,0,SCREEN_X, 75);
-                searchResultController.draw();
-                break;
-            case BUSINESS_SCREEN:
-                fill(0,169,154);
-                noStroke();
-                rect(0,0,SCREEN_X, 500-offsetFromTop);
-                businessScreenController.draw();
-                fill(255);
-                text(selectedBusiness.getName(), 100,100-offsetFromTop);
-                drawReviews(reviews, 10, 510);
-                break;
+        if (connected) {
+            if(qControl == null)qControl = new queries();
+            background(255);
+            switch (currentController) {
+                case HOME_SCREEN:
+                    fill(0, 169, 154);
+                    noStroke();
+                    rect(0, 0, SCREEN_X, 340);
+                    image(testLogo, SCREEN_X / 2 - 400, -90);
+                    homeScreenController.draw();
+                    break;
+                case SEARCH_RESULT_SCREEN:
+                    fill(0, 169, 154);
+                    noStroke();
+                    rect(0, 0, SCREEN_X, 75);
+                    searchResultController.draw();
+                    break;
+                case BUSINESS_SCREEN:
+                    fill(0, 169, 154);
+                    noStroke();
+                    rect(0, 0, SCREEN_X, 500 - offsetFromTop);
+                    businessScreenController.draw();
+                    fill(255);
+                    text(selectedBusiness.getName(), 100, 100 - offsetFromTop);
+                    drawReviews(reviews, 10, 510);
+                    break;
+            }
+        } else {
+            background(0, 169, 154);
+            println("Connecting...");
+            textFont(searchFont);
+            text("loading...", SCREEN_X/2-textWidth("loading")/2, SCREEN_Y/2);
+            connected = true;
         }
     }
+
     //dont mind all of this, this is just a temporary scollable feature until the scrollbar is integrated
     public void keyPressed() {
         int totalHeight = 0;
         //when "w" is pressed
-        if(key == 'w' && offsetFromTop >= 0 && offsetFromTop <= (getTotalHeight(reviews)-SCREEN_Y))
-        {
+        if (key == 'w' && offsetFromTop >= 0 && offsetFromTop <= (getTotalHeight(reviews) - SCREEN_Y)) {
             offsetFromTop = offsetFromTop + 20;
             println(offsetFromTop);
             println((getTotalHeight(reviews) - SCREEN_Y));
         }
         //when "s" is pressed
-        else if(key == 's' && offsetFromTop >= 0 && offsetFromTop <= (getTotalHeight(reviews)-SCREEN_Y))
-        {
+        else if (key == 's' && offsetFromTop >= 0 && offsetFromTop <= (getTotalHeight(reviews) - SCREEN_Y)) {
             offsetFromTop = offsetFromTop - 20;
             println(offsetFromTop);
             println((getTotalHeight(reviews) - SCREEN_Y));
-        }
-        else if(offsetFromTop <= 0)
-        {
+        } else if (offsetFromTop <= 0) {
             offsetFromTop = 0;
         }
     }
@@ -267,15 +190,17 @@ public class Main extends PApplet {
             }
         }
     }
+
     public void Options(int n) {
         selected = n;
     }
+
     public void backButton() {
-        switch(currentController) {
+        switch (currentController) {
             case SEARCH_RESULT_SCREEN:
-                if(currentSearch != 0){
+                if (currentSearch != 0) {
                     currentSearch -= 10;
-                    ArrayList<Business>businessList = qControl.businessSearch("sports", currentSearch, 10);
+                    ArrayList<Business> businessList = qControl.businessSearch("sports", currentSearch, 10);
                     buttonBusinessList(businessList);
                 }
                 break;
@@ -284,50 +209,59 @@ public class Main extends PApplet {
                 break;
         }
     }
-    public void forwardButton(){
-        if(searchResultController.getAll().size() == 15) {
+
+    public void forwardButton() {
+        if (searchResultController.getAll().size() == 15) {
             currentSearch += 10;
             ArrayList<Business> businessList = qControl.businessSearch("sports", currentSearch, 10);
             buttonBusinessList(businessList);
         }
     }
-    public void homeButton(){
+
+    public void homeButton() {
         currentController = HOME_SCREEN;
     }
+
     public void beautyButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        ArrayList<Business>businessList = qControl.businessSearch("Beauty", 0, 10);
+        ArrayList<Business> businessList = qControl.businessSearch("Beauty", 0, 10);
         buttonBusinessList(businessList);
     }
+
     public void autoButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        ArrayList<Business>businessList = qControl.businessSearch("Automotive", 0, 10);
+        ArrayList<Business> businessList = qControl.businessSearch("Automotive", 0, 10);
         buttonBusinessList(businessList);
     }
+
     public void shoppingButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        ArrayList<Business>businessList = qControl.businessSearch("Shopping", 0, 10);
+        ArrayList<Business> businessList = qControl.businessSearch("Shopping", 0, 10);
         buttonBusinessList(businessList);
     }
+
     public void nightlifeButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        ArrayList<Business>businessList = qControl.businessSearch("nightlife", 0, 10);
+        ArrayList<Business> businessList = qControl.businessSearch("nightlife", 0, 10);
         buttonBusinessList(businessList);
     }
+
     public void restaurantsButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        ArrayList<Business>businessList = qControl.businessSearch("Restaurant", 0, 10);
+        ArrayList<Business> businessList = qControl.businessSearch("Restaurant", 0, 10);
         buttonBusinessList(businessList);
     }
+
     public void sportsButton() {
         currentController = SEARCH_RESULT_SCREEN;
-        ArrayList<Business>businessList = qControl.businessSearch("sports", 0, 10);
+        ArrayList<Business> businessList = qControl.businessSearch("sports", 0, 10);
         buttonBusinessList(businessList);
     }
+
     public void buttonBusinessList(ArrayList<Business> businessList) {
 
         List<ControllerInterface<?>> elements = searchResultController.getAll();
-        for(ControllerInterface e : elements){
+        for (ControllerInterface e : elements) {
             searchResultController.remove(e.getName());
         }
 
@@ -340,7 +274,7 @@ public class Main extends PApplet {
                         .setSize(1000, 50)
                         .setFont(searchFont)
                         .setColorBackground(color(0, 169, 154))
-                        .setColorForeground(color(0,135,122))
+                        .setColorForeground(color(0, 135, 122))
                         .setColorActive(color(0, 100, 100))
                         .getCaptionLabel().align(ControlP5.LEFT, ControlP5.LEFT);
 
@@ -351,19 +285,19 @@ public class Main extends PApplet {
 
         backButton = searchResultController.addButton("backButton")
                 .setSize(50, 50)
-                .setPosition(SCREEN_X - 120,SCREEN_Y - 60);
+                .setPosition(SCREEN_X - 120, SCREEN_Y - 60);
         backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
         backButton.setImage(backButtonImage);
 
         forwardButton = searchResultController.addButton("forwardButton")
                 .setSize(50, 50)
-                .setPosition(SCREEN_X - 60,SCREEN_Y - 60);
+                .setPosition(SCREEN_X - 60, SCREEN_Y - 60);
         forwardButtonImage.resize(forwardButton.getWidth(), forwardButton.getHeight());
         forwardButton.setImage(forwardButtonImage);
 
         homeButton = searchResultController.addButton("homeButton")
                 .setSize(60, 60)
-                .setPosition(10,10);
+                .setPosition(10, 10);
         homeButtonImage.resize(homeButton.getWidth(), homeButton.getHeight());
         homeButton.setImage(homeButtonImage);
 
@@ -388,7 +322,7 @@ public class Main extends PApplet {
                 .addItem("By City", 2)
                 .setFont(searchFont)
                 .setColorBackground(color(0, 145, 135))
-                .setColorForeground(color(0,135,122))
+                .setColorForeground(color(0, 135, 122))
                 .setColorActive(color(0, 100, 100))
                 .setMouseOver(false)
                 .setOpen(false)
@@ -402,30 +336,28 @@ public class Main extends PApplet {
         label.toUpperCase(false);
         label.getStyle()
                 .setPaddingLeft(5)
-                .setPaddingTop(20-(int)(textAscent()+textDescent()/2));
+                .setPaddingTop(20 - (int) (textAscent() + textDescent() / 2));
         label = searchOptionsSearch.getValueLabel();
         label.toUpperCase(false);
         label.getStyle()
                 .setPaddingLeft(5)
-                .setPaddingTop(20-(int)(textAscent()+textDescent()/2));
+                .setPaddingTop(20 - (int) (textAscent() + textDescent() / 2));
     }
 
     public void controlEvent(ControlEvent event) {
-        if(event.getValue() == 10){
+        if (event.getValue() == 10) {
             String business = event.getLabel().split(",")[0];
             selectedBusiness = qControl.getBusinessInfoName(business);
             selectedBusiness.setName(qControl.getBusinessName(selectedBusiness.getBusiness_id()));
             System.out.println(selectedBusiness);
             reviews = qControl.reviews(selectedBusiness.getBusiness_id());
 
-            for(Review r : reviews)
-            {
-                r.setUser_name(qControl.getUserName(r.getUserId()));
+            for (Review r : reviews) {
+                //r.setUser_name(qControl.getUserName(r.getUserId()));
                 r.setBusinessName(selectedBusiness.getName());
             }
             formatReviews(reviews);
-            for(Review r : reviews)
-            {
+            for (Review r : reviews) {
                 println(r.getFormattedReview());
             }
             currentController = BUSINESS_SCREEN;
@@ -437,15 +369,14 @@ public class Main extends PApplet {
         int borderOffsetY = 20;
         int borderOffsetX = xStart;
         float lineHeight = textAscent() + textDescent();
-        for (Review r : reviews)
-        {
+        for (Review r : reviews) {
             fill(175, 255, 248);
-            rect(borderOffsetX / 2, reviewOffset - offsetFromTop, SCREEN_X-10, (r.getNumberOfLines() * (int)lineHeight) + borderOffsetY - 5);
+            rect(borderOffsetX / 2, reviewOffset - offsetFromTop, SCREEN_X - 10, (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5);
             fill(0);
-            text(r.getDate(), SCREEN_X-textWidth(r.getDate()) - 20, reviewOffset+ borderOffsetY -offsetFromTop);
-            text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY -offsetFromTop);
+            text(r.getDate(), SCREEN_X - textWidth(r.getDate()) - 20, reviewOffset + borderOffsetY - offsetFromTop);
+            text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - offsetFromTop);
 
-            reviewOffset = reviewOffset + (r.getNumberOfLines() * (int)lineHeight) + borderOffsetY;
+            reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
         }
     }
 
@@ -455,28 +386,23 @@ public class Main extends PApplet {
         for (Review r : reviews) {
             String[] splitReview = r.getReview().split("");
             String formattedReview = "";
-            for (int i = 0; i<r.getStars(); i++)
-            {
+            for (int i = 0; i < r.getStars(); i++) {
                 formattedReview = formattedReview + " * ";
             }
             formattedReview = formattedReview + "\n" + r.getBusiness_id() + ":" + "\n";
             boolean toNextLine = false;
             int lines = 4;
-            for (int i = 0; i < splitReview.length; i++)
-            {
+            for (int i = 0; i < splitReview.length; i++) {
                 // Checks to see if line length has exceeded
-                if ((i % LINE_LENGTH == 0) && (i != 0))
-                {
+                if ((i % LINE_LENGTH == 0) && (i != 0)) {
                     toNextLine = true;
                 }
                 // If line length has been exceeded it will put a new line at the next whitespace
-                if (toNextLine && splitReview[i].equals(" "))
-                {
+                if (toNextLine && splitReview[i].equals(" ")) {
                     splitReview[i] = "\n";
                     toNextLine = false;
                 }
-                if (splitReview[i].equals("\n"))
-                {
+                if (splitReview[i].equals("\n")) {
                     lines++;
                 }
                 formattedReview = formattedReview + splitReview[i];
@@ -493,14 +419,11 @@ public class Main extends PApplet {
         int lineHeight = 15;
         int lines = 4;
 
-        for (Review r: reviews)
-        {
+        for (Review r : reviews) {
             String[] split = r.getFormattedReview().split("");
 
-            for (int i = 0; i < split.length; i++)
-            {
-                if (split[i].equals("\n"))
-                {
+            for (int i = 0; i < split.length; i++) {
+                if (split[i].equals("\n")) {
                     lines++;
                 }
             }
@@ -510,4 +433,90 @@ public class Main extends PApplet {
         return totalHeight;
     }
 
+    void setupHomeScreen() {
+        int searchbarHeight = 40;
+        int searchbarWidth = 3 * (SCREEN_X / 4);
+
+        beautyButton = homeScreenController.addButton("beautyButton")
+                .setSize(110, 110)
+                .setPosition(SCREEN_X / 2 - (72 / 2) - 250 - 72, SCREEN_Y / 2)
+                .setPosition(SCREEN_X / 2 - (72 / 2) - 250 - 72, SCREEN_Y / 2)
+                .setImage(beautyImage);
+
+        sportsButton = homeScreenController.addButton("sportsButton")
+                .setSize(110, 110)
+                .setPosition(SCREEN_X / 2 - (72 / 2), SCREEN_Y / 2)
+                .setImage(sportsImage);
+
+        restaurantsButton = homeScreenController.addButton("restaurantsButton")
+                .setSize(110, 110)
+                .setPosition(SCREEN_X / 2 + (72 / 2) + 250, SCREEN_Y / 2)
+                .setImage(restaurantImage);
+
+
+        shoppingButton = homeScreenController.addButton("shoppingButton")
+                .setSize(110, 110)
+                .setPosition(SCREEN_X / 2 - (72 / 2) - 250 - 72, SCREEN_Y / 2 + 190)
+                .setImage(shoppingImage);
+
+
+        automotiveButton = homeScreenController.addButton("autoButton")
+                .setSize(110, 110)
+                .setPosition(SCREEN_X / 2 - (72 / 2), SCREEN_Y / 2 + 190)
+                .setImage(automotiveImage);
+
+        nightLifeButton = homeScreenController.addButton("nightlifeButton")
+                .setSize(110, 110)
+                .setPosition(SCREEN_X / 2 + (72 / 2) + 250, SCREEN_Y / 2 + 190)
+                .setImage(nightLifeImage);
+
+        searchBar = homeScreenController.addTextfield("searchBar")
+                .setCaptionLabel("")
+                .setColorBackground(color(255, 255, 255))
+                .setPosition(SCREEN_X / 2 - searchbarWidth / 2, 250)
+                .setSize(searchbarWidth - 200, searchbarHeight)
+                .setFont(searchFont)
+                .setFocus(false)
+                .setColor(color(0, 0, 0))
+                .setColorCursor(color(0, 0, 0))
+                .setColor(color(0, 0, 0))
+                .setColorActive(color(0, 0, 0))
+        ;
+
+        searchOptions = homeScreenController.addScrollableList("Options")
+                .addItem("By Category", 0)
+                .addItem("By Name", 1)
+                .addItem("By City", 2)
+                .setFont(searchFont)
+                .setColorBackground(color(0, 145, 135))
+                .setColorForeground(color(0, 135, 122))
+                .setColorActive(color(0, 100, 100))
+                .setMouseOver(false)
+                .setOpen(false)
+                .setHeight(300)
+                .setWidth(200)
+                .setBarHeight(40)
+                .setItemHeight(40)
+                .setPosition(SCREEN_X / 2 + 3 * (SCREEN_X / 4) / 2 - 200, 250);
+
+        Label label = searchOptions.getCaptionLabel();
+        label.toUpperCase(false);
+        label.getStyle()
+                .setPaddingLeft(5)
+                .setPaddingTop(10);
+        label = searchOptions.getValueLabel();
+        label.toUpperCase(false);
+        label.getStyle()
+                .setPaddingLeft(5)
+                .setPaddingTop(20 - (int) (textAscent() + textDescent() / 2));
+    }
+
+    void setupBusinessScreen() {
+        backButtonBusiness = businessScreenController.addButton("backButton")
+                .setValue(0)
+                .setSize(50, 50)
+                .setPosition(10, 10);
+        backButtonImage.resize(backButtonBusiness.getWidth(), backButtonBusiness.getHeight());
+        backButtonBusiness.setImage(backButtonImage);
+    }
 }

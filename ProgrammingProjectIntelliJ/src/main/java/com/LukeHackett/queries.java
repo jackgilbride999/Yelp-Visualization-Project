@@ -57,6 +57,7 @@ class queries {
 
             while (results.next()) {
                 Review r = new Review(results.getString("id"), results.getString("user_id"), results.getString("business_id"), results.getInt("stars"), results.getString("date"), results.getString("text"), results.getInt("useful"), results.getInt("funny"), results.getInt("cool"));
+                r.setUser_name(getUserName(r.getUserId()));
                 reviews.add(r);
                 System.out.println(results.getString("id"));
             }
