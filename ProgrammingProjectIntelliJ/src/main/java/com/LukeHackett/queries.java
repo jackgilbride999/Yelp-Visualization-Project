@@ -56,7 +56,9 @@ class queries {
             ResultSet results = statement.executeQuery(businessQuery);
 
             while (results.next()) {
-                reviews.add(new Review(results.getString("id"), results.getString("user_id"), results.getString("business_id"), results.getInt("stars"), results.getString("date"), results.getString("text"), results.getInt("useful"), results.getInt("funny"), results.getInt("cool")));
+                Review r = new Review(results.getString("id"), results.getString("user_id"), results.getString("business_id"), results.getInt("stars"), results.getString("date"), results.getString("text"), results.getInt("useful"), results.getInt("funny"), results.getInt("cool"));
+                reviews.add(r);
+                System.out.println(results.getString("id"));
             }
         } catch (Exception e) {
             e.printStackTrace();
