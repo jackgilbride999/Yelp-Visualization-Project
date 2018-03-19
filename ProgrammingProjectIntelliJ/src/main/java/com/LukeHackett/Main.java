@@ -1,7 +1,9 @@
 package com.LukeHackett;
 
+import com.google.maps.model.PhotoResult;
 import processing.core.*;
 import controlP5.*;
+import processing.data.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +76,7 @@ public class Main extends PApplet {
 
     @Override
     public void setup() {
+
         qControl = null;
         homeScreenController = new ControlP5(this);
         searchResultController = new ControlP5(this);
@@ -84,7 +87,7 @@ public class Main extends PApplet {
         forwardButtonImage = loadImage("forwardButton.png");
         homeButtonImage = loadImage("home.png");
         shoppingImage = loadImage("72x72_shopping.png");
-        nightLifeImage = loadImage("72x72_nightlife.png");//
+        nightLifeImage = loadImage("72x72_nightlife.png");
         sportsImage = loadImage("72x72_active_life.png");
         beautyImage = loadImage("72x72_beauty.png");
         automotiveImage = loadImage("72x72_automotive.png");
@@ -134,6 +137,12 @@ public class Main extends PApplet {
             textFont(searchFont);
             text("loading...", SCREEN_X/2-textWidth("loading")/2, SCREEN_Y/2);
             connected = true;
+            /*
+            Image search in progress but messed up and ran out of requests so need to wait:
+
+            JSONObject map = loadJSONObject("https://maps.googleapis.com/maps/api/place/textsearch/json?query=Dental%20By%20Design%20Ahwatukee&key=AIzaSyAdNw5lE_KJe9uhRRb2fKi2U8Ex63HfYL8");
+            println(map);
+            */
         }
     }
 
@@ -265,20 +274,34 @@ public class Main extends PApplet {
             searchResultController.remove(e.getName());
         }
 
+        String spaces = " ";
+        while(textWidth(spaces) < 200){
+            spaces += " ";
+        }
+
+        Button businessButton;
         if (businessList != null) {
             for (Business b : businessList) {
-                searchResultController.addButton(b.getBusiness_id())
+                String stars = new String(new char[b.getStars()]).replace("\0", "*");
+                businessButton = searchResultController.addButton(b.getBusiness_id())
                         .setValueSelf(10)
-                        .setLabel(b.getName())
+                        .setLabel(spaces + b.getName() + '\n' + spaces + stars)
                         .setPosition((float) SCREEN_X / 2 - 500, (float) yOffset + 80)
-                        .setSize(1000, 50)
+                        .setSize(1000, 200)
                         .setFont(searchFont)
                         .setColorBackground(color(0, 169, 154))
                         .setColorForeground(color(0, 135, 122))
-                        .setColorActive(color(0, 100, 100))
-                        .getCaptionLabel().align(ControlP5.LEFT, ControlP5.LEFT);
+                        .setColorActive(color(0, 100, 100));
 
-                yOffset = yOffset + 50 + BORDER_OFFSET_Y;
+                Label label = businessButton.getValueLabel();
+                label.align(ControlP5.LEFT, ControlP5.TOP);
+                println(label.getAlign());
+                label = businessButton.getCaptionLabel();
+                label.align(ControlP5.LEFT, ControlP5.TOP);
+                println(label.getAlign());
+                label.toUpperCase(false);
+
+                yOffset = yOffset + 200 + BORDER_OFFSET_Y;
             }
             yOffset = 0;
         }
@@ -336,18 +359,18 @@ public class Main extends PApplet {
         label.toUpperCase(false);
         label.getStyle()
                 .setPaddingLeft(5)
-                .setPaddingTop(20 - (int) (textAscent() + textDescent() / 2));
+                .setPaddingTop(10);
         label = searchOptionsSearch.getValueLabel();
         label.toUpperCase(false);
         label.getStyle()
                 .setPaddingLeft(5)
-                .setPaddingTop(20 - (int) (textAscent() + textDescent() / 2));
+                .setPaddingTop(10);
     }
 
     public void controlEvent(ControlEvent event) {
         if (event.getValue() == 10) {
-            String business = event.getLabel().split(",")[0];
-            selectedBusiness = qControl.getBusinessInfoName(business);
+            String business[] = event.getLabel().split("\n")[0].split(" ");
+            selectedBusiness = qControl.getBusinessInfoName(business[business.length-1]);
             selectedBusiness.setName(qControl.getBusinessName(selectedBusiness.getBusiness_id()));
             System.out.println(selectedBusiness);
             reviews = qControl.reviews(selectedBusiness.getBusiness_id());
@@ -508,7 +531,7 @@ public class Main extends PApplet {
         label.toUpperCase(false);
         label.getStyle()
                 .setPaddingLeft(5)
-                .setPaddingTop(20 - (int) (textAscent() + textDescent() / 2));
+                .setPaddingTop(10);
     }
 
     void setupBusinessScreen() {
