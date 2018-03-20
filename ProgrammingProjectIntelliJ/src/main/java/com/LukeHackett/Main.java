@@ -1,10 +1,9 @@
 package com.LukeHackett;
 
-import com.google.maps.model.PhotoResult;
-import processing.core.*;
 import controlP5.*;
-import processing.data.JSONObject;
-
+import processing.core.PApplet;
+import processing.core.PFont;
+import processing.core.PImage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +24,9 @@ public class Main extends PApplet {
     private int selected = 0;
     private int yOffset;
     private int offsetFromTop = 0;
+
+    private String searchString;
+    private String spaces;
 
     private boolean connected = false;
 
@@ -59,9 +61,11 @@ public class Main extends PApplet {
     private PImage forwardButtonImage;
     private PImage homeButtonImage;
 
+    private ImageCrawler[] businessesSearch;
     private Business selectedBusiness;
     private ArrayList<Review> reviews;
 
+    ImageCrawler businessImages;
     queries qControl;
 
     private PFont searchFont;
@@ -76,12 +80,20 @@ public class Main extends PApplet {
 
     @Override
     public void setup() {
-
         qControl = null;
+        spaces = " ";
+        while (textWidth(spaces) < 200) {
+            spaces += " ";
+        }
+
         homeScreenController = new ControlP5(this);
         searchResultController = new ControlP5(this);
         businessScreenController = new ControlP5(this);
         searchFont = createFont("OpenSans-Regular", 28);
+
+        background(0, 169, 154);
+        textFont(searchFont);
+        text("loading...", SCREEN_X / 2 - textWidth("loading") / 2, SCREEN_Y / 2);
 
         backButtonImage = loadImage("backButton.png");
         forwardButtonImage = loadImage("forwardButton.png");
@@ -94,6 +106,8 @@ public class Main extends PApplet {
         restaurantImage = loadImage("72x72_restaurants.png");
         testLogo = loadImage("testLogo_white_2.png");
 
+        businessesSearch = new ImageCrawler[10];
+
         //Control P5 setup
         setupHomeScreen();
         setupBusinessScreen();
@@ -105,7 +119,7 @@ public class Main extends PApplet {
 
     public void draw() {
         if (connected) {
-            if(qControl == null)qControl = new queries();
+            if (qControl == null) qControl = new queries();
             background(255);
             switch (currentController) {
                 case HOME_SCREEN:
@@ -120,6 +134,7 @@ public class Main extends PApplet {
                     noStroke();
                     rect(0, 0, SCREEN_X, 75);
                     searchResultController.draw();
+                    drawBusinesses();
                     break;
                 case BUSINESS_SCREEN:
                     fill(0, 169, 154);
@@ -135,18 +150,13 @@ public class Main extends PApplet {
             background(0, 169, 154);
             println("Connecting...");
             textFont(searchFont);
-            text("loading...", SCREEN_X/2-textWidth("loading")/2, SCREEN_Y/2);
+            text("loading...", SCREEN_X / 2 - textWidth("loading") / 2, SCREEN_Y / 2);
             connected = true;
-            /*
-            Image search in progress but messed up and ran out of requests so need to wait:
-
-            JSONObject map = loadJSONObject("https://maps.googleapis.com/maps/api/place/textsearch/json?query=Dental%20By%20Design%20Ahwatukee&key=AIzaSyAdNw5lE_KJe9uhRRb2fKi2U8Ex63HfYL8");
-            println(map);
-            */
         }
     }
 
     //dont mind all of this, this is just a temporary scollable feature until the scrollbar is integrated
+    /*
     public void keyPressed() {
         int totalHeight = 0;
         //when "w" is pressed
@@ -164,9 +174,10 @@ public class Main extends PApplet {
             offsetFromTop = 0;
         }
     }
-
+    */
     public void searchBar(String text) {
         currentController = SEARCH_RESULT_SCREEN;
+        searchString = text;
         if (selected == 0) {
             ArrayList<Business> businessesC = qControl.categorySearch(text, 0, 10);
             buttonBusinessList(businessesC);
@@ -209,7 +220,7 @@ public class Main extends PApplet {
             case SEARCH_RESULT_SCREEN:
                 if (currentSearch != 0) {
                     currentSearch -= 10;
-                    ArrayList<Business> businessList = qControl.businessSearch("sports", currentSearch, 10);
+                    ArrayList<Business> businessList = qControl.businessSearch(searchString, currentSearch, 10);
                     buttonBusinessList(businessList);
                 }
                 break;
@@ -222,7 +233,7 @@ public class Main extends PApplet {
     public void forwardButton() {
         if (searchResultController.getAll().size() == 15) {
             currentSearch += 10;
-            ArrayList<Business> businessList = qControl.businessSearch("sports", currentSearch, 10);
+            ArrayList<Business> businessList = qControl.businessSearch(searchString, currentSearch, 10);
             buttonBusinessList(businessList);
         }
     }
@@ -233,12 +244,14 @@ public class Main extends PApplet {
 
     public void beautyButton() {
         currentController = SEARCH_RESULT_SCREEN;
+        searchString = "Beauty";
         ArrayList<Business> businessList = qControl.businessSearch("Beauty", 0, 10);
         buttonBusinessList(businessList);
     }
 
     public void autoButton() {
         currentController = SEARCH_RESULT_SCREEN;
+        searchString = "Automotive";
         ArrayList<Business> businessList = qControl.businessSearch("Automotive", 0, 10);
         buttonBusinessList(businessList);
     }
@@ -257,12 +270,14 @@ public class Main extends PApplet {
 
     public void restaurantsButton() {
         currentController = SEARCH_RESULT_SCREEN;
+        searchString = "Restaurant";
         ArrayList<Business> businessList = qControl.businessSearch("Restaurant", 0, 10);
         buttonBusinessList(businessList);
     }
 
     public void sportsButton() {
         currentController = SEARCH_RESULT_SCREEN;
+        searchString = "sports";
         ArrayList<Business> businessList = qControl.businessSearch("sports", 0, 10);
         buttonBusinessList(businessList);
     }
@@ -274,15 +289,15 @@ public class Main extends PApplet {
             searchResultController.remove(e.getName());
         }
 
-        String spaces = " ";
-        while(textWidth(spaces) < 200){
-            spaces += " ";
-        }
-
         Button businessButton;
         if (businessList != null) {
-            for (Business b : businessList) {
+            businessesSearch = new ImageCrawler[10];
+            for (int i = 0; i < businessList.size(); i++) {
+                Business b = businessList.get(i);
+                businessesSearch[i] = new ImageCrawler(this, b);
+
                 String stars = new String(new char[b.getStars()]).replace("\0", "*");
+                b.setImage(loadImage("businessPlaceholder.png"));
                 businessButton = searchResultController.addButton(b.getBusiness_id())
                         .setValueSelf(10)
                         .setLabel(spaces + b.getName() + '\n' + spaces + stars)
@@ -295,10 +310,8 @@ public class Main extends PApplet {
 
                 Label label = businessButton.getValueLabel();
                 label.align(ControlP5.LEFT, ControlP5.TOP);
-                println(label.getAlign());
                 label = businessButton.getCaptionLabel();
                 label.align(ControlP5.LEFT, ControlP5.TOP);
-                println(label.getAlign());
                 label.toUpperCase(false);
 
                 yOffset = yOffset + 200 + BORDER_OFFSET_Y;
@@ -369,8 +382,8 @@ public class Main extends PApplet {
 
     public void controlEvent(ControlEvent event) {
         if (event.getValue() == 10) {
-            String business[] = event.getLabel().split("\n")[0].split(" ");
-            selectedBusiness = qControl.getBusinessInfoName(business[business.length-1]);
+            String business = event.getLabel().split("\n")[0].replaceAll(spaces, "");
+            selectedBusiness = qControl.getBusinessInfoName(business);
             selectedBusiness.setName(qControl.getBusinessName(selectedBusiness.getBusiness_id()));
             System.out.println(selectedBusiness);
             reviews = qControl.reviews(selectedBusiness.getBusiness_id());
@@ -384,6 +397,18 @@ public class Main extends PApplet {
                 println(r.getFormattedReview());
             }
             currentController = BUSINESS_SCREEN;
+        }
+    }
+
+    void drawBusinesses() {
+        //ArrayList<Business> newImages = businessImages.getBusinessList();
+        int x = SCREEN_X / 2 - 490;
+        int y = 0;
+        for (ImageCrawler image : businessesSearch) {
+            if(image.getBusiness()!=null) {
+                image(image.getBusiness().getImage(), x, y + 90, 180, 180);
+                y = y + 200 + BORDER_OFFSET_Y;
+            }
         }
     }
 
@@ -409,9 +434,7 @@ public class Main extends PApplet {
         for (Review r : reviews) {
             String[] splitReview = r.getReview().split("");
             String formattedReview = "";
-            for (int i = 0; i < r.getStars(); i++) {
-                formattedReview = formattedReview + " * ";
-            }
+
             formattedReview = formattedReview + "\n" + r.getBusiness_id() + ":" + "\n";
             boolean toNextLine = false;
             int lines = 4;
