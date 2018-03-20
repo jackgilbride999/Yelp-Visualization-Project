@@ -434,7 +434,6 @@ public class Main extends PApplet {
         offsetFromTopSearch=searchScroll.getY();
 
         List<ControllerInterface<?>> list = searchResultController.getAll();
-        println(list.get(0).getPosition());
         for (ControllerInterface i : list) {
             if(i.getName() != "backButton" && i.getName() != "forwardButton" && i.getName() != "homeButton" && i.getName() != "searchBar" && i.getName() != "Options")
                 i.setPosition(i.getPosition()[0], i.getPosition()[1]-(searchRatio*offsetFromTopSearch));
@@ -444,7 +443,7 @@ public class Main extends PApplet {
         int x = SCREEN_X / 2 - 490;
         int y = 0;
         for (ImageCrawler image : businessesSearch) {
-            if(image.getBusiness()!=null) {
+            if(image !=null) {
                 image(image.getBusiness().getImage(), x, y + 90-(searchRatio*offsetFromTopSearch), 180, 180);
                 y = y + 200 + BORDER_OFFSET_Y;
             }

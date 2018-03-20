@@ -57,7 +57,11 @@ class Scrollbar extends Widget {
               int widgetColor, int event) {
         super(canvas, Main.SCREEN_X - width, 0, width, 0, "", widgetColor, null, event); // again the super constructor for the class is called to stop code duplication
         this.ratio = totalHeightOfPage / Main.SCREEN_Y;
-        setHeight(Main.SCREEN_Y / ratio);
+        if(this.ratio == 0){
+            setHeight(Main.SCREEN_Y);
+        }else {
+            setHeight(Main.SCREEN_Y / ratio);
+        }
     }
 
     public int getRatio() {
