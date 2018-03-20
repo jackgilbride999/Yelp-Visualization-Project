@@ -14,7 +14,7 @@ void settings(){
 void setup() {
   background(0);
   // just showing that this map can be drawn on a subsection of the screen, just delete the four ints for it to draw on the full screen
-  map = new UnfoldingMap(this,  3*SCREEN_X/4, 0, SCREEN_X/4, SCREEN_Y/4, new OpenStreetMap.OpenStreetMapProvider()); // put the map provider in this constructor
+  map = new UnfoldingMap(this,  2*SCREEN_X/3, 0, SCREEN_X/3, SCREEN_Y/3, new OpenStreetMap.OpenStreetMapProvider()); // put the map provider in this constructor
   MapUtils.createDefaultEventDispatcher(this, map);   // allows us to drag, zoom etc
   Location tcdLocation = new Location(53.3438, -6.2546); // tcd location as found through a Google search
   Location ucdLocation = new Location(53.3083, -6.2236);
@@ -31,4 +31,5 @@ void setup() {
 
 void draw() {
   map.draw();
+  text("Rest of screen", SCREEN_X/2, SCREEN_Y/2);
 }
