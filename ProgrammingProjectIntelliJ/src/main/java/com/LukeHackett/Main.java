@@ -62,6 +62,7 @@ public class Main extends PApplet {
     private PImage homeButtonImage;
 
     private ImageCrawler[] businessesSearch;
+    private Scrollbar searchScroll;
     private Business selectedBusiness;
     private ArrayList<Review> reviews;
 
@@ -69,6 +70,11 @@ public class Main extends PApplet {
     queries qControl;
 
     private PFont searchFont;
+    private int searchRatio;
+    private int previousSearchMouseY;
+    private int offsetFromTopSearch;
+    private int searchMouseDifference;
+    private boolean searchScrollPressed;
 
     public static void main(String[] args) {
         PApplet.main("com.LukeHackett.Main");
@@ -82,7 +88,7 @@ public class Main extends PApplet {
     public void setup() {
         qControl = null;
         spaces = " ";
-        while (textWidth(spaces) < 200) {
+        while (textWidth(spaces) < 100) {
             spaces += " ";
         }
 
@@ -133,7 +139,6 @@ public class Main extends PApplet {
                     fill(0, 169, 154);
                     noStroke();
                     rect(0, 0, SCREEN_X, 75);
-                    searchResultController.draw();
                     drawBusinesses();
                     break;
                 case BUSINESS_SCREEN:
@@ -175,6 +180,27 @@ public class Main extends PApplet {
         }
     }
     */
+    public void mousePressed() {                                        // when these three mouse methods are used in the main program, make sure to have this code within them to control scrollbar
+        if (searchScroll != null && searchScroll.getEvent(mouseX, mouseY)==SCROLLBAR_EVENT) {
+            searchScrollPressed=true;
+            searchMouseDifference=mouseY-searchScroll.getY();
+        }
+    }
+
+    public void mouseReleased() {
+        searchScrollPressed=false;
+    }
+
+    public void mouseDragged() {
+        if (searchScrollPressed==true) {
+            searchScroll.setY(mouseY-searchMouseDifference);
+            if (searchScroll.getY()<0)
+                searchScroll.setY(0);
+            else if (searchScroll.getY()+searchScroll.getHeight()>SCREEN_Y)
+                searchScroll.setY(SCREEN_Y-searchScroll.getHeight());
+        }
+    }
+
     public void searchBar(String text) {
         currentController = SEARCH_RESULT_SCREEN;
         searchString = text;
@@ -316,6 +342,8 @@ public class Main extends PApplet {
 
                 yOffset = yOffset + 200 + BORDER_OFFSET_Y;
             }
+            searchScroll = new Scrollbar(this, 10,yOffset - 200 - BORDER_OFFSET_Y, color(123), SCROLLBAR_EVENT);
+            searchRatio = searchScroll.getRatio();
             yOffset = 0;
         }
 
@@ -401,12 +429,23 @@ public class Main extends PApplet {
     }
 
     void drawBusinesses() {
-        //ArrayList<Business> newImages = businessImages.getBusinessList();
+        searchScroll.draw(0);
+        previousSearchMouseY=mouseY;
+        offsetFromTopSearch=searchScroll.getY();
+
+        List<ControllerInterface<?>> list = searchResultController.getAll();
+        println(list.get(0).getPosition());
+        for (ControllerInterface i : list) {
+            if(i.getName() != "backButton" && i.getName() != "forwardButton" && i.getName() != "homeButton" && i.getName() != "searchBar" && i.getName() != "Options")
+                i.setPosition(i.getPosition()[0], i.getPosition()[1]-(searchRatio*offsetFromTopSearch));
+        }
+        searchResultController.draw();
+
         int x = SCREEN_X / 2 - 490;
         int y = 0;
         for (ImageCrawler image : businessesSearch) {
             if(image.getBusiness()!=null) {
-                image(image.getBusiness().getImage(), x, y + 90, 180, 180);
+                image(image.getBusiness().getImage(), x, y + 90-(searchRatio*offsetFromTopSearch), 180, 180);
                 y = y + 200 + BORDER_OFFSET_Y;
             }
         }
