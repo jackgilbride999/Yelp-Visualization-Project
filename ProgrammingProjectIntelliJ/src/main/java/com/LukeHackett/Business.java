@@ -1,5 +1,7 @@
 package com.LukeHackett;
 
+import processing.core.PImage;
+
 public class Business {
     private String business_id;
     private String name;
@@ -14,6 +16,7 @@ public class Business {
     private int review_count;
     private int is_open;
     private String categories;
+    private PImage image;
 
     public Business(String business_id, String name, String neighborhood, String address, String city, String state, String postal_code, double latitude, double longitude, int stars, int review_count, int is_open, String categories) {
         this.business_id = business_id;
@@ -133,6 +136,14 @@ public class Business {
 
     public void setCategories(String categories) {
         this.categories = categories;
+    }
+
+    public PImage getImage() {
+        return image;
+    }
+
+    public void setImage(PImage image) {
+        this.image = image;
     }
 
     @Override
