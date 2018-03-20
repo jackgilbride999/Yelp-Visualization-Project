@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Unfolding">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../Unfolding.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../log4j-1.2.15.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../json4processing.jar!/" />
+      <root url="file://$PROJECT_DIR$" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/src" />
+    </SOURCES>
+  </library>
+</component>
