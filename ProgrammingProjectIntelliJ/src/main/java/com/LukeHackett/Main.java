@@ -121,6 +121,7 @@ public class Main extends PApplet {
         searchResultController.setAutoDraw(false);
         businessScreenController.setAutoDraw(false);
         //End Control P5 setup
+
     }
 
     public void draw() {
@@ -450,6 +451,7 @@ public class Main extends PApplet {
         }
     }
 
+    //TODO make a reviewCrawler object that extends thread, lower latency
     void drawReviews(ArrayList<Review> reviews, int xStart, int yStart) {
         int reviewOffset = yStart;
         int borderOffsetY = 20;
