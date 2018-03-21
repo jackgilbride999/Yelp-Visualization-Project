@@ -30,13 +30,20 @@ public class ImageCrawler extends Thread {
 
         //Make XML object and parse photo reference and load the image
         XML xmlPlace = canvas.loadXML(url);
-        String urlPhoto = "businessPlaceholder.png";
+        */
+        //String urlPhoto =
+        return canvas.loadImage("businessPlaceholder.png");
+        /*
         if (xmlPlace.getChild("status").getContent().equals("OK")) {
-            String photoReference;
+            String photoReference = null;
             try {
                 if ((photoReference = xmlPlace.getChild("result").getChild("photo").getChild("photo_reference").getContent()) != null)
                     urlPhoto = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=180&maxheight=180&photoreference=" + photoReference + "&key=AIzaSyAI1gmMQChQjNW5A2ye5h0tIx_c1kQLNc0";
             } catch (Exception e){
+                System.out.println("-----------------");
+                System.out.println(url);
+                System.out.println(xmlPlace);
+                System.out.println("-----------------");
                 urlPhoto = xmlPlace.getChild("result").getChild("icon").getContent();
             }
             return canvas.loadImage(urlPhoto, "jpg");
@@ -44,8 +51,6 @@ public class ImageCrawler extends Thread {
             return canvas.loadImage(urlPhoto);
         }
         */
-        String urlPhoto = "businessPlaceholder.png";
-        return canvas.loadImage(urlPhoto);
     }
 
     public Business getBusiness() {
