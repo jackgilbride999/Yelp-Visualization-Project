@@ -26,7 +26,7 @@ public class Main extends PApplet {
     public static int offsetFromTop = 0;
 
     public static String searchString;
-    public static String spaces;
+    public static String spaceFromEdge;
 
     public static boolean connected = false;
 
@@ -92,15 +92,15 @@ public class Main extends PApplet {
         qControl = null;
         UI = new UI(this);
         draws = new Drawable(this);
-        spaces = " ";
-        while (textWidth(spaces) < 100) {
-            spaces += " ";
+        searchFont = createFont("OpenSans-Regular", 22);
+        spaceFromEdge = " ";
+        while (textWidth(spaceFromEdge) < 120) {
+            spaceFromEdge += " ";
         }
 
         homeScreenController = new ControlP5(this);
         searchResultController = new ControlP5(this);
         businessScreenController = new ControlP5(this);
-        searchFont = createFont("OpenSans-Regular", 28);
 
         background(0, 169, 154);
         textFont(searchFont);
@@ -231,7 +231,8 @@ public class Main extends PApplet {
     }
 
     public void forwardButton() {
-        UI.forwardButton();
+        ArrayList<Business> businessList = UI.forwardButton();
+        buttonBusinessList(businessList);
     }
 
     public void homeButton() {
@@ -279,7 +280,7 @@ public class Main extends PApplet {
 
     public void controlEvent(ControlEvent event) {
         if (event.getValue() == 10) {
-            String business = event.getLabel().split("\n")[0].replaceAll(spaces, "");
+            String business = event.getLabel().split("\n")[0].replaceAll(spaceFromEdge, "");
             selectedBusiness = qControl.getBusinessInfoName(business);
             selectedBusiness.setName(qControl.getBusinessName(selectedBusiness.getBusiness_id()));
             reviewCrawler = new ReviewCrawler(selectedBusiness, qControl);

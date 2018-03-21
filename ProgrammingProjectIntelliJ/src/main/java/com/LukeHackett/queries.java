@@ -295,4 +295,22 @@ class queries {
 
         return 0;
     }
+
+    public String getTip(String business_id) {
+        try {
+            String tipQuery = "SELECT text " +
+                    "FROM yelp_tip " +
+                    "WHERE MATCH (business_id) AGAINST('" + business_id + "')" +
+                    " LIMIT 1";
+            java.sql.Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(tipQuery);
+            while (results.next()) {
+                return results.getString("text");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        println("null : " + business_id);
+        return null;
+    }
 }

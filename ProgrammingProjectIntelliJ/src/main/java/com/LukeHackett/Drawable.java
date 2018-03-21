@@ -45,9 +45,11 @@ public class Drawable {
             }
         }
         formatter.formatReviews(Main.reviewCrawler.getReviews());
+        /*
         for (Review r : Main.reviewCrawler.getReviews()) {
             Main.println(r.getFormattedReview());
         }
+        */
 
         int reviewOffset = yStart;
         int borderOffsetY = 20;
@@ -89,7 +91,6 @@ public class Drawable {
                 .setSize(110, 110)
                 .setPosition(Main.SCREEN_X / 2 - (72 / 2) - 250 - 72, Main.SCREEN_Y / 2 + 190)
                 .setImage(Main.shoppingImage);
-
 
         Main.automotiveButton = Main.homeScreenController.addButton("autoButton")
                 .setSize(110, 110)
