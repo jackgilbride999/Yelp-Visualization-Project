@@ -5,7 +5,6 @@ import controlP5.ControlP5;
 import controlP5.ControllerInterface;
 import controlP5.Label;
 import processing.core.PApplet;
-import sun.security.krb5.internal.PAData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,11 +125,33 @@ public class UI {
                 Business b = businessList.get(i);
                 Main.businessesSearch[i] = new ImageCrawler(canvas, b);
 
+                String spacesToOuter = " ";
+                String spacesToOuterLower = " ";
                 String stars = new String(new char[b.getStars()]).replace("\0", "*");
+                String[] catSplit = b.getCategories().split(";");
+                StringBuilder categories = new StringBuilder();
+                for(int j = 0; j < 3 && j < catSplit.length; j++) {
+                    categories.append(catSplit[j]);
+                    if(j < catSplit.length-1 && j != 2) categories.append(", ");
+                }
+
+                float nameWidth = canvas.textWidth(b.getName());
+                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(b.getAddress()) < 990) {
+                    spacesToOuter += " ";
+                }
+                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(stars) + canvas.textWidth(b.getCity()) < 990) {
+                    spacesToOuterLower += " ";
+                }
+
                 b.setImage(canvas.loadImage("businessPlaceholder.png"));
                 businessButton = Main.searchResultController.addButton(b.getBusiness_id())
                         .setValueSelf(10)
-                        .setLabel(Main.spaces + b.getName() + '\n' + Main.spaces + stars)
+                        .setLabel(Main.spaceFromEdge + b.getName()
+                                + spacesToOuter + b.getAddress()
+                                + '\n' + Main.spaceFromEdge + stars
+                                + spacesToOuterLower + b.getCity()
+                                + '\n' + '\n'  + '\n' + '\n' + '\n' + '\n'
+                                + Main.spaceFromEdge + categories)
                         .setPosition((float) Main.SCREEN_X / 2 - 500, (float) yOffset + 80)
                         .setSize(1000, 200)
                         .setFont(Main.searchFont)
