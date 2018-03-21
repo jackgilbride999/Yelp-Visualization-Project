@@ -1,13 +1,20 @@
 package com.LukeHackett;
 
+import processing.core.PApplet;
+
 import java.sql.*;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 
+import static processing.core.PApplet.println;
+
 class queries {
+    private final PApplet canvas;
     java.sql.Connection connection;
 
-    queries() {
+    queries(PApplet canvas) {
+        this.canvas = canvas;
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
             String connectionUrlAWS = "jdbc:mysql://yelpdatabase.cioogriagt5l.eu-west-1.rds.amazonaws.com/yelp?"
@@ -46,12 +53,13 @@ class queries {
         return businesses;
     }
 
-    public ArrayList<Review> reviews(String business_id) {
+    public ArrayList<Review> reviews(String business_id, int start, int lim) {
         ArrayList<Review> reviews = new ArrayList<Review>();
         try {
             String businessQuery = "SELECT * " +
                     "FROM yelp_review " +
-                    "WHERE MATCH(business_id) AGAINST(" + '\'' + business_id + '\'' + ')';
+                    "WHERE MATCH(business_id) AGAINST(" + '\'' + business_id + '\'' + ')' +
+                    "LIMIT " + start + "," + lim;
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessQuery);
 
@@ -221,12 +229,13 @@ class queries {
     }
 
     public ArrayList<Business> businessSearch(String name, int start, int limit) {
+        println(canvas.millis());
         ArrayList<Business> businesses = new ArrayList<Business>();
         try {
             String businessQuery = "SELECT * " +
                     "FROM yelp_business " +
-                    "WHERE name " +
-                    "LIKE " + '"' + '%' + name + '%' + '"' +
+                    "WHERE MATCH(name) " +
+                    "AGAINST " + '(' + '\'' + name + '\'' + ')' +
                     "LIMIT " + start + "," + limit;
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessQuery);
@@ -237,6 +246,7 @@ class queries {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        println(canvas.millis());
         return businesses;
     }
 
@@ -279,5 +289,10 @@ class queries {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getRow(String review_id) {
+
+        return 0;
     }
 }
