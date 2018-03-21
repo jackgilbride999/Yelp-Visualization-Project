@@ -17,6 +17,10 @@ public class Review {
     private String business_name;
     private String user_name;
 
+    public void setReview_id(String review_id) {
+        this.review_id = review_id;
+    }
+
     public Review(String review_id, String user_id, String business_id, int stars, String date, String text, int reviewUseful, int reviewFunny, int reviewCool) {
         this.review_id = review_id;
         this.user_id = user_id;
@@ -27,6 +31,9 @@ public class Review {
         this.reviewUseful = reviewUseful;
         this.reviewFunny = reviewFunny;
         this.reviewCool = reviewCool;
+
+        this.user_name = "";
+        this.business_name = "";
     }
 
     public String getUserId() {
@@ -120,6 +127,10 @@ public class Review {
     }
     public String getFormattedReview() {
         return this.formattedReview;
+    }
+
+    public String getReview_id() {
+        return review_id;
     }
 
     @java.lang.Override
