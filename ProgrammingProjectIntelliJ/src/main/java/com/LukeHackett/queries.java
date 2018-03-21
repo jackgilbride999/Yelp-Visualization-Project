@@ -115,9 +115,9 @@ class queries {
         try {
             String businessQuery = "SELECT * " +
                     "FROM yelp_business " +
-                    "WHERE business_id " +
-                    "LIKE " + '"' + business_id + '"' +
-                    "LIMIT " + 1;
+                    "WHERE MATCH(business_id)" +
+                    "AGAINST (" + '"' + business_id + '"' + ')' +
+                    " LIMIT " + 1;
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessQuery);
 
@@ -135,7 +135,7 @@ class queries {
             String businessQuery = "SELECT * " +
                     "FROM yelp_business " +
                     "WHERE name " +
-                    "LIKE " + '"' + '%' + business_name + '%' + '"' +
+                    "AGAINST (" + '"' + business_name + '"' + ')' +
                     "LIMIT " + 1;
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessQuery);
@@ -171,8 +171,8 @@ class queries {
         try {
             String attributesQuery = "SELECT * " +
                     "FROM yelp_business_attributes " +
-                    "WHERE business_id " +
-                    "LIKE " + '"' + business_id + '"' +
+                    "WHERE MATCH (business_id) " +
+                    "AGAINST(" + '"' + business_id + '"' + ')' +
                     " LIMIT 1";
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(attributesQuery);
@@ -192,8 +192,8 @@ class queries {
         try {
             String attributesQuery = "SELECT * " +
                     "FROM yelp_business_hours " +
-                    "WHERE business_id " +
-                    "LIKE " + '"' + business_id + '"' +
+                    "WHERE MATCH (business_id)" +
+                    "AGAINST (" + '"' + business_id + '"' + ')' +
                     " LIMIT 1";
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(attributesQuery);
@@ -213,8 +213,8 @@ class queries {
         try {
             String businessQuery = "SELECT * " +
                     "FROM yelp_business " +
-                    "WHERE categories " +
-                    "LIKE " + '"' + '%' + category + '%' + '"' +
+                    "WHERE MATCH(categories) " +
+                    "AGAINST " + '(' + '\'' + category + '\'' + ')' +
                     "LIMIT " + start + "," + limit;
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessQuery);
@@ -255,8 +255,8 @@ class queries {
         try {
             String businessQuery = "SELECT * " +
                     "FROM yelp_business " +
-                    "WHERE city " +
-                    "LIKE " + '"' + '%' + city + '%' + '"' +
+                    "WHERE MATCH(city) " +
+                    "AGAINST " + '(' + '\'' + city + '\'' + ')' +
                     "LIMIT " + start + "," + limit;
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessQuery);
