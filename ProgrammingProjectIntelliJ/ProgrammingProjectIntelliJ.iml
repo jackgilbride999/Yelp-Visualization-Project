@@ -30,7 +30,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Downloads/controlP5-2.2.6/controlP5/library/controlP5.jar!/" />
+          <root url="jar://$USER_HOME$/Downloads/controlP5.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -39,7 +39,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files/processing-3.3.6/core/library/core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../processing-3.3.6/core/library/core.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
