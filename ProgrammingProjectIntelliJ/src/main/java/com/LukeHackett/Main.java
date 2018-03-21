@@ -228,6 +228,9 @@ public class Main extends PApplet {
 
     public void backButton() {
         ArrayList<Business> businessList = UI.backButton();
+        if(businessList!=null){
+            buttonBusinessList(businessList);
+        }
     }
 
     public void forwardButton() {

@@ -1,7 +1,10 @@
+package com.LukeHackett;
+
 import java.sql.*;
 import java.util.ArrayList;
 
-DbAccess db = null;
+//DbAccess db = null;
+import static processing.core.PApplet.println;
 
 class BusinessNameId{
   public String id;
@@ -136,7 +139,7 @@ class DbAccess {
   {
          ArrayList<Float> businessCheckins = new ArrayList<Float>();
          for (int i=0; i<7;i++)
-           businessCheckins.add(0.0);
+           businessCheckins.add(0.0f);
          String query = "SELECT weekday,SUM(checkins) AS checkins FROM yelp_checkin WHERE business_id = '"+businessId+"' GROUP BY weekday ORDER BY weekday";
         // set the query string as your needed query
         ResultSet results = getQueryResult(query);
