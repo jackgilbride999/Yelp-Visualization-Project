@@ -11,9 +11,12 @@ public class Drawable {
     private final PApplet canvas;
     private final Formatter formatter;
 
+    ArrayList<Float> initialBusinessYs;
+
     Drawable(PApplet canvas) {
         this.canvas = canvas;
         formatter = new Formatter();
+        initialBusinessYs = new ArrayList<Float>();
     }
 
     public void drawBusinesses() {
@@ -22,9 +25,12 @@ public class Drawable {
         Main.offsetFromTopSearch = Main.searchScroll.getY();
 
         List<ControllerInterface<?>> list = Main.searchResultController.getAll();
+        int controllerCount = 0;
         for (ControllerInterface i : list) {
             if (i.getName() != "backButton" && i.getName() != "forwardButton" && i.getName() != "homeButton" && i.getName() != "searchBar" && i.getName() != "Options")
-                i.setPosition(i.getPosition()[0], i.getPosition()[1] - (Main.searchRatio * Main.offsetFromTopSearch));
+               // i.setPosition(i.getPosition()[0], i.getPosition()[1] - (Main.searchRatio * Main.offsetFromTopSearch));
+            i.setPosition(i.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (Main.searchRatio * Main.offsetFromTopSearch));
+            controllerCount++;
         }
         Main.searchResultController.draw();
 

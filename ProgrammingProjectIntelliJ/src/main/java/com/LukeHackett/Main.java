@@ -329,4 +329,8 @@ public class Main extends PApplet {
     void setupBusinessScreen() {
         draws.setupBusinessScreen();
     }
+
+    public static Drawable getDraw(){
+        return draws;
+    }
 }

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.LukeHackett.Main.*;
+import static com.LukeHackett.Main.SEARCH_RESULT_SCREEN;
 
 public class UI {
 
@@ -164,6 +165,8 @@ public class UI {
                 label = businessButton.getCaptionLabel();
                 label.align(ControlP5.LEFT, ControlP5.TOP);
                 label.toUpperCase(false);
+
+                Main.getDraw().initialBusinessYs.add(new Float(businessButton.getPosition()[1]));
 
                 yOffset = yOffset + 200 + BORDER_OFFSET_Y;
             }
