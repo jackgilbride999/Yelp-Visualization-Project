@@ -21,11 +21,10 @@ public class ImageCrawler extends Thread {
     PImage findPhoto(Business b) {
         //Construct URL
         //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
-
+/*
         String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/xml?"
                 + "location=" + b.getLatitude() + ',' + b.getLongitude()
                 + "&name=" + b.getName().replaceAll(" ", "%20").replaceAll("'", "")
-                + "&type=" + b.getCategories().split(";")[0].replaceAll(" ", "%20")
                 + "&radius=500&key=AIzaSyAI1gmMQChQjNW5A2ye5h0tIx_c1kQLNc0";
 
         //Make XML object and parse photo reference and load the image
@@ -43,9 +42,9 @@ public class ImageCrawler extends Thread {
         } else {
             return canvas.loadImage(urlPhoto);
         }
-
-        //String urlPhoto = "businessPlaceholder.png";
-        //return canvas.loadImage(urlPhoto);
+*/
+        String urlPhoto = "businessPlaceholder.png";
+        return canvas.loadImage(urlPhoto);
     }
 
     public Business getBusiness() {
