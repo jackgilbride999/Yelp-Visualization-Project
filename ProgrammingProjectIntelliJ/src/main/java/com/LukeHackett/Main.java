@@ -305,8 +305,9 @@ public class Main extends PApplet {
 
     public void controlEvent(ControlEvent event) {
         if (event.getValue() == 10) {
-            String business = event.getLabel().split("\n")[0].replaceAll(spaceFromEdge, "");
-            selectedBusiness = qControl.getBusinessInfoName(business);
+            String[] business = event.getLabel().split("\n")[0].replaceAll(spaceFromEdge, "").split(" {2}");
+            println(business[0]);
+            selectedBusiness = qControl.getBusinessInfoName(business[0]);
             selectedBusiness.setName(qControl.getBusinessName(selectedBusiness.getBusiness_id()));
             reviewCrawler = new ReviewCrawler(selectedBusiness, qControl);
 

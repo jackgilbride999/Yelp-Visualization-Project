@@ -300,7 +300,7 @@ class queries {
         try {
             String tipQuery = "SELECT text " +
                     "FROM yelp_tip " +
-                    "WHERE MATCH (business_id) AGAINST('" + business_id + "')" +
+                    "WHERE MATCH (business_id) AGAINST(" + '\"' + business_id + '\"' + ")" +
                     " LIMIT 1";
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(tipQuery);

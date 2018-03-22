@@ -7,6 +7,8 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import static oracle.jrockit.jfr.events.Bits.floatValue;
+
 public class Drawable {
     private final PApplet canvas;
     private final Formatter formatter;
@@ -27,10 +29,11 @@ public class Drawable {
         List<ControllerInterface<?>> list = Main.searchResultController.getAll();
         int controllerCount = 0;
         for (ControllerInterface i : list) {
-            if (i.getName() != "backButton" && i.getName() != "forwardButton" && i.getName() != "homeButton" && i.getName() != "searchBar" && i.getName() != "Options")
-               // i.setPosition(i.getPosition()[0], i.getPosition()[1] - (Main.searchRatio * Main.offsetFromTopSearch));
-            i.setPosition(i.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (Main.searchRatio * Main.offsetFromTopSearch));
-            controllerCount++;
+            if (i.getName() != "backButton" && i.getName() != "forwardButton" && i.getName() != "homeButton" && i.getName() != "searchBar" && i.getName() != "Options") {
+                // i.setPosition(i.getPosition()[0], i.getPosition()[1] - (Main.searchRatio * Main.offsetFromTopSearch));
+                i.setPosition(i.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (Main.searchRatio * Main.offsetFromTopSearch));
+                controllerCount++;
+            }
         }
         Main.searchResultController.draw();
 
@@ -84,8 +87,6 @@ public class Drawable {
         chart = new CheckinsBarChart(canvas,visitorsList, name);
         return chart;
     }
-
-
 
     public void drawCheckIns(CheckinsBarChart chart) {
         chart.draw();
