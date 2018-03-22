@@ -167,9 +167,18 @@ public class Main extends PApplet {
 
 
                     String name = selectedBusiness.getName();
-                    name = name.replace("\"" ,"");
-                    CheckinsBarChart checkinChart = draws.setupCheckinGraph(name);
-                    draws.drawCheckIns(checkinChart);
+                    name = name.trim();
+                    CheckinsBarChart chart;
+                    String id = qControl.getBusinessIdByName(name.split(" ")[0]);
+
+                    ArrayList<Float> visitorsList = qControl.getBusinessCheckins(id);
+                    chart = new CheckinsBarChart(this,visitorsList, name);
+                    chart.draw();
+
+                    //StarBarChart starChart;
+                    //ArrayList<Float> starsList = qControl.getStarsList(id);
+                    //starChart = new StarBarChart(this, starsList, name);
+                    //starChart.draw();
 
 
                     //StarBarChart starChart = draws.setupStarsChart("Starbucks");
