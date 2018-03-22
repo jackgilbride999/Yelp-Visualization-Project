@@ -3,6 +3,7 @@ package com.LukeHackett;
 import controlP5.ControllerInterface;
 import controlP5.Label;
 import processing.core.PApplet;
+import java.util.ArrayList;
 
 import java.util.List;
 
@@ -64,6 +65,42 @@ public class Drawable {
 
             reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
         }
+    }
+
+    public CheckinsBarChart setupCheckinGraph(String name) {
+        CheckinsBarChart chart;
+        DbAccess db = new DbAccess();
+
+
+        String id = db.getBusinessIdByName(name);
+
+        ArrayList<Float> visitorsList = db.getBusinessCheckins(id);
+        chart = new CheckinsBarChart(canvas,visitorsList, name);
+        return chart;
+    }
+
+
+
+    public void drawCheckIns(CheckinsBarChart chart) {
+        chart.draw();
+
+    }
+
+    public StarBarChart setupStarsChart(String name) {
+        StarBarChart chart2;
+        DbAccess db2 = new DbAccess();
+
+        String idStars = db2.getBusinessIdByName(name);
+
+        ArrayList<Float> starsList = db2.getStarsList(idStars);
+
+        chart2 = new StarBarChart(canvas, starsList, name);
+        return chart2;
+    }
+
+    public void drawStarChart(StarBarChart chart2) {
+        chart2.draw();
+
     }
 
     public void setupHomeScreen() {
