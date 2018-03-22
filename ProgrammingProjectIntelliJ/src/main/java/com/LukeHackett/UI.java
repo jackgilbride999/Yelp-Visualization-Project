@@ -125,7 +125,6 @@ public class UI {
             for (int i = 0; i < businessList.size(); i++) {
                 Business b = businessList.get(i);
                 Main.businessesSearch[i] = new ImageCrawler(canvas, b);
-
                 String spacesToOuter = " ";
                 String spacesToOuterLower = " ";
                 String stars = new String(new char[b.getStars()]).replace("\0", "*");

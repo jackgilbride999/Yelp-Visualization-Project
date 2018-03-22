@@ -10,7 +10,7 @@ public class Formatter {
             String[] splitReview = r.getReview().split("");
             String formattedReview = "";
 
-            formattedReview = formattedReview + "\n" + r.getBusiness_id() + ":" + "\n";
+            formattedReview = formattedReview + r.getUser_name() + ":" + "\n";
             boolean toNextLine = false;
             int lines = 4;
             for (int i = 0; i < splitReview.length; i++) {
