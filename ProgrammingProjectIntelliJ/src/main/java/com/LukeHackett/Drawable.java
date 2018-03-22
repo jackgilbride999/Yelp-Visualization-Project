@@ -36,15 +36,19 @@ public class Drawable {
             }
         }
         Main.searchResultController.draw();
-
         int x = Main.SCREEN_X / 2 - 490;
         int y = 0;
+
         for (ImageCrawler image : Main.businessesSearch) {
             if (image != null) {
                 canvas.image(image.getBusiness().getImage(), x, y + 90 - (Main.searchRatio * Main.offsetFromTopSearch), 180, 180);
                 y = y + 200 + Main.BORDER_OFFSET_Y;
             }
         }
+        canvas.fill(0, 169, 130);
+        canvas.noStroke();
+        canvas.rect(0, 0, Main.SCREEN_X, 75);
+        Main.searchResultHeaders.draw();
     }
 
     public void drawReviews(int xStart, int yStart) {

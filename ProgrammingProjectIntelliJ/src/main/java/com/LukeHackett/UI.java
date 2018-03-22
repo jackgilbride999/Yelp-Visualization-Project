@@ -174,41 +174,28 @@ public class UI {
             searchRatio = searchScroll.getRatio();
             Main.yOffset = 0;
         }
+    }
 
-        backButton = Main.searchResultController.addButton("backButton")
+    public void searchHeader(){
+        backButton = Main.searchResultHeaders.addButton("backButton")
                 .setSize(50, 50)
                 .setPosition(SCREEN_X - 120, SCREEN_Y - 60);
         backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
         backButton.setImage(backButtonImage);
 
-        forwardButton = Main.searchResultController.addButton("forwardButton")
+        forwardButton = Main.searchResultHeaders.addButton("forwardButton")
                 .setSize(50, 50)
                 .setPosition(SCREEN_X - 60, SCREEN_Y - 60);
         forwardButtonImage.resize(forwardButton.getWidth(), forwardButton.getHeight());
         forwardButton.setImage(forwardButtonImage);
 
-        homeButton = Main.searchResultController.addButton("homeButton")
+        homeButton = Main.searchResultHeaders.addButton("homeButton")
                 .setSize(60, 60)
                 .setPosition(10, 10);
         homeButtonImage.resize(homeButton.getWidth(), homeButton.getHeight());
         homeButton.setImage(homeButtonImage);
 
-        int searchbarHeight = 40;
-        int searchbarWidth = 3 * (SCREEN_X / 4);
-        searchBarSearch = Main.searchResultController.addTextfield("searchBar")
-                .setCaptionLabel("")
-                .setColorBackground(canvas.color(255, 255, 255))
-                .setPosition(SCREEN_X / 2 - searchbarWidth / 2, 20)
-                .setSize(searchbarWidth - 200, searchbarHeight)
-                .setFont(searchFont)
-                .setFocus(false)
-                .setColor(canvas.color(0, 0, 0))
-                .setColorCursor(canvas.color(0, 0, 0))
-                .setColor(canvas.color(0, 0, 0))
-                .setColorActive(canvas.color(0, 0, 0))
-        ;
-
-        searchOptionsSearch = Main.searchResultController.addScrollableList("Options")
+        searchOptionsSearch = Main.searchResultHeaders.addScrollableList("Options")
                 .addItem("By Category", 0)
                 .addItem("By Name", 1)
                 .addItem("By City", 2)
@@ -234,5 +221,20 @@ public class UI {
         label.getStyle()
                 .setPaddingLeft(5)
                 .setPaddingTop(10);
+
+        int searchbarHeight = 40;
+        int searchbarWidth = 3 * (SCREEN_X / 4);
+        searchBarSearch = Main.searchResultHeaders.addTextfield("searchBar")
+                .setCaptionLabel("")
+                .setColorBackground(canvas.color(255, 255, 255))
+                .setPosition(SCREEN_X / 2 - searchbarWidth / 2, 20)
+                .setSize(searchbarWidth - 200, searchbarHeight)
+                .setFont(searchFont)
+                .setFocus(false)
+                .setColor(canvas.color(0, 0, 0))
+                .setColorCursor(canvas.color(0, 0, 0))
+                .setColor(canvas.color(0, 0, 0))
+                .setColorActive(canvas.color(0, 0, 0))
+        ;
     }
 }

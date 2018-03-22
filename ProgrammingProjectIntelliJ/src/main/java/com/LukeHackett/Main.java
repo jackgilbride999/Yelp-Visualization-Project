@@ -32,6 +32,7 @@ public class Main extends PApplet {
 
     public static ControlP5 homeScreenController;
     public static ControlP5 searchResultController;
+    public static ControlP5 searchResultHeaders;
     public static ControlP5 businessScreenController;
 
     public static Textfield searchBar;
@@ -106,6 +107,7 @@ public class Main extends PApplet {
 
         homeScreenController = new ControlP5(this);
         searchResultController = new ControlP5(this);
+        searchResultHeaders = new ControlP5(this);
         businessScreenController = new ControlP5(this);
 
         background(0, 169, 154);
@@ -127,9 +129,11 @@ public class Main extends PApplet {
 
         //Control P5 setup
         setupHomeScreen();
+        setupSearchHeader();
         setupBusinessScreen();
         homeScreenController.setAutoDraw(false);
         searchResultController.setAutoDraw(false);
+        searchResultHeaders.setAutoDraw(false);
         businessScreenController.setAutoDraw(false);
         //End Control P5 setup
     }
@@ -147,9 +151,6 @@ public class Main extends PApplet {
                     homeScreenController.draw();
                     break;
                 case SEARCH_RESULT_SCREEN:
-                    fill(0, 169, 154);
-                    noStroke();
-                    rect(0, 0, SCREEN_X, 75);
                     drawBusinesses();
                     break;
                 case BUSINESS_SCREEN:
@@ -334,6 +335,10 @@ public class Main extends PApplet {
 
     void setupHomeScreen() {
         draws.setupHomeScreen();
+    }
+
+    public void setupSearchHeader() {
+        UI.searchHeader();
     }
 
     void setupBusinessScreen() {
