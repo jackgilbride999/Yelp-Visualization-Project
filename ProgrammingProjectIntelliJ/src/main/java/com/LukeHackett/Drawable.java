@@ -80,8 +80,6 @@ public class Drawable {
         }
     }
 
-
-
     public void drawCheckIns(CheckinsBarChart chart) {
         chart.draw();
 
