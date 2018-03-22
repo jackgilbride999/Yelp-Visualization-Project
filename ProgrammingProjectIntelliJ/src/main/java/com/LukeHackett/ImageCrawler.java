@@ -21,11 +21,11 @@ public class ImageCrawler extends Thread {
     PImage findPhoto(Business b) {
         //Construct URL
         //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
-/*
+
         String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/xml?"
                 + "location=" + b.getLatitude() + ',' + b.getLongitude()
                 + "&name=" + b.getName().replaceAll(" ", "%20").replaceAll("'", "")
-                + "&radius=500&key=AIzaSyAI1gmMQChQjNW5A2ye5h0tIx_c1kQLNc0";
+                + "&radius=500&key=AIzaSyAdNw5lE_KJe9uhRRb2fKi2U8Ex63HfYL8";
 
         //Make XML object and parse photo reference and load the image
         XML xmlPlace = canvas.loadXML(url);
@@ -34,7 +34,7 @@ public class ImageCrawler extends Thread {
             String photoReference;
             try {
                 if ((photoReference = xmlPlace.getChild("result").getChild("photo").getChild("photo_reference").getContent()) != null)
-                    urlPhoto = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=180&maxheight=180&photoreference=" + photoReference + "&key=AIzaSyAI1gmMQChQjNW5A2ye5h0tIx_c1kQLNc0";
+                    urlPhoto = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=180&maxheight=180&photoreference=" + photoReference + "&key=AIzaSyAdNw5lE_KJe9uhRRb2fKi2U8Ex63HfYL8";
             } catch (Exception e){
                 urlPhoto = xmlPlace.getChild("result").getChild("icon").getContent();
             }
@@ -42,9 +42,9 @@ public class ImageCrawler extends Thread {
         } else {
             return canvas.loadImage(urlPhoto);
         }
-*/
-        String urlPhoto = "businessPlaceholder.png";
-        return canvas.loadImage(urlPhoto);
+
+       // String urlPhoto = "businessPlaceholder.png";
+       // return canvas.loadImage(urlPhoto);
     }
 
     public Business getBusiness() {
