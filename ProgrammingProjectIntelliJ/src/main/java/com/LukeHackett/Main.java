@@ -79,6 +79,9 @@ public class Main extends PApplet {
     public static int searchMouseDifference;
     public static boolean searchScrollPressed;
 
+
+
+
     public static void main(String[] args) {
         PApplet.main("com.LukeHackett.Main");
     }
@@ -97,6 +100,9 @@ public class Main extends PApplet {
         while (textWidth(spaceFromEdge) < 120) {
             spaceFromEdge += " ";
         }
+
+
+
 
         homeScreenController = new ControlP5(this);
         searchResultController = new ControlP5(this);
@@ -153,7 +159,23 @@ public class Main extends PApplet {
                     businessScreenController.draw();
                     fill(255);
                     text(selectedBusiness.getName(), 100, 100 - offsetFromTop);
+
+
                     drawReviews(10, 510);
+
+                    //System.out.println(selectedBusiness.getName());
+
+
+                    String name = selectedBusiness.getName();
+                    name = name.replace("\"" ,"");
+                    CheckinsBarChart checkinChart = draws.setupCheckinGraph(name);
+                    draws.drawCheckIns(checkinChart);
+
+
+                    //StarBarChart starChart = draws.setupStarsChart("Starbucks");
+                    //draws.drawStarChart(starChart);
+                    // the data isn't getting loaded in
+
                     break;
             }
         } else {
