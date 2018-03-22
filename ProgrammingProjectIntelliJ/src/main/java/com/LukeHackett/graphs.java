@@ -93,14 +93,14 @@ class StarBarChart {
 
     void draw() {
         canvas.background(255);
-        barChart2.draw(1010, 30, canvas.width - 1000, canvas.height - 600);
+        barChart2.draw(1010, 400, canvas.width - 1000, canvas.height - 600);
 
         canvas.fill(100);
         canvas.textSize(20);
-        canvas.text("Average Star Rating for " + name, 1010, 30);
+        canvas.text("Average Star Rating for " + name, 1010, 400);
         canvas.textSize(15);
-        canvas.text("Change over time", 1010, 30);
-        canvas.text("Average rating over year: " + String.format("%.2f", avg), 1010, 30);
+        canvas.text("Change over time", 1010, 420);
+        canvas.text("Average rating over year: " + String.format("%.2f", avg), 1010, 440);
     }
 
 }
@@ -149,12 +149,12 @@ class CheckinsBarChart {
 
     void draw() {
         // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
-        barChart.draw(1010, 180, canvas.width - 1000, canvas.height - 600);
+        barChart.draw(1010, 60, canvas.width - 1000, canvas.height - 600);
         canvas.fill(80);
         canvas.textSize(20);
-        canvas.text(name, 1030, 160);
+        canvas.text(name, 1030, 40);
         canvas.textSize(15);
-        canvas.text("check-in statistics", 1030, 180);
+        canvas.text("check-in statistics", 1030, 60);
 
     }
 }
