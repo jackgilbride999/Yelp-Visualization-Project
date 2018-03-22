@@ -109,6 +109,20 @@ public class Drawable {
 
     }
 
+    public boolean starChartInvalid(StarBarChart chart) {
+	if(chart == null) {
+		return true;
+	}
+	return false;
+    }
+
+	public boolean checkinChartInvalid(CheckinsBarChart chart) {
+	if(chart == null) {
+		return true;
+	}
+	return false;
+    }	
+
     public void setupHomeScreen() {
         int searchbarHeight = 40;
         int searchbarWidth = 3 * (Main.SCREEN_X / 4);
