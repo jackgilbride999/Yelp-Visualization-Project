@@ -59,21 +59,19 @@ public class Drawable {
             }
         }
         formatter.formatReviews(Main.reviewCrawler.getReviews());
-        /*
-        for (Review r : Main.reviewCrawler.getReviews()) {
-            Main.println(r.getFormattedReview());
-        }
-        */
-
         int reviewOffset = yStart;
         int borderOffsetY = 20;
         int borderOffsetX = xStart;
         float lineHeight = canvas.textAscent() + canvas.textDescent();
+        int reviewBoxHeight;
+        String[] dateFormat;
         for (Review r : Main.reviewCrawler.getReviews()) {
+            dateFormat = r.getDate().split(" ");
+            reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
             canvas.fill(175, 255, 248);
-            canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5);
+            canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, reviewBoxHeight);
             canvas.fill(0);
-            canvas.text(r.getDate(), Main.SCREEN_X - canvas.textWidth(r.getDate()) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
+            canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
             canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
 
             reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
