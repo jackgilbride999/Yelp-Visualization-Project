@@ -168,23 +168,28 @@ public class Main extends PApplet {
 
 
                     String name = selectedBusiness.getName();
-                    name = name.trim();
+                    name = name.replace("\"", "");
                     CheckinsBarChart chart;
+
                     String id = qControl.getBusinessIdByName(name.split(" ")[0]);
 
                     ArrayList<Float> visitorsList = qControl.getBusinessCheckins(id);
+                    System.out.println("length:"+visitorsList.size());
                     chart = new CheckinsBarChart(this,visitorsList, name);
                     chart.draw();
 
                     //StarBarChart starChart;
-                    //ArrayList<Float> starsList = qControl.getStarsList(id);
-                    //starChart = new StarBarChart(this, starsList, name);
+                   //ArrayList<Float> starsList = qControl.getStarsList(id);
+                   // starChart = new StarBarChart(this, starsList, name);
                     //starChart.draw();
 
 
-                    //StarBarChart starChart = draws.setupStarsChart("Starbucks");
-                    //draws.drawStarChart(starChart);
-                    // the data isn't getting loaded in
+
+
+
+
+
+
 
                     break;
             }

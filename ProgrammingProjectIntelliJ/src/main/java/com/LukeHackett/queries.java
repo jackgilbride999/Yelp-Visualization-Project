@@ -101,7 +101,6 @@ class queries {
         try {
             while(results.next())
             {
-
                 float stars = Float.parseFloat(results.getString("stars"));
 
                 starsList.add(stars);
@@ -425,6 +424,7 @@ class queries {
     }
 
     ArrayList<Integer> visitorsList = new ArrayList<Integer>();
+
 
     public String getBusinessVisitors(String business_id) {
         try {
