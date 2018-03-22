@@ -135,6 +135,26 @@ class DbAccess {
   }
 
 
+
+    public String getBusinessName(String business_id) {
+        try {
+            String businessNameQuery = "SELECT name " +
+                    "FROM yelp_business " +
+                    "WHERE MATCH(business_id) " +
+                    "AGAINST (" + '"' + business_id + '"' + ")" +
+                    " LIMIT " + 1;
+            java.sql.Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(businessNameQuery);
+            while (results.next()) {
+                return results.getString("name");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
   public ArrayList<Float> getBusinessCheckins(String businessId)
   {
          ArrayList<Float> businessCheckins = new ArrayList<Float>();
