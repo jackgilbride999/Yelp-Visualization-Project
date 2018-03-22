@@ -72,7 +72,7 @@ public class UI {
     }
 
     public ArrayList<Business> forwardButton() {
-        if (Main.searchResultController.getAll().size() == 15) {
+        if (Main.searchResultController.getAll().size() == 10) {
             Main.currentSearch += 10;
             return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);
         }
