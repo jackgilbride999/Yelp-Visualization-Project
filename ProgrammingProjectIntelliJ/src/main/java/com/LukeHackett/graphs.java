@@ -82,7 +82,7 @@ class StarBarChart {
         barChart2.showCategoryAxis(true);
 
         // Bar colours and appearance
-        barChart2.setBarColour(canvas.color(128, 179, 255));
+        barChart2.setBarColour(canvas.color(65, 244, 169));
         barChart2.setBarGap(10);
 
         // Bar layout
@@ -93,14 +93,14 @@ class StarBarChart {
 
     void draw() {
         canvas.background(255);
-        barChart2.draw(600, 30, canvas.width - 1200, canvas.height - 700);
+        barChart2.draw(1010, 30, canvas.width - 1000, canvas.height - 600);
 
-        canvas.fill(120);
+        canvas.fill(100);
         canvas.textSize(20);
-        canvas.text("Average Star Rating for " + name, 600, 20);
+        canvas.text("Average Star Rating for " + name, 1010, 30);
         canvas.textSize(15);
-        canvas.text("Change over time", 600, 40);
-        canvas.text("Average rating over year: " + String.format("%.2f", avg), 730, 40);
+        canvas.text("Change over time", 1010, 30);
+        canvas.text("Average rating over year: " + String.format("%.2f", avg), 1010, 30);
     }
 
 }
@@ -140,7 +140,7 @@ class CheckinsBarChart {
         barChart.showCategoryAxis(true);
 
         // Bar colours and appearance
-        barChart.setBarColour(canvas.color(200, 80, 80, 150));
+        barChart.setBarColour(canvas.color(65, 244, 169));
         barChart.setBarGap(10);
 
         // Bar layout
@@ -149,11 +149,12 @@ class CheckinsBarChart {
 
     void draw() {
         // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
-        barChart.draw(15, 30, canvas.width - 1300, canvas.height - 700);
-        canvas.fill(120);
+        barChart.draw(1010, 180, canvas.width - 1000, canvas.height - 600);
+        canvas.fill(80);
         canvas.textSize(20);
-        canvas.text(name, 30, 20);
+        canvas.text(name, 1030, 160);
         canvas.textSize(15);
+        canvas.text("check-in statistics", 1030, 180);
 
     }
 }
