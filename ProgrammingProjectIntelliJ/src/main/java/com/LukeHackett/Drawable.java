@@ -76,17 +76,7 @@ public class Drawable {
         }
     }
 
-    public CheckinsBarChart setupCheckinGraph(String name) {
-        CheckinsBarChart chart;
-        DbAccess db = new DbAccess();
 
-
-        String id = db.getBusinessIdByName(name);
-
-        ArrayList<Float> visitorsList = db.getBusinessCheckins(id);
-        chart = new CheckinsBarChart(canvas,visitorsList, name);
-        return chart;
-    }
 
     public void drawCheckIns(CheckinsBarChart chart) {
         chart.draw();
