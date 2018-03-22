@@ -51,6 +51,7 @@ class StarBarChart {
 
     public StarBarChart(PApplet canvas, ArrayList<Float> inputList, String name) {
         barChart2 = new BarChart(canvas);
+
         starsArray = new float[inputList.size()];
         max = 0;
         for (int i = 0; i < inputList.size(); i++) {
@@ -65,7 +66,8 @@ class StarBarChart {
             sum += starsArray[i];
         }
         avg = sum / 12;
-        // Draws the chart in the sketch        
+        // Draws the chart in the sketch
+
         barChart2.setData(starsArray);
         // Scaling
 
@@ -93,14 +95,14 @@ class StarBarChart {
 
     void draw() {
         canvas.background(255);
-        barChart2.draw(1010, 400, canvas.width - 1000, canvas.height - 600);
+        barChart2.draw(1010, 200, canvas.width - 1000, canvas.height - 600);
 
         canvas.fill(100);
         canvas.textSize(20);
-        canvas.text("Average Star Rating for " + name, 1010, 400);
+        canvas.text("Average Star Rating for " + name, 1010, 200);
         canvas.textSize(15);
-        canvas.text("Change over time", 1010, 420);
-        canvas.text("Average rating over year: " + String.format("%.2f", avg), 1010, 440);
+        canvas.text("Change over time", 1010, 220);
+        canvas.text("Average rating over year: " + String.format("%.2f", avg), 1010, 240);
     }
 
 }
