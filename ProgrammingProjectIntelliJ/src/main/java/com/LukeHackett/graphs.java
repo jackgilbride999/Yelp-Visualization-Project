@@ -87,9 +87,9 @@ class StarBarChart {
         barChart2.draw(1010, 300, canvas.width - 1000, canvas.height - 600);
         canvas.fill(80);
         canvas.textSize(15);
-        canvas.text(name, 1030, 280);
+        canvas.text(name, 1010, 280);
         canvas.textSize(15);
-        canvas.text("Change in rating over time.", 1030, 300);
+        canvas.text("Change in rating over time.", 1010, 300);
 
 
 
@@ -145,9 +145,9 @@ class CheckinsBarChart {
             barChart.draw(1010, 60, canvas.width - 1000, canvas.height - 600);
             canvas.fill(80);
             canvas.textSize(15);
-            canvas.text(name, 1030, 40);
+            canvas.text(name, 1010, 40);
             canvas.textSize(15);
-            canvas.text("check-in statistics.", 1030, 60);
+            canvas.text("check-in statistics.", 1010, 60);
 
 
 
