@@ -187,6 +187,8 @@ public class Main extends PApplet {
 
                     }
 
+                    /*
+
                     StarBarChart starChart;
                     String id2 = qControl.getBusinessID(name.split(" ")[0]);
                     ArrayList<Float> starsList = qControl.getStarsList(id2);
@@ -206,6 +208,7 @@ public class Main extends PApplet {
 
                     }
 
+                */
 
 
 
