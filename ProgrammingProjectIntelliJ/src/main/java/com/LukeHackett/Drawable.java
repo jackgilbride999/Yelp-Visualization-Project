@@ -78,10 +78,15 @@ public class Drawable {
         }
     }
 
-    public void drawCheckIns(CheckinsBarChart chart) {
-        chart.draw();
+    public void drawFailedCheckIns() {
+        canvas.text("No Check-Ins available",1010,60);
 
     }
+
+    public void drawFailedStars() {
+        canvas.text("No ratings available",1030,300);
+    }
+
 
     public StarBarChart setupStarsChart(String name) {
         StarBarChart chart2;
