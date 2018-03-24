@@ -95,17 +95,35 @@ class queries {
     {
         ArrayList<Float> starsList= new ArrayList<Float>();
 
-        String query = "SELECT stars FROM yelp_review WHERE business_id = '"+businessId+"' LIMIT 12";
+        for (int i=0; i<12;i++) {
+            starsList.add(0.0f);
+        }
+        String query = "SELECT stars FROM yelp_review WHERE business_id = 'ixGb4NLfgD90wZHlw94rLw' LIMIT 12";
         // set the query string as your needed query
         ResultSet results = getQueryResult(query);
         try {
             while(results.next())
             {
                 float stars = Float.parseFloat(results.getString("stars"));
-
                 starsList.add(stars);
             }
-            return starsList;
+            int counter =0;
+            for(int i =0; i < 12; i++) {
+                if(starsList.get(i) == 0.0f) {
+                    counter++;
+
+                }
+            }
+            if(counter == 12) {
+                return null;
+
+            }
+            else {
+                return starsList;
+            }
+
+
+
         } catch (Exception e){
             println(e);
             return null;
@@ -143,11 +161,14 @@ class queries {
         String query = "SELECT weekday,SUM(checkins) AS checkins FROM yelp_checkin WHERE business_id = '"+businessId+"' GROUP BY weekday ORDER BY weekday";
         // set the query string as your needed query
         ResultSet results = getQueryResult(query);
+
+
         try {
             while(results.next())
             {
                 String weekday = results.getString("weekday") ;
                 float checkins = Float.parseFloat(results.getString("checkins"));
+
 
                 if( weekday.equals("Mon"))
                     businessCheckins.set(0,checkins);
@@ -164,7 +185,20 @@ class queries {
                 if( weekday.equals("Sun"))
                     businessCheckins.set(6,checkins);
             }
-            return businessCheckins; //<>//
+            int count =0;
+            for(int i =0; i < 7;i++) {
+               if(businessCheckins.get(i) == 0.0f)  {
+                   count++;
+
+               }
+            }
+            if(count == 7) {
+                return null;
+            }
+            else {
+                return businessCheckins;
+            }
+
         } catch (Exception e){
             println(e);
             return null;

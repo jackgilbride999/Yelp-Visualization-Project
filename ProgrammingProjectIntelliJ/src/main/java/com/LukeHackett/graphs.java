@@ -151,12 +151,15 @@ class CheckinsBarChart {
 
     void draw() {
         // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
-        barChart.draw(1010, 60, canvas.width - 1000, canvas.height - 600);
-        canvas.fill(80);
-        canvas.textSize(20);
-        canvas.text(name, 1030, 40);
-        canvas.textSize(15);
-        canvas.text("check-in statistics", 1030, 60);
+
+            barChart.draw(1010, 60, canvas.width - 1000, canvas.height - 600);
+            canvas.fill(80);
+            canvas.textSize(13);
+            canvas.text(name, 1030, 40);
+            canvas.textSize(13);
+            canvas.text("check-in statistics", 1030, 60);
+
+
 
     }
 }
