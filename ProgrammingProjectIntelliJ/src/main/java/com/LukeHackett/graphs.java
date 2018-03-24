@@ -42,35 +42,25 @@ void setup()
 
 class StarBarChart {
     private BarChart barChart2;
-    private float[] starsArray;
+    private float[] starArray;
     private String name;
+    private float max;
     private PApplet canvas;
-    float max;
-    float avg;
-    float sum;
 
     public StarBarChart(PApplet canvas, ArrayList<Float> inputList, String name) {
+        this.canvas = canvas;
         barChart2 = new BarChart(canvas);
-
-        starsArray = new float[inputList.size()];
+        starArray = new float[inputList.size()];
         max = 0;
         for (int i = 0; i < inputList.size(); i++) {
 
-            starsArray[i] = inputList.get(i);
-            if (max < starsArray[i])
-                max = starsArray[i];
+            starArray[i] = inputList.get(i);
+            if (max < starArray[i])
+                max = starArray[i];
         }
         this.name = name;
-
-        for (int i = 0; i < starsArray.length; i++) {
-            sum += starsArray[i];
-        }
-        avg = sum / 12;
         // Draws the chart in the sketch
-
-        barChart2.setData(starsArray);
-        // Scaling
-
+        barChart2.setData(starArray);
         // Scaling
         barChart2.setMinValue(0);
         barChart2.setMaxValue(max + 2);
@@ -80,32 +70,32 @@ class StarBarChart {
 
         barChart2.showValueAxis(true);
         barChart2.setValueFormat("");
-        barChart2.setBarLabels(new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"});
+        barChart2.setBarLabels(new String[]{"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept", "Oct", "Nov", "Dec",});
         barChart2.showCategoryAxis(true);
 
         // Bar colours and appearance
         barChart2.setBarColour(canvas.color(65, 244, 169));
-        barChart2.setBarGap(10);
+        barChart2.setBarGap(5);
 
         // Bar layout
-        barChart2.transposeAxes(false);
+        barChart2.transposeAxes(true);
     }
-
-// Draws the chart in the sketch
 
     void draw() {
-        canvas.background(255);
-        barChart2.draw(1010, 200, canvas.width - 1000, canvas.height - 600);
+        // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
 
-        canvas.fill(100);
-        canvas.textSize(20);
-        canvas.text("Average Star Rating for " + name, 1010, 200);
+        barChart2.draw(1010, 300, canvas.width - 1000, canvas.height - 600);
+        canvas.fill(80);
         canvas.textSize(15);
-        canvas.text("Change over time", 1010, 220);
-        canvas.text("Average rating over year: " + String.format("%.2f", avg), 1010, 240);
-    }
+        canvas.text(name, 1030, 280);
+        canvas.textSize(15);
+        canvas.text("Change in rating over time.", 1030, 300);
 
+
+
+    }
 }
+
 
 
 class CheckinsBarChart {
@@ -154,10 +144,10 @@ class CheckinsBarChart {
 
             barChart.draw(1010, 60, canvas.width - 1000, canvas.height - 600);
             canvas.fill(80);
-            canvas.textSize(13);
+            canvas.textSize(15);
             canvas.text(name, 1030, 40);
-            canvas.textSize(13);
-            canvas.text("check-in statistics", 1030, 60);
+            canvas.textSize(15);
+            canvas.text("check-in statistics.", 1030, 60);
 
 
 
