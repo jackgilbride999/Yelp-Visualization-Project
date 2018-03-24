@@ -91,43 +91,32 @@ class queries {
     }
 
 
+
+
     public ArrayList<Float> getStarsList(String businessId)
     {
         ArrayList<Float> starsList= new ArrayList<Float>();
 
-        for (int i=0; i<12;i++) {
-            starsList.add(0.0f);
-        }
-        String query = "SELECT stars FROM yelp_review WHERE business_id = 'ixGb4NLfgD90wZHlw94rLw' LIMIT 12";
-        // set the query string as your needed query
-        ResultSet results = getQueryResult(query);
+
+
+
         try {
-            while(results.next())
-            {
-                float stars = Float.parseFloat(results.getString("stars"));
-                starsList.add(stars);
-            }
-            int counter =0;
-            for(int i =0; i < 12; i++) {
-                if(starsList.get(i) == 0.0f) {
-                    counter++;
+            String query ="SELECT stars FROM yelp_review WHERE MATCH(business_id) AGAINST " + "(" + '\'' + businessId + '\'' + ") LIMIT 12";
+            java.sql.Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(query);
 
-                }
+            while (results.next()) {
+                starsList.add(Float.parseFloat(results.getString("stars")));
             }
-            if(counter == 12) {
+            if(starsList == null) {
                 return null;
-
             }
-            else {
-                return starsList;
-            }
-
-
-
-        } catch (Exception e){
-            println(e);
-            return null;
+            else return starsList;
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+        return starsList;
+
     }
 
 
