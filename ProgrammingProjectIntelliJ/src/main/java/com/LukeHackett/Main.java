@@ -164,8 +164,8 @@ public class Main extends PApplet {
 
                     drawReviews(10, 510);
 
-                    //System.out.println(selectedBusiness.getName());
 
+                    // checkins chart, working for all with case if there is no chart
 
                     String name = selectedBusiness.getName();
                     name = name.replace("\"", "");
@@ -174,15 +174,37 @@ public class Main extends PApplet {
                     String id = qControl.getBusinessIdByName(name.split(" ")[0]);
 
                     ArrayList<Float> visitorsList = qControl.getBusinessCheckins(id);
-                    System.out.println("length:"+visitorsList.size());
-                    chart = new CheckinsBarChart(this,visitorsList, name);
-                    chart.draw();
+                    if(visitorsList == null) {
 
-                    //StarBarChart starChart;
-                   //ArrayList<Float> starsList = qControl.getStarsList(id);
-                   // starChart = new StarBarChart(this, starsList, name);
-                    //starChart.draw();
+                        System.out.println("Checkins not available for "+name);
+                        draws.drawFailedCheckIns();
+                    }
+                    else {
 
+
+                        chart = new CheckinsBarChart(this,visitorsList, name);
+                        chart.draw();
+
+                    }
+
+                    StarBarChart starChart;
+                    String id2 = qControl.getBusinessID(name.split(" ")[0]);
+                    ArrayList<Float> starsList = qControl.getStarsList(id2);
+                 ;
+
+                    if(starsList == null) {
+
+                        System.out.println("Ratings not available for "+name);
+                        draws.drawFailedStars();
+                        break;
+                    }
+                    else {
+
+
+                        starChart = new StarBarChart(this,starsList, name);
+                        starChart.draw();
+
+                    }
 
 
 
