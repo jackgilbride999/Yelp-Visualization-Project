@@ -88,22 +88,10 @@ public class Drawable {
     }
 
 
-    public StarBarChart setupStarsChart(String name) {
-        StarBarChart chart2;
-        DbAccess db2 = new DbAccess();
 
-        String idStars = db2.getBusinessIdByName(name);
 
-        ArrayList<Float> starsList = db2.getStarsList(idStars);
 
-        chart2 = new StarBarChart(canvas, starsList, name);
-        return chart2;
-    }
 
-    public void drawStarChart(StarBarChart chart2) {
-        chart2.draw();
-
-    }
 
     public boolean starChartInvalid(StarBarChart chart) {
 	if(chart == null) {
