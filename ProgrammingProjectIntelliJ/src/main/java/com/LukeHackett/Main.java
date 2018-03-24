@@ -187,29 +187,24 @@ public class Main extends PApplet {
 
                     }
 
-                    /*
+
 
                     StarBarChart starChart;
                     String id2 = qControl.getBusinessID(name.split(" ")[0]);
+
                     ArrayList<Float> starsList = qControl.getStarsList(id2);
-                 ;
 
                     if(starsList == null) {
-
                         System.out.println("Ratings not available for "+name);
                         draws.drawFailedStars();
-                        break;
+
                     }
                     else {
 
-
-                        starChart = new StarBarChart(this,starsList, name);
+                        starChart = new StarBarChart(this, starsList, name);
                         starChart.draw();
 
                     }
-
-                */
-
 
 
 
