@@ -17,6 +17,7 @@ public class Business {
     private int is_open;
     private String categories;
     private PImage image;
+    private boolean parking;
 
     public Business(String business_id, String name, String neighborhood, String address, String city, String state, String postal_code, double latitude, double longitude, double stars, int review_count, int is_open, String categories) {
         this.business_id = business_id;
@@ -32,6 +33,7 @@ public class Business {
         this.review_count = review_count;
         this.is_open = is_open;
         this.categories = categories;
+        this.parking = false;
     }
 
     public String getBusiness_id() {
@@ -144,6 +146,14 @@ public class Business {
 
     public void setImage(PImage image) {
         this.image = image;
+    }
+    
+    public void setParking(boolean parking){
+        this.parking = parking;
+    }
+
+    public boolean getParking(){
+        return parking;
     }
 
     @Override

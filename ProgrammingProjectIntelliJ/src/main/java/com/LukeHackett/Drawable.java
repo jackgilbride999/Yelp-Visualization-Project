@@ -1,5 +1,6 @@
 package com.LukeHackett;
 
+import controlP5.Button;
 import controlP5.ControllerInterface;
 import controlP5.Label;
 import processing.core.PApplet;
@@ -27,15 +28,25 @@ public class Drawable {
         Main.previousSearchMouseY = canvas.mouseY;
         Main.offsetFromTopSearch = Main.searchScroll.getY();
 
-        List<ControllerInterface<?>> list = Main.searchResultController.getAll();
         int controllerCount = 0;
-        for (ControllerInterface i : list) {
-            if (i.getName() != "backButton" && i.getName() != "forwardButton" && i.getName() != "homeButton" && i.getName() != "searchBar" && i.getName() != "Options") {
-                // i.setPosition(i.getPosition()[0], i.getPosition()[1] - (Main.searchRatio * Main.offsetFromTopSearch));
-                i.setPosition(i.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (Main.searchRatio * Main.offsetFromTopSearch));
-                controllerCount++;
+        for(Button b : Main.searchResultButtons){
+            b.setPosition(b.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (Main.searchRatio * Main.offsetFromTopSearch));
+            controllerCount++;
+
+            if(b.getPosition()[1] < 75){
+                b.setValueSelf(15);
+                b.setColorBackground(canvas.color(0, 169, 154));
+                b.setColorForeground(canvas.color(0, 169, 154));
+                b.setColorActive(canvas.color(0, 169, 154));
+            }
+            else {
+                b.setValueSelf(10);
+                b.setColorBackground(canvas.color(0, 169, 154));
+                b.setColorForeground(canvas.color(0, 135, 122));
+                b.setColorActive(canvas.color(0, 100, 100));
             }
         }
+
         Main.searchResultController.draw();
         int x = 20;
         int y = 0;
@@ -64,6 +75,17 @@ public class Drawable {
                     starX += 25;
                 }
 
+                boolean parking = image.getBusiness().getParking();
+                /*
+                ATTRIBUTE BUTTONS IN PROGRESS - LH
+
+                if(parking){
+                    //canvas.image(Main.Parking, 100, y, 20, 20);
+                }
+                else{
+                    //canvas.image(Main.noParking, 100, y, 20, 20);
+                }
+                */
                 //Increment y for business
                 y = y + 200 + Main.BORDER_OFFSET_Y;
             }
@@ -75,6 +97,7 @@ public class Drawable {
         canvas.textSize(32);
         canvas.text("Search results for " + Main.searchString, Main.SCREEN_X/2-canvas.textWidth("Search results for " + Main.searchString)/2, 40);
         canvas.textSize(12);
+
         Main.searchResultHeaders.draw();
         Main.searchScroll.draw(0);
     }

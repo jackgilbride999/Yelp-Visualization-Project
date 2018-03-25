@@ -7,6 +7,7 @@ import controlP5.Label;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import static com.LukeHackett.Main.*;
@@ -144,7 +145,21 @@ public class UI {
                     spacesToOuterLower += " ";
                 }
 
-                b.setImage(canvas.loadImage("businessPlaceholder.png"));
+                b.setImage(Main.placeHolderImage);
+                LinkedHashMap<String, String> attributes = qControl.getBusinessAttributes(b.getBusiness_id());
+
+                if(attributes.size() > 0){
+                    if(!attributes.get("BusinessParking_garage").equals("Na")
+                            || !attributes.get("BusinessParking_street").equals("Na")
+                            || !attributes.get("BusinessParking_lot").equals("Na")) {
+                        if (!attributes.get("BusinessParking_garage").equals("False")
+                                || !attributes.get("BusinessParking_street").equals("False")
+                                || !attributes.get("BusinessParking_lot").equals("False")) {
+                            //b.setParking(true);
+                        }
+                    }
+                }
+
                 businessButton = Main.searchResultController.addButton(b.getBusiness_id())
                         .setValueSelf(10)
                         .setLabel(Main.spaceFromEdge + b.getName()
@@ -165,26 +180,27 @@ public class UI {
                 label.align(ControlP5.LEFT, ControlP5.TOP);
                 label.toUpperCase(false);
 
-                Main.getDraw().initialBusinessYs.add(new Float(businessButton.getPosition()[1]));
+                Main.getDraw().initialBusinessYs.add(businessButton.getPosition()[1]);
+                Main.searchResultButtons[i] = businessButton;
 
                 yOffset = yOffset + 200 + BORDER_OFFSET_Y;
             }
-            println(searchResultController.getAll().size());
+
             float totalHeight = (searchResultController.getAll().size())*200+180;
-            Main.searchScroll = new Scrollbar(canvas, 10, totalHeight, canvas.color(123), SCROLLBAR_EVENT);
+            Main.searchScroll = new Scrollbar(canvas, 10, totalHeight, canvas.color(150), SCROLLBAR_EVENT);
             Main.searchRatio = searchScroll.getRatio();
             Main.yOffset = 0;
         }
     }
 
     public void searchHeader(){
-        backButton = Main.searchResultHeaders.addButton("backButton")
+        Main.backButton = Main.searchResultHeaders.addButton("backButton")
                 .setSize(50, 50)
                 .setPosition(SCREEN_X - 120, 10);
         backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
         backButton.setImage(backButtonImage);
 
-        forwardButton = Main.searchResultHeaders.addButton("forwardButton")
+        Main.forwardButton = Main.searchResultHeaders.addButton("forwardButton")
                 .setSize(50, 50)
                 .setPosition(SCREEN_X - 60, 10);
         forwardButtonImage.resize(forwardButton.getWidth(), forwardButton.getHeight());
