@@ -306,7 +306,7 @@ public class Main extends PApplet {
 
     public void forwardButton() {
         ArrayList<Business> businessList = UI.forwardButton();
-        buttonBusinessList(businessList);
+        if(businessList != null) buttonBusinessList(businessList);
     }
 
     public void homeButton() {
@@ -333,6 +333,7 @@ public class Main extends PApplet {
 
     public void nightlifeButton() {
         ArrayList<Business> businessList = UI.nightlifeButton(qControl);
+        buttonBusinessList(businessList);
         searchString = "nightlife";
     }
 

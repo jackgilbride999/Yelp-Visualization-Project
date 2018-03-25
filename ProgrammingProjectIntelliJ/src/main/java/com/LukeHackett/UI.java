@@ -125,9 +125,7 @@ public class UI {
             for (int i = 0; i < businessList.size(); i++) {
                 Business b = businessList.get(i);
                 Main.businessesSearch[i] = new ImageCrawler(canvas, b);
-                String spacesToOuter = " ";
-                String spacesToOuterLower = " ";
-                String stars = new String(new char[b.getStars()]).replace("\0", "*");
+
                 String[] catSplit = b.getCategories().split(";");
                 StringBuilder categories = new StringBuilder();
                 for(int j = 0; j < 3 && j < catSplit.length; j++) {
@@ -135,11 +133,14 @@ public class UI {
                     if(j < catSplit.length-1 && j != 2) categories.append(", ");
                 }
 
+                canvas.textSize(12);
+                String spacesToOuter = " ";
+                String spacesToOuterLower = " ";
                 float nameWidth = canvas.textWidth(b.getName());
-                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(b.getAddress()) < 990) {
+                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(b.getAddress()) < 650) {
                     spacesToOuter += " ";
                 }
-                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(stars) + canvas.textWidth(b.getCity()) < 990) {
+                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth("*****") + canvas.textWidth(b.getCity()) < 650) {
                     spacesToOuterLower += " ";
                 }
 
@@ -148,7 +149,7 @@ public class UI {
                         .setValueSelf(10)
                         .setLabel(Main.spaceFromEdge + b.getName()
                                 + spacesToOuter + b.getAddress()
-                                + '\n' + Main.spaceFromEdge + stars
+                                + '\n' + Main.spaceFromEdge + "*****"
                                 + spacesToOuterLower + b.getCity()
                                 + '\n' + '\n'  + '\n' + '\n' + '\n' + '\n'
                                 + Main.spaceFromEdge + categories)
@@ -160,6 +161,7 @@ public class UI {
                         .setColorActive(canvas.color(0, 100, 100));
 
                 Label label = businessButton.getValueLabel();
+                println(businessButton.getCaptionLabel().getText());
                 label.align(ControlP5.LEFT, ControlP5.TOP);
                 label = businessButton.getCaptionLabel();
                 label.align(ControlP5.LEFT, ControlP5.TOP);

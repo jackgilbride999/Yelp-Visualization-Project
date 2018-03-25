@@ -12,13 +12,13 @@ public class Business {
     private String postal_code;
     private double latitude;
     private double longitude;
-    private int stars;
+    private double stars;
     private int review_count;
     private int is_open;
     private String categories;
     private PImage image;
 
-    public Business(String business_id, String name, String neighborhood, String address, String city, String state, String postal_code, double latitude, double longitude, int stars, int review_count, int is_open, String categories) {
+    public Business(String business_id, String name, String neighborhood, String address, String city, String state, String postal_code, double latitude, double longitude, double stars, int review_count, int is_open, String categories) {
         this.business_id = business_id;
         this.name = name.substring(1, name.length() - 1);
         this.neighborhood = neighborhood;
@@ -106,7 +106,7 @@ public class Business {
         this.longitude = longitude;
     }
 
-    public int getStars() {
+    public double getStars() {
         return stars;
     }
 
