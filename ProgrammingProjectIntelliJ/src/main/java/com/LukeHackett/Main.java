@@ -83,10 +83,10 @@ public class Main extends PApplet {
     public static queries qControl;
 
     public static PFont searchFont;
-    public static int searchRatio;
-    public static int previousSearchMouseY;
-    public static int offsetFromTopSearch;
-    public static int searchMouseDifference;
+    public static float searchRatio;
+    public static float previousSearchMouseY;
+    public static float offsetFromTopSearch;
+    public static float searchMouseDifference;
     public static boolean searchScrollPressed;
 
 //    public UnfoldingMap map;
@@ -112,7 +112,6 @@ public class Main extends PApplet {
         }
 
         //   map = null;
-
 
         homeScreenController = new ControlP5(this);
         searchResultController = new ControlP5(this);

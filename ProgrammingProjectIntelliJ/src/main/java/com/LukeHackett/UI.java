@@ -160,7 +160,6 @@ public class UI {
                         .setColorActive(canvas.color(0, 100, 100));
 
                 Label label = businessButton.getValueLabel();
-                println(businessButton.getCaptionLabel().getText());
                 label.align(ControlP5.LEFT, ControlP5.TOP);
                 label = businessButton.getCaptionLabel();
                 label.align(ControlP5.LEFT, ControlP5.TOP);
@@ -170,8 +169,10 @@ public class UI {
 
                 yOffset = yOffset + 200 + BORDER_OFFSET_Y;
             }
-            Main.searchScroll = new Scrollbar(canvas, 10, yOffset - 200 - BORDER_OFFSET_Y, canvas.color(123), SCROLLBAR_EVENT);
-            searchRatio = searchScroll.getRatio();
+            println(searchResultController.getAll().size());
+            float totalHeight = (searchResultController.getAll().size())*200+180;
+            Main.searchScroll = new Scrollbar(canvas, 10, totalHeight, canvas.color(123), SCROLLBAR_EVENT);
+            Main.searchRatio = searchScroll.getRatio();
             Main.yOffset = 0;
         }
     }

@@ -4,13 +4,13 @@ import processing.core.*;
 
 class Widget {
     PApplet canvas;
-    int x, y, width, height;
+    float x, y, width, height;
     String label;
     int event;
     int widgetColor, labelColor, borderColor;
     PFont widgetFont;
 
-    Widget(PApplet canvas, int x, int y, int width, int height, String label,
+    Widget(PApplet canvas, float x, float y, float width, float height, String label,
            int widgetColor, PFont widgetFont, int event) {
         this.canvas = canvas;
         this.x = x;
@@ -51,9 +51,9 @@ class Widget {
 }
 
 class Scrollbar extends Widget {
-    int ratio;
+    float ratio;
 
-    Scrollbar(PApplet canvas, int width, int totalHeightOfPage,
+    Scrollbar(PApplet canvas, float width, float totalHeightOfPage,
               int widgetColor, int event) {
         super(canvas, Main.SCREEN_X - width, 0, width, 0, "", widgetColor, null, event); // again the super constructor for the class is called to stop code duplication
         this.ratio = totalHeightOfPage / Main.SCREEN_Y;
@@ -64,23 +64,23 @@ class Scrollbar extends Widget {
         }
     }
 
-    public int getRatio() {
+    public float getRatio() {
         return this.ratio;
     }
 
-    public void setHeight(int height) {
+    public void setHeight(float height) {
         this.height = height;
     }
 
-    public int getY() {
+    public float getY() {
         return y;
     }
 
-    public void setY(int y) {
+    public void setY(float y) {
         this.y = y;
     }
 
-    public int getHeight() {
+    public float getHeight() {
         return height;
     }
 
