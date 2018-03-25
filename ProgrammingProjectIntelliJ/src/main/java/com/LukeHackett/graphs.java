@@ -90,7 +90,7 @@ class StarBarChart {
         canvas.text(name, 1010, 280);
         canvas.textSize(15);
         canvas.text("Change in rating over time.", 1010, 300);
-
+        canvas.textSize(12);
 
 
     }
@@ -148,7 +148,7 @@ class CheckinsBarChart {
             canvas.text(name, 1010, 40);
             canvas.textSize(15);
             canvas.text("check-in statistics.", 1010, 60);
-
+            canvas.textSize(12);
 
 
     }
