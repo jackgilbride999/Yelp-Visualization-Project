@@ -140,7 +140,7 @@ public class UI {
                 while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(b.getAddress()) < 650) {
                     spacesToOuter += " ";
                 }
-                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth("*****") + canvas.textWidth(b.getCity()) < 650) {
+                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(b.getCity()) + 125 < 775) {
                     spacesToOuterLower += " ";
                 }
 
@@ -149,8 +149,7 @@ public class UI {
                         .setValueSelf(10)
                         .setLabel(Main.spaceFromEdge + b.getName()
                                 + spacesToOuter + b.getAddress()
-                                + '\n' + Main.spaceFromEdge + "*****"
-                                + spacesToOuterLower + b.getCity()
+                                + '\n' + spaceFromEdge + spacesToOuterLower + b.getCity()
                                 + '\n' + '\n'  + '\n' + '\n' + '\n' + '\n'
                                 + Main.spaceFromEdge + categories)
                         .setPosition((float)10, (float) yOffset + 80)

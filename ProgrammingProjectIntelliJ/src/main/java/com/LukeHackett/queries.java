@@ -233,7 +233,7 @@ class queries {
             ResultSet results = statement.executeQuery(businessQuery);
 
             while (results.next()) {
-                Review r = new Review(results.getString("id"), results.getString("user_id"), results.getString("business_id"), results.getInt("stars"), results.getString("date"), results.getString("text"), results.getInt("useful"), results.getInt("funny"), results.getInt("cool"));
+                Review r = new Review(results.getString("id"), results.getString("user_id"), results.getString("business_id"), results.getDouble("stars"), results.getString("date"), results.getString("text"), results.getInt("useful"), results.getInt("funny"), results.getInt("cool"));
                 r.setUser_name(getUserName(r.getUserId()));
                 reviews.add(r);
                 System.out.println(results.getString("id"));
@@ -291,7 +291,7 @@ class queries {
             ResultSet results = statement.executeQuery(businessQuery);
 
             while (results.next()) {
-                return new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getInt("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories"));
+                return new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getDouble("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -310,7 +310,7 @@ class queries {
             ResultSet results = statement.executeQuery(businessQuery);
 
             while (results.next()) {
-                return new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getInt("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories"));
+                return new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getDouble("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -392,7 +392,7 @@ class queries {
             ResultSet results = statement.executeQuery(businessQuery);
 
             while (results.next()) {
-                businesses.add(new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getInt("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories")));
+                businesses.add(new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getDouble("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -413,7 +413,7 @@ class queries {
             ResultSet results = statement.executeQuery(businessQuery);
 
             while (results.next()) {
-                businesses.add(new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getInt("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories")));
+                businesses.add(new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getDouble("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -434,7 +434,7 @@ class queries {
             ResultSet results = statement.executeQuery(businessQuery);
 
             while (results.next()) {
-                businesses.add(new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getInt("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories")));
+                businesses.add(new Business(results.getString("business_id"), results.getString("name"), results.getString("neighbourhood"), results.getString("address"), results.getString("city"), results.getString("state"), results.getString("postal_code"), results.getDouble("latitude"), results.getDouble("longitude"), results.getDouble("stars"), results.getInt("review_count"), results.getInt("is_open"), results.getString("categories")));
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -3,6 +3,8 @@ package com.LukeHackett;
 import controlP5.ControllerInterface;
 import controlP5.Label;
 import processing.core.PApplet;
+import processing.core.PImage;
+
 import java.util.ArrayList;
 
 import java.util.List;
@@ -40,7 +42,29 @@ public class Drawable {
 
         for (ImageCrawler image : Main.businessesSearch) {
             if (image != null) {
+                //Draw images
                 canvas.image(image.getBusiness().getImage(), x, y + 90 - (Main.searchRatio * Main.offsetFromTopSearch), 180, 180);
+
+                //Draw stars piggybacking here
+                double stars = image.getBusiness().getStars();
+                float starX = 210;
+                for(int i = 0; i < 5; i++){
+                    if(stars <= 0){
+                        canvas.image(Main.emptyStar, starX, y + 115 - (Main.searchRatio * Main.offsetFromTopSearch), 20, 20);
+                    }
+                    else{
+                        if(stars == 0.5){
+                            canvas.image(Main.halfStar, starX, y + 115 - (Main.searchRatio * Main.offsetFromTopSearch), 20, 20);
+                        }
+                        else{
+                            canvas.image(Main.fullStar, starX, y + 115 - (Main.searchRatio * Main.offsetFromTopSearch), 20, 20);
+                        }
+                        stars--;
+                    }
+                    starX += 25;
+                }
+
+                //Increment y for business
                 y = y + 200 + Main.BORDER_OFFSET_Y;
             }
         }
