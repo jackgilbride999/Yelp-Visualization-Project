@@ -79,6 +79,11 @@ public class Main extends PApplet {
     public static Business selectedBusiness;
     public static ArrayList<Review> reviews;
 
+    public static ArrayList<Float> starsList;
+    public static StarBarChart starChart;
+    public static ArrayList<Float> visitorsList;
+    public static CheckinsBarChart chart;
+
     public static ImageCrawler businessImages;
     public static ReviewCrawler reviewCrawler;
     public static UI UI;
@@ -143,6 +148,7 @@ public class Main extends PApplet {
 
         searchResultButtons = new Button[10];
         businessesSearch = new ImageCrawler[10];
+        //starsList = null;
 
         //Control P5 setup
         setupHomeScreen();
@@ -186,9 +192,8 @@ public class Main extends PApplet {
 
                     String name = selectedBusiness.getName();
                     name = name.replace("\"", "");
-                    CheckinsBarChart chart;
 
-                    String id = qControl.getBusinessIdByName(name.split(" ")[0]);
+                    String id = selectedBusiness.getBusiness_id();
 
                     /*
                     map = new UnfoldingMap(this, SCREEN_X/4, 0, SCREEN_X/4, SCREEN_X/4, new OpenStreetMap.OpenStreetMapProvider());
@@ -205,36 +210,42 @@ public class Main extends PApplet {
                     */
                     // Haven't gotten map working yet ^^
 
-                    ArrayList<Float> visitorsList = qControl.getBusinessCheckins(id);
                     if (visitorsList == null) {
+                        visitorsList = qControl.getBusinessCheckins(id);
+                        if(visitorsList == null) {
+                            System.out.println("Checkins not available for " + name);
+                        }
+                        else {
+                            chart = new CheckinsBarChart(this, visitorsList, name);
+                        }
+                    }
 
-                        System.out.println("Checkins not available for " + name);
-                        draws.drawFailedCheckIns();
-                    } else {
-
-
-                        chart = new CheckinsBarChart(this, visitorsList, name);
+                    if(chart != null) {
                         chart.draw();
-
+                    }
+                    else {
+                        draws.drawFailedCheckIns();
                     }
 
-
-                    StarBarChart starChart;
-                    String id2 = qControl.getBusinessID(name.split(" ")[0]);
-
-                    ArrayList<Float> starsList = qControl.getStarsList(id2);
-
+                    //Setup star chart if it is first time drawing
+                    String id2 = selectedBusiness.getBusiness_id();
                     if (starsList == null) {
-                        System.out.println("Ratings not available for " + name);
-                        draws.drawFailedStars();
-
-                    } else {
-
-                        starChart = new StarBarChart(this, starsList, name);
-                        starChart.draw();
-
+                        starsList = qControl.getStarsList(id2);
+                        if (starsList != null) {
+                            starChart = new StarBarChart(this, starsList, name);
+                        } else {
+                            starsList = new ArrayList<Float>();
+                            System.out.println("Ratings not available for " + name);
+                        }
                     }
 
+                    //Draw star chart or failure
+                    if(starChart != null) {
+                        starChart.draw();
+                    }
+                    else{
+                        draws.drawFailedStars();
+                    }
 
                     break;
             }
@@ -317,7 +328,7 @@ public class Main extends PApplet {
 
     public void forwardButton() {
         ArrayList<Business> businessList = UI.forwardButton();
-        if(businessList != null) buttonBusinessList(businessList);
+        if (businessList != null) buttonBusinessList(businessList);
     }
 
     public void homeButton() {
