@@ -33,7 +33,7 @@ public class Drawable {
             b.setPosition(b.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (Main.searchRatio * Main.offsetFromTopSearch));
             controllerCount++;
 
-            if(b.getPosition()[1] < 75){
+            if(b.getPosition()[1] < 75 && canvas.mouseY < 75){
                 b.setValueSelf(15);
                 b.setColorBackground(canvas.color(0, 169, 154));
                 b.setColorForeground(canvas.color(0, 169, 154));
