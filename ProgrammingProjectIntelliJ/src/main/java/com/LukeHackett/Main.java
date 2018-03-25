@@ -56,6 +56,7 @@ public class Main extends PApplet {
     public static Button automotiveButton;
     public static Button restaurantsButton;
     public static Button shoppingButton;
+    public static Button[] searchResultButtons;
 
     public static PImage restaurantImage;
     public static PImage beautyImage;
@@ -70,6 +71,8 @@ public class Main extends PApplet {
     public static PImage fullStar;
     public static PImage halfStar;
     public static PImage emptyStar;
+    public static PImage placeHolderImage;
+    public static PImage noParking;
 
     public static ImageCrawler[] businessesSearch;
     public static Scrollbar searchScroll;
@@ -135,7 +138,10 @@ public class Main extends PApplet {
         fullStar = loadImage("fullStar.png");
         halfStar = loadImage("halfStar.png");
         emptyStar = loadImage("emptyStar.png");
+        placeHolderImage = loadImage("businessPlaceholder.png");
+        noParking = loadImage("noParking.png");
 
+        searchResultButtons = new Button[10];
         businessesSearch = new ImageCrawler[10];
 
         //Control P5 setup
@@ -321,37 +327,37 @@ public class Main extends PApplet {
     public void beautyButton() {
         ArrayList<Business> businessList = UI.beautyButton(qControl);
         buttonBusinessList(businessList);
-        searchString = "beauty";
+        searchString = "Beauty";
     }
 
     public void autoButton() {
         ArrayList<Business> businessList = UI.autoButton(qControl);
         buttonBusinessList(businessList);
-        searchString = "automotive";
+        searchString = "Automotive";
     }
 
     public void shoppingButton() {
         ArrayList<Business> businessList = UI.shoppingButton(qControl);
         buttonBusinessList(businessList);
-        searchString = "shopping";
+        searchString = "Shopping";
     }
 
     public void nightlifeButton() {
         ArrayList<Business> businessList = UI.nightlifeButton(qControl);
         buttonBusinessList(businessList);
-        searchString = "nightlife";
+        searchString = "Nightlife";
     }
 
     public void restaurantsButton() {
         ArrayList<Business> businessList = UI.restaurantsButton(qControl);
         buttonBusinessList(businessList);
-        searchString = "restaurants";
+        searchString = "Restaurants";
     }
 
     public void sportsButton() {
         ArrayList<Business> businessList = UI.sportsButton(qControl);
         buttonBusinessList(businessList);
-        searchString = "sports";
+        searchString = "Sports";
     }
 
     public void buttonBusinessList(ArrayList<Business> businessList) {

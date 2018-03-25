@@ -26,7 +26,7 @@ class Widget {
     }
 
     void draw(int subFromY) {
-        canvas.stroke(borderColor);
+        canvas.noStroke();
         canvas.fill(widgetColor);
         canvas.rect(x, y - subFromY, width, height);
         canvas.fill(labelColor);
