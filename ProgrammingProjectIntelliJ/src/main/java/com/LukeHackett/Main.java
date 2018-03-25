@@ -1,9 +1,15 @@
 package com.LukeHackett;
 
 import controlP5.*;
+
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
+
+//import de.fhpotsdam.unfolding.*;
+//import de.fhpotsdam.unfolding.geo.*;
+//import de.fhpotsdam.unfolding.ui.*;
+//import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 
 import java.util.ArrayList;
 
@@ -80,7 +86,7 @@ public class Main extends PApplet {
     public static int searchMouseDifference;
     public static boolean searchScrollPressed;
 
-
+//    public UnfoldingMap map;
 
 
     public static void main(String[] args) {
@@ -102,7 +108,7 @@ public class Main extends PApplet {
             spaceFromEdge += " ";
         }
 
-
+     //   map = null;
 
 
         homeScreenController = new ControlP5(this);
@@ -172,6 +178,21 @@ public class Main extends PApplet {
                     CheckinsBarChart chart;
 
                     String id = qControl.getBusinessIdByName(name.split(" ")[0]);
+
+                    /*
+                    map = new UnfoldingMap(this, SCREEN_X/4, 0, SCREEN_X/4, SCREEN_X/4, new OpenStreetMap.OpenStreetMapProvider());
+                    Location businessLocation = new Location(selectedBusiness.getLatitude(), selectedBusiness.getLongitude());
+                    if(map!=null) {
+                        settings();
+                        map.zoomAndPanTo(businessLocation, 15); // about 15 for street level, 13 for city level etc
+                        float maxPanningDistance = 10;
+                        map.setPanningRestriction(businessLocation, maxPanningDistance);
+                        ImageMarker businessMarker = new ImageMarker(businessLocation, loadImage("pink.png"));
+                        map.addMarker(businessMarker);
+                        map.draw();
+                    }
+                    */
+                    // Haven't gotten map working yet ^^
 
                     ArrayList<Float> visitorsList = qControl.getBusinessCheckins(id);
                     if(visitorsList == null) {
