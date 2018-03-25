@@ -5,6 +5,7 @@ import processing.core.PApplet;
 import java.util.ArrayList;
 
 class Screen {
+    /*
     PApplet canvas;
     ArrayList screenWidgets;
     int screenColor;
@@ -13,7 +14,7 @@ class Screen {
     boolean scrollbarPressed;      //    ""
     int scrollOffsetFromTop;       //    ""
     int totalHeight;               //    ""
-    int ratio;                     //    ""
+    float ratio;                     //    ""
 
     Screen(PApplet canvas, int in_color) {
         this.canvas = canvas;
@@ -87,4 +88,5 @@ class Screen {
                 scrollbar.setY(Main.SCREEN_Y - scrollbar.getHeight());
         }
     }
+    */
 }
