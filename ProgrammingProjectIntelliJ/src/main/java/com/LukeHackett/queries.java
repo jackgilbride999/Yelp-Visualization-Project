@@ -137,10 +137,6 @@ class queries {
         }
     }
 
-
-
-
-
     public ArrayList<Float> getBusinessCheckins(String businessId)
     {
 
