@@ -108,7 +108,7 @@ public class Main extends PApplet {
             spaceFromEdge += " ";
         }
 
-     //   map = null;
+        //   map = null;
 
 
         homeScreenController = new ControlP5(this);
@@ -195,19 +195,17 @@ public class Main extends PApplet {
                     // Haven't gotten map working yet ^^
 
                     ArrayList<Float> visitorsList = qControl.getBusinessCheckins(id);
-                    if(visitorsList == null) {
+                    if (visitorsList == null) {
 
-                        System.out.println("Checkins not available for "+name);
+                        System.out.println("Checkins not available for " + name);
                         draws.drawFailedCheckIns();
-                    }
-                    else {
+                    } else {
 
 
-                        chart = new CheckinsBarChart(this,visitorsList, name);
+                        chart = new CheckinsBarChart(this, visitorsList, name);
                         chart.draw();
 
                     }
-
 
 
                     StarBarChart starChart;
@@ -215,21 +213,16 @@ public class Main extends PApplet {
 
                     ArrayList<Float> starsList = qControl.getStarsList(id2);
 
-                    if(starsList == null) {
-                        System.out.println("Ratings not available for "+name);
+                    if (starsList == null) {
+                        System.out.println("Ratings not available for " + name);
                         draws.drawFailedStars();
 
-                    }
-                    else {
+                    } else {
 
                         starChart = new StarBarChart(this, starsList, name);
                         starChart.draw();
 
                     }
-
-
-
-
 
 
                     break;
@@ -306,7 +299,7 @@ public class Main extends PApplet {
 
     public void backButton() {
         ArrayList<Business> businessList = UI.backButton();
-        if(businessList!=null){
+        if (businessList != null) {
             buttonBusinessList(businessList);
         }
     }
@@ -391,7 +384,7 @@ public class Main extends PApplet {
         draws.setupBusinessScreen();
     }
 
-    public static Drawable getDraw(){
+    public static Drawable getDraw() {
         return draws;
     }
 }

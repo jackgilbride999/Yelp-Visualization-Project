@@ -152,8 +152,8 @@ public class UI {
                                 + spacesToOuterLower + b.getCity()
                                 + '\n' + '\n'  + '\n' + '\n' + '\n' + '\n'
                                 + Main.spaceFromEdge + categories)
-                        .setPosition((float) Main.SCREEN_X / 2 - 500, (float) yOffset + 80)
-                        .setSize(1000, 200)
+                        .setPosition((float)10, (float) yOffset + 80)
+                        .setSize(SCREEN_X-20, 200)
                         .setFont(Main.searchFont)
                         .setColorBackground(canvas.color(0, 169, 154))
                         .setColorForeground(canvas.color(0, 135, 122))
@@ -178,13 +178,13 @@ public class UI {
     public void searchHeader(){
         backButton = Main.searchResultHeaders.addButton("backButton")
                 .setSize(50, 50)
-                .setPosition(SCREEN_X - 120, SCREEN_Y - 60);
+                .setPosition(SCREEN_X - 120, 10);
         backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
         backButton.setImage(backButtonImage);
 
         forwardButton = Main.searchResultHeaders.addButton("forwardButton")
                 .setSize(50, 50)
-                .setPosition(SCREEN_X - 60, SCREEN_Y - 60);
+                .setPosition(SCREEN_X - 60, 10);
         forwardButtonImage.resize(forwardButton.getWidth(), forwardButton.getHeight());
         forwardButton.setImage(forwardButtonImage);
 
@@ -193,47 +193,5 @@ public class UI {
                 .setPosition(10, 10);
         homeButtonImage.resize(homeButton.getWidth(), homeButton.getHeight());
         homeButton.setImage(homeButtonImage);
-
-        searchOptionsSearch = Main.searchResultHeaders.addScrollableList("Options")
-                .addItem("By Category", 0)
-                .addItem("By Name", 1)
-                .addItem("By City", 2)
-                .setFont(searchFont)
-                .setColorBackground(canvas.color(0, 145, 135))
-                .setColorForeground(canvas.color(0, 135, 122))
-                .setColorActive(canvas.color(0, 100, 100))
-                .setMouseOver(false)
-                .setOpen(false)
-                .setHeight(300)
-                .setWidth(200)
-                .setBarHeight(40)
-                .setItemHeight(40)
-                .setPosition(SCREEN_X / 2 + 3 * (SCREEN_X / 4) / 2 - 200, 20);
-
-        Label label = searchOptionsSearch.getCaptionLabel();
-        label.toUpperCase(false);
-        label.getStyle()
-                .setPaddingLeft(5)
-                .setPaddingTop(10);
-        label = searchOptionsSearch.getValueLabel();
-        label.toUpperCase(false);
-        label.getStyle()
-                .setPaddingLeft(5)
-                .setPaddingTop(10);
-
-        int searchbarHeight = 40;
-        int searchbarWidth = 3 * (SCREEN_X / 4);
-        searchBarSearch = Main.searchResultHeaders.addTextfield("searchBar")
-                .setCaptionLabel("")
-                .setColorBackground(canvas.color(255, 255, 255))
-                .setPosition(SCREEN_X / 2 - searchbarWidth / 2, 20)
-                .setSize(searchbarWidth - 200, searchbarHeight)
-                .setFont(searchFont)
-                .setFocus(false)
-                .setColor(canvas.color(0, 0, 0))
-                .setColorCursor(canvas.color(0, 0, 0))
-                .setColor(canvas.color(0, 0, 0))
-                .setColorActive(canvas.color(0, 0, 0))
-        ;
     }
 }

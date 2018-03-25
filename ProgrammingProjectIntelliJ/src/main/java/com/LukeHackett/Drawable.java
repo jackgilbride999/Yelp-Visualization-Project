@@ -22,7 +22,6 @@ public class Drawable {
     }
 
     public void drawBusinesses() {
-        Main.searchScroll.draw(0);
         Main.previousSearchMouseY = canvas.mouseY;
         Main.offsetFromTopSearch = Main.searchScroll.getY();
 
@@ -36,7 +35,7 @@ public class Drawable {
             }
         }
         Main.searchResultController.draw();
-        int x = Main.SCREEN_X / 2 - 490;
+        int x = 20;
         int y = 0;
 
         for (ImageCrawler image : Main.businessesSearch) {
@@ -45,10 +44,15 @@ public class Drawable {
                 y = y + 200 + Main.BORDER_OFFSET_Y;
             }
         }
-        canvas.fill(0, 169, 130);
+        canvas.fill(0, 169, 154);
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 75);
+        canvas.fill(255);
+        canvas.textSize(32);
+        canvas.text("Search results for " + Main.searchString, Main.SCREEN_X/2-canvas.textWidth("Search results for " + Main.searchString)/2, 40);
+        canvas.textSize(12);
         Main.searchResultHeaders.draw();
+        Main.searchScroll.draw(0);
     }
 
     public void drawReviews(int xStart, int yStart) {
@@ -86,12 +90,6 @@ public class Drawable {
     public void drawFailedStars() {
         canvas.text("No ratings available",1030,300);
     }
-
-
-
-
-
-
 
     public boolean starChartInvalid(StarBarChart chart) {
 	if(chart == null) {
