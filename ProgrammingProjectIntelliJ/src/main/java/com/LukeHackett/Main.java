@@ -168,7 +168,7 @@ public class Main extends PApplet {
         //End Control P5 setup
 
         //Graph screen setup
-        graphScreen = new GraphScreen(this, SCREEN_X - 250, 0, 250, 250);
+        graphScreen = new GraphScreen(this, SCREEN_X - 300, 50, 250, 250);
     }
 
     public void draw() {

@@ -109,7 +109,7 @@ public class GraphScreen {
 
     public void draw() {
         canvas.fill(255);
-        canvas.rect(xPos, yPos, xSize, ySize+100);
+        canvas.rect(xPos, yPos, xSize, ySize+30);
         Set<Graph> graphSet = graphs.keySet();
         for(Graph g : graphSet){
             if(graphs.get(g)){
