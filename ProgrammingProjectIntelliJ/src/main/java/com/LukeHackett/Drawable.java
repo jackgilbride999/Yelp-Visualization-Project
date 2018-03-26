@@ -1,8 +1,10 @@
 package com.LukeHackett;
 
 import controlP5.Button;
+import controlP5.ControllerInterface;
 import controlP5.Label;
 import processing.core.PApplet;
+import processing.core.PImage;
 
 import java.util.*;
 
@@ -116,6 +118,7 @@ public class Drawable {
         int borderOffsetY = 20;
         int borderOffsetX = xStart;
         float lineHeight = canvas.textAscent() + canvas.textDescent();
+
         int reviewBoxHeight;
         String[] dateFormat;
 
@@ -179,7 +182,7 @@ public class Drawable {
 		return true;
 	}
 	return false;
-    }	
+    }
 
     public void setupHomeScreen() {
         int searchbarHeight = 40;
@@ -246,7 +249,37 @@ public class Drawable {
                 .setItemHeight(40)
                 .setPosition(Main.SCREEN_X / 2 + 3 * (Main.SCREEN_X / 4) / 2 - 200, 250);
 
+        Main.reviewOptions = Main.businessScreenController.addScrollableList("Filter")
+                .addItem("5 Star Reviews", 0)
+                .addItem("4 Star Reviews", 1)
+                .addItem("3 Star Reviews", 2)
+                .addItem("2 Star Reviews", 3)
+                .addItem("1 Star Reviews", 4)
+                .addItem("ALL", 5)
+                .setFont(Main.reviewFont)
+                .setColorBackground(canvas.color(0, 145, 135))
+                .setColorForeground(canvas.color(0, 135, 122))
+                .setColorActive(canvas.color(0, 100, 100))
+                .setMouseOver(false)
+                .setOpen(false)
+                .setHeight(300)
+                .setWidth(200)
+                .setBarHeight(40)
+                .setItemHeight(40)
+                .setPosition(20, 200 - Main.offsetFromTop);
+
         Label label = Main.searchOptions.getCaptionLabel();
+        label.toUpperCase(false);
+        label.getStyle()
+                .setPaddingLeft(5)
+                .setPaddingTop(10);
+        label = Main.searchOptions.getValueLabel();
+        label.toUpperCase(false);
+        label.getStyle()
+                .setPaddingLeft(5)
+                .setPaddingTop(10);
+
+        Label filterLabel = Main.reviewOptions.getCaptionLabel();
         label.toUpperCase(false);
         label.getStyle()
                 .setPaddingLeft(5)
@@ -258,4 +291,12 @@ public class Drawable {
                 .setPaddingTop(10);
     }
 
+    public void setupBusinessScreen() {
+        Main.backButtonBusiness = Main.businessScreenController.addButton("backButton")
+                .setValue(0)
+                .setSize(50, 50)
+                .setPosition(10, 10);
+        Main.backButtonImage.resize(Main.backButtonBusiness.getWidth(), Main.backButtonBusiness.getHeight());
+        Main.backButtonBusiness.setImage(Main.backButtonImage);
+    }
 }
