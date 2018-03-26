@@ -108,8 +108,10 @@ public class GraphScreen {
     }
 
     public void draw() {
-        canvas.fill(255);
-        canvas.rect(xPos, yPos, xSize, ySize+30);
+        canvas.textSize(12);
+        canvas.fill(74,75,75,120);
+        canvas.rect(xPos, yPos, xSize, ySize+35);
+
         Set<Graph> graphSet = graphs.keySet();
         for(Graph g : graphSet){
             if(graphs.get(g)){

@@ -60,6 +60,7 @@ public class UI {
     public ArrayList<Business> backButton() {
         Main.starsList = null;
         Main.visitorsList = null;
+        if(Main.graphScreen != null) Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
         switch (Main.currentController) {
             case SEARCH_RESULT_SCREEN:
                 if (Main.currentSearch != 0) {
@@ -139,15 +140,17 @@ public class UI {
                 canvas.textSize(12);
                 String spacesToOuter = " ";
                 String spacesToOuterLower = " ";
+                String address = (!b.getAddress().equals("")) ? b.getAddress() : "N/a";
                 float nameWidth = canvas.textWidth(b.getName());
-                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(b.getAddress()) < 650) {
+                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(address) < 660) {
                     spacesToOuter += " ";
                 }
-                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(b.getCity()) + 125 < 775) {
+                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(b.getCity()) + 125 < 785) {
                     spacesToOuterLower += " ";
                 }
 
                 b.setImage(Main.placeHolderImage);
+                /*
                 LinkedHashMap<String, String> attributes = qControl.getBusinessAttributes(b.getBusiness_id());
 
                 if(attributes.size() > 0){
@@ -161,11 +164,11 @@ public class UI {
                         }
                     }
                 }
-
+                */
                 businessButton = Main.searchResultController.addButton(b.getBusiness_id())
                         .setValueSelf(10)
                         .setLabel(Main.spaceFromEdge + b.getName()
-                                + spacesToOuter + b.getAddress()
+                                + spacesToOuter + address
                                 + '\n' + spaceFromEdge + spacesToOuterLower + b.getCity()
                                 + '\n' + '\n'  + '\n' + '\n' + '\n' + '\n'
                                 + Main.spaceFromEdge + categories)
@@ -213,5 +216,29 @@ public class UI {
                 .setPosition(10, 10);
         homeButtonImage.resize(homeButton.getWidth(), homeButton.getHeight());
         homeButton.setImage(homeButtonImage);
+    }
+
+    public void setupBusinessScreen() {
+        Main.backButtonBusiness = Main.businessScreenController.addButton("backButton")
+                .setValue(0)
+                .setSize(50, 50)
+                .setPosition(10, 10);
+        Main.backButtonImage.resize(Main.backButtonBusiness.getWidth(), Main.backButtonBusiness.getHeight());
+        Main.backButtonBusiness.setImage(Main.backButtonImage);
+
+        Main.graphForward = Main.businessScreenController.addButton("graphForward")
+                .setValueSelf(15)
+                .setSize(50, 50)
+                .setCaptionLabel("")
+                .setImage(forwardButtonImage)
+                .setPosition(Main.SCREEN_X - 100, 350);
+
+        Main.graphBackward = Main.businessScreenController.addButton("graphBackward")
+                .setValueSelf(15)
+                .setSize(50, 50)
+                .setCaptionLabel("")
+                .setImage(backButtonImage)
+                .setPosition(Main.SCREEN_X - 300, 350);
+
     }
 }

@@ -1,10 +1,8 @@
 package com.LukeHackett;
 
 import controlP5.Button;
-import controlP5.ControllerInterface;
 import controlP5.Label;
 import processing.core.PApplet;
-import processing.core.PImage;
 
 import java.util.*;
 
@@ -101,64 +99,125 @@ public class Drawable {
         Main.searchScroll.draw(0);
     }
 
+    public void drawBusinessScreen(){
+        canvas.fill(0, 169, 154);
+        canvas.noStroke();
+        canvas.rect(0, 0, Main.SCREEN_X, 500 - Main.offsetFromTop);
+        canvas.fill(255);
+        canvas.textSize(25);
+        canvas.text(Main.selectedBusiness.getName().substring(1, Main.selectedBusiness.getName().length()-1) + '\n'
+                + Main.selectedBusiness.getAddress() + '\n'
+                + Main.selectedBusiness.getCity() + ", "
+                + Main.selectedBusiness.getPostal_code()
+                , 100, 100 - Main.offsetFromTop);
+
+        drawReviews(10, 510);
+
+        // Start graph drawings
+        String name = Main.selectedBusiness.getName();
+        name = name.replace("\"", "");
+
+        String id = Main.selectedBusiness.getBusiness_id();
+
+        if (Main.visitorsList == null) {
+            Main.visitorsList = Main.qControl.getBusinessCheckins(id);
+            if (Main.visitorsList == null) {
+                System.out.println("Checkins not available for " + name);
+            } else {
+                Main.chart = new CheckinsBarChart(canvas, Main.visitorsList, name);
+                if(Main.chart != null) {
+                    Main.graphScreen.addGraph(Main.chart, false);
+                }
+            }
+        }
+
+        //Setup star chart if it is first time drawing
+        String id2 = Main.selectedBusiness.getBusiness_id();
+        if (Main.starsList == null) {
+            Main.starsList = Main.qControl.getStarsList(id2);
+            if (Main.starsList != null) {
+                Main.starChart = new StarBarChart(canvas, Main.starsList, name);
+                if(Main.starChart != null) {
+                    Main.graphScreen.addGraph(Main.starChart, true);
+                }
+            } else {
+                Main.starsList = new ArrayList<Float>();
+                System.out.println("Ratings not available for " + name);
+            }
+        }
+
+        //Draw star chart or failure
+
+        Main.graphScreen.draw();
+        Main.businessScreenController.draw();
+
+        //map test
+                    /*
+                    map = new UnfoldingMap(this, SCREEN_X/4, 0, SCREEN_X/4, SCREEN_X/4, new OpenStreetMap.OpenStreetMapProvider());
+                    Location businessLocation = new Location(selectedBusiness.getLatitude(), selectedBusiness.getLongitude());
+                    if(map!=null) {
+                        settings();
+                        map.zoomAndPanTo(businessLocation, 15); // about 15 for street level, 13 for city level etc
+                        float maxPanningDistance = 10;
+                        map.setPanningRestriction(businessLocation, maxPanningDistance);
+                        ImageMarker businessMarker = new ImageMarker(businessLocation, loadImage("pink.png"));
+                        map.addMarker(businessMarker);
+                        map.draw();
+                    }
+                    */
+        // Haven't gotten map working yet ^^
+
+    }
+
     public void drawReviews(int xStart, int yStart){
         Main.reviews = Main.reviewCrawler.getReviews();
-
-        try {
-            for (Review r : Main.reviews) {
-                if (r.getUser_name().equals("")) {
-                    r.setUser_name(Main.qControl.getUserName(r.getUserId()));
-                    r.setBusinessName(Main.selectedBusiness.getName());
+        if(Main.reviews.size() > 0) {
+            try {
+                for (Review r : Main.reviews) {
+                    if (r.getUser_name().equals("")) {
+                        r.setUser_name(Main.qControl.getUserName(r.getUserId()));
+                        r.setBusinessName(Main.selectedBusiness.getName());
+                    }
                 }
+            } catch (ConcurrentModificationException e) {
+                //System.out.println("Couldn't get info this time");
             }
-        } catch (ConcurrentModificationException e){
-            //System.out.println("Couldn't get info this time");
-        }
-        int reviewOffset = yStart;
-        int borderOffsetY = 20;
-        int borderOffsetX = xStart;
-        float lineHeight = canvas.textAscent() + canvas.textDescent();
+            int reviewOffset = yStart+5;
+            int borderOffsetY = 20;
+            int borderOffsetX = xStart;
+            float lineHeight = canvas.textAscent() + canvas.textDescent();
+            int reviewBoxHeight;
+            String[] dateFormat;
 
-        int reviewBoxHeight;
-        String[] dateFormat;
+            ListIterator<Review> reviewIterator = Main.reviews.listIterator();
+            try {
+                //formatter.formatReviews(Main.reviews);
 
-        ListIterator<Review> reviewIterator = Main.reviews.listIterator();
-        try {
-            //formatter.formatReviews(Main.reviews);
+                while (reviewIterator.hasNext()) {
+                    Review r = reviewIterator.next();
+                    if (r.getFormattedReview() == null) {
+                        formatter.formatReview(r);
+                    }
 
-            while (reviewIterator.hasNext()) {
-                Review r = reviewIterator.next();
-                if(r.getFormattedReview() == null) {
-                    formatter.formatReview(r);
+                    canvas.textSize(15);
+                    dateFormat = r.getDate().split(" ");
+                    reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
+                    canvas.fill(175, 255, 248);
+                    canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, reviewBoxHeight);
+                    canvas.fill(0);
+                    canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
+                    canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
+
+                    reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
                 }
-
-                dateFormat = r.getDate().split(" ");
-                reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
-                canvas.fill(175, 255, 248);
-                canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, reviewBoxHeight);
-                canvas.fill(0);
-                canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
-                canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
-
-                reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
+            } catch (ConcurrentModificationException e) {
+                //System.out.println("Couldn't draw this time");
             }
-        } catch (ConcurrentModificationException e){
-            //System.out.println("Couldn't draw this time");
         }
-
-        /*
-        for (Review r : Main.reviews) {
-            dateFormat = r.getDate().split(" ");
-            reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
-            canvas.fill(175, 255, 248);
-            canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, reviewBoxHeight);
+        else {
             canvas.fill(0);
-            canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
-            canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
-
-            reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
+            canvas.text("loading reviews...", Main.SCREEN_X/2 - canvas.textWidth("loading reviews...")/2, Main.SCREEN_Y-200);
         }
-        */
     }
 
     public void drawFailedCheckIns() {
@@ -249,25 +308,6 @@ public class Drawable {
                 .setItemHeight(40)
                 .setPosition(Main.SCREEN_X / 2 + 3 * (Main.SCREEN_X / 4) / 2 - 200, 250);
 
-        Main.reviewOptions = Main.businessScreenController.addScrollableList("Filter")
-                .addItem("5 Star Reviews", 0)
-                .addItem("4 Star Reviews", 1)
-                .addItem("3 Star Reviews", 2)
-                .addItem("2 Star Reviews", 3)
-                .addItem("1 Star Reviews", 4)
-                .addItem("ALL", 5)
-                .setFont(Main.reviewFont)
-                .setColorBackground(canvas.color(0, 145, 135))
-                .setColorForeground(canvas.color(0, 135, 122))
-                .setColorActive(canvas.color(0, 100, 100))
-                .setMouseOver(false)
-                .setOpen(false)
-                .setHeight(300)
-                .setWidth(200)
-                .setBarHeight(40)
-                .setItemHeight(40)
-                .setPosition(20, 200 - Main.offsetFromTop);
-
         Label label = Main.searchOptions.getCaptionLabel();
         label.toUpperCase(false);
         label.getStyle()
@@ -278,25 +318,6 @@ public class Drawable {
         label.getStyle()
                 .setPaddingLeft(5)
                 .setPaddingTop(10);
-
-        Label filterLabel = Main.reviewOptions.getCaptionLabel();
-        label.toUpperCase(false);
-        label.getStyle()
-                .setPaddingLeft(5)
-                .setPaddingTop(10);
-        label = Main.searchOptions.getValueLabel();
-        label.toUpperCase(false);
-        label.getStyle()
-                .setPaddingLeft(5)
-                .setPaddingTop(10);
     }
 
-    public void setupBusinessScreen() {
-        Main.backButtonBusiness = Main.businessScreenController.addButton("backButton")
-                .setValue(0)
-                .setSize(50, 50)
-                .setPosition(10, 10);
-        Main.backButtonImage.resize(Main.backButtonBusiness.getWidth(), Main.backButtonBusiness.getHeight());
-        Main.backButtonBusiness.setImage(Main.backButtonImage);
-    }
 }
