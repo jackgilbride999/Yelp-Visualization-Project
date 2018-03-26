@@ -241,6 +241,7 @@ class queries {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        System.out.println("Done!!");
         return reviews;
     }
 
@@ -377,9 +378,6 @@ class queries {
         }
         return attributes;
     }
-
-
-
 
     public String[] getBusinessHours(String business_id) {
         String[] businessHours = new String[7];
