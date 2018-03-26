@@ -23,11 +23,12 @@ public class Main extends PApplet {
     public static final int SEARCH_RESULT_SCREEN = 1;
     public static final int BUSINESS_SCREEN = 2;
     public static final int BORDER_OFFSET_Y = 10;
-    public static final int LINE_LENGTH = 170;
+    public static final int LINE_LENGTH = SCREEN_X / 10;
 
     public static int currentController;
     public static int currentSearch = 0;
     public static int selected = 0;
+    public static int selectedFilter = 0;
     public static int yOffset;
     public static int offsetFromTop = 0;
 
@@ -45,6 +46,8 @@ public class Main extends PApplet {
     public static Textfield searchBarSearch;
     public static ScrollableList searchOptions;
     public static ScrollableList searchOptionsSearch;
+    public static ScrollableList reviewOptions;
+    public static ScrollableList reviewOptionsSearch;
 
     public static Button backButton;
     public static Button forwardButton;
@@ -57,8 +60,6 @@ public class Main extends PApplet {
     public static Button restaurantsButton;
     public static Button shoppingButton;
     public static Button[] searchResultButtons;
-    public static Button graphForward;
-    public static Button graphBackward;
 
     public static PImage restaurantImage;
     public static PImage beautyImage;
@@ -88,12 +89,12 @@ public class Main extends PApplet {
 
     public static ImageCrawler businessImages;
     public static ReviewCrawler reviewCrawler;
+    public static ReviewCrawler filterCrawler;
     public static UI UI;
     public static Drawable draws;
     public static queries qControl;
-    public static GraphScreen graphScreen;
-
     public static PFont searchFont;
+    public static PFont reviewFont;
     public static float searchRatio;
     public static float previousSearchMouseY;
     public static float offsetFromTopSearch;
@@ -117,6 +118,7 @@ public class Main extends PApplet {
         UI = new UI(this);
         draws = new Drawable(this);
         searchFont = createFont("OpenSans-Regular", 22);
+        reviewFont = createFont("OpenSans-Regular", 15);
         spaceFromEdge = " ";
         while (textWidth(spaceFromEdge) < 120) {
             spaceFromEdge += " ";
@@ -162,16 +164,11 @@ public class Main extends PApplet {
         searchResultHeaders.setAutoDraw(false);
         businessScreenController.setAutoDraw(false);
         //End Control P5 setup
-
-        //Graph screen setup
-        graphScreen = new GraphScreen(this, SCREEN_X - 300, 50, 250, 250);
     }
 
     public void draw() {
         if (connected) {
-            if (qControl == null) {
-                qControl = new queries(this);
-            }
+            if (qControl == null) qControl = new queries(this);
             background(255);
             switch (currentController) {
                 case HOME_SCREEN:
@@ -188,63 +185,19 @@ public class Main extends PApplet {
                     fill(0, 169, 154);
                     noStroke();
                     rect(0, 0, SCREEN_X, 500 - offsetFromTop);
+                    businessScreenController.draw();
                     fill(255);
                     text(selectedBusiness.getName(), 100, 100 - offsetFromTop);
-
-
                     drawReviews(10, 510);
 
 
                     // checkins chart, working for all with case if there is no chart
 
-                    // Start graph drawings
                     String name = selectedBusiness.getName();
                     name = name.replace("\"", "");
 
                     String id = selectedBusiness.getBusiness_id();
 
-                    if (visitorsList == null) {
-                        visitorsList = qControl.getBusinessCheckins(id);
-                        if (visitorsList == null) {
-                            System.out.println("Checkins not available for " + name);
-                        } else {
-                            chart = new CheckinsBarChart(this, visitorsList, name);
-                            graphScreen.addGraph(chart, false);
-                        }
-                    }
-/*
-                    if (chart != null) {
-                        chart.draw();
-                    } else {
-                        draws.drawFailedCheckIns();
-                    }
-*/
-                    //Setup star chart if it is first time drawing
-                    String id2 = selectedBusiness.getBusiness_id();
-                    if (starsList == null) {
-                        starsList = qControl.getStarsList(id2);
-                        if (starsList != null) {
-                            starChart = new StarBarChart(this, starsList, name);
-                            graphScreen.addGraph(starChart, true);
-                        } else {
-                            starsList = new ArrayList<Float>();
-                            System.out.println("Ratings not available for " + name);
-                        }
-                    }
-
-                    //Draw star chart or failure
-                    /*
-                    if (starChart != null) {
-                        starChart.draw();
-                    } else {
-                        draws.drawFailedStars();
-                    }
-                    */
-
-                    graphScreen.draw();
-                    businessScreenController.draw();
-
-                    //map test
                     /*
                     map = new UnfoldingMap(this, SCREEN_X/4, 0, SCREEN_X/4, SCREEN_X/4, new OpenStreetMap.OpenStreetMapProvider());
                     Location businessLocation = new Location(selectedBusiness.getLatitude(), selectedBusiness.getLongitude());
@@ -259,6 +212,43 @@ public class Main extends PApplet {
                     }
                     */
                     // Haven't gotten map working yet ^^
+
+                    if (visitorsList == null) {
+                        visitorsList = qControl.getBusinessCheckins(id);
+                        if(visitorsList == null) {
+                            System.out.println("Checkins not available for " + name);
+                        }
+                        else {
+                            chart = new CheckinsBarChart(this, visitorsList, name);
+                        }
+                    }
+
+//                    if(chart != null) {
+//                        chart.draw();
+//                    }
+//                    else {
+//                        draws.drawFailedCheckIns();
+//                    }
+
+                    //Setup star chart if it is first time drawing
+                    String id2 = selectedBusiness.getBusiness_id();
+                    if (starsList == null) {
+                        starsList = qControl.getStarsList(id2);
+                        if (starsList != null) {
+                            starChart = new StarBarChart(this, starsList, name);
+                        } else {
+                            starsList = new ArrayList<Float>();
+                            System.out.println("Ratings not available for " + name);
+                        }
+                    }
+
+                    //Draw star chart or failure
+                    if(starChart != null) {
+                        starChart.draw(100,100, 100, 100);
+                    }
+                    else{
+                        draws.drawFailedStars();
+                    }
 
                     break;
             }
@@ -275,6 +265,13 @@ public class Main extends PApplet {
         if (searchScroll != null && searchScroll.getEvent(mouseX, mouseY) == SCROLLBAR_EVENT) {
             searchScrollPressed = true;
             searchMouseDifference = mouseY - searchScroll.getY();
+        }
+    }
+
+    public void keyPressed() {
+        if(key == 'b') {
+            qControl.reviews("CoGcHxwZNwG3gdMJey_UXQ");
+            System.out.println("b");
         }
     }
 
@@ -330,6 +327,21 @@ public class Main extends PApplet {
 
     public void Options(int n) {
         selected = n;
+    }
+
+    public void Filter(int n) {
+        selectedFilter = n;
+        switch(selectedFilter) {
+            case 0:
+            //    reviewCrawler.reviews = qControl.reviews("CoGcHxwZNwG3gdMJey_UXQ");
+                System.out.println("5 star");
+                break;
+            case 1:
+                System.out.println("4 star");
+                //reviewCrawler = new ReviewCrawler(selectedBusiness, qControl);
+                reviewCrawler.reviews = qControl.reviews("CoGcHxwZNwG3gdMJey_UXQ");
+                break;
+        }
     }
 
     public void backButton() {
@@ -398,18 +410,6 @@ public class Main extends PApplet {
 
             currentController = BUSINESS_SCREEN;
         }
-        else if(event.getValue() == 15){
-            if(event.getName().equals("graphForward")){
-                int index = graphScreen.getActiveIndex()+1;
-                if(index == graphScreen.getGraphs().size()) index = 0;
-                graphScreen.setActive(index);
-            }
-            else{
-                int index = graphScreen.getActiveIndex()-1;
-                if(index == -1) index = graphScreen.getGraphs().size()-1;
-                graphScreen.setActive(index);
-            }
-        }
     }
 
     void drawBusinesses() {
@@ -417,6 +417,7 @@ public class Main extends PApplet {
     }
 
     void drawReviews(int xStart, int yStart) {
+        textFont(reviewFont);
         draws.drawReviews(xStart, yStart);
     }
 
@@ -429,7 +430,7 @@ public class Main extends PApplet {
     }
 
     void setupBusinessScreen() {
-        UI.setupBusinessScreen();
+        draws.setupBusinessScreen();
     }
 
     public static Drawable getDraw() {
