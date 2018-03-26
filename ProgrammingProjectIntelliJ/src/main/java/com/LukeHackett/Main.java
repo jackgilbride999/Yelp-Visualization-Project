@@ -11,7 +11,11 @@ import processing.core.PImage;
 //import de.fhpotsdam.unfolding.ui.*;
 //import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
 
 public class Main extends PApplet {
 
@@ -57,6 +61,8 @@ public class Main extends PApplet {
     public static Button restaurantsButton;
     public static Button shoppingButton;
     public static Button[] searchResultButtons;
+    public static Button graphForward;
+    public static Button graphBackward;
 
     public static PImage restaurantImage;
     public static PImage beautyImage;
@@ -89,6 +95,7 @@ public class Main extends PApplet {
     public static UI UI;
     public static Drawable draws;
     public static queries qControl;
+    public static GraphScreen graphScreen;
 
     public static PFont searchFont;
     public static float searchRatio;
@@ -159,11 +166,16 @@ public class Main extends PApplet {
         searchResultHeaders.setAutoDraw(false);
         businessScreenController.setAutoDraw(false);
         //End Control P5 setup
+
+        //Graph screen setup
+        graphScreen = new GraphScreen(this, SCREEN_X - 250, 0, 250, 250);
     }
 
     public void draw() {
         if (connected) {
-            if (qControl == null) qControl = new queries(this);
+            if (qControl == null) {
+                qControl = new queries(this);
+            }
             background(255);
             switch (currentController) {
                 case HOME_SCREEN:
@@ -180,7 +192,6 @@ public class Main extends PApplet {
                     fill(0, 169, 154);
                     noStroke();
                     rect(0, 0, SCREEN_X, 500 - offsetFromTop);
-                    businessScreenController.draw();
                     fill(255);
                     text(selectedBusiness.getName(), 100, 100 - offsetFromTop);
 
@@ -190,11 +201,54 @@ public class Main extends PApplet {
 
                     // checkins chart, working for all with case if there is no chart
 
+                    // Start graph drawings
                     String name = selectedBusiness.getName();
                     name = name.replace("\"", "");
 
                     String id = selectedBusiness.getBusiness_id();
 
+                    if (visitorsList == null) {
+                        visitorsList = qControl.getBusinessCheckins(id);
+                        if (visitorsList == null) {
+                            System.out.println("Checkins not available for " + name);
+                        } else {
+                            chart = new CheckinsBarChart(this, visitorsList, name);
+                            graphScreen.addGraph(chart, false);
+                        }
+                    }
+/*
+                    if (chart != null) {
+                        chart.draw();
+                    } else {
+                        draws.drawFailedCheckIns();
+                    }
+*/
+                    //Setup star chart if it is first time drawing
+                    String id2 = selectedBusiness.getBusiness_id();
+                    if (starsList == null) {
+                        starsList = qControl.getStarsList(id2);
+                        if (starsList != null) {
+                            starChart = new StarBarChart(this, starsList, name);
+                            graphScreen.addGraph(starChart, true);
+                        } else {
+                            starsList = new ArrayList<Float>();
+                            System.out.println("Ratings not available for " + name);
+                        }
+                    }
+
+                    //Draw star chart or failure
+                    /*
+                    if (starChart != null) {
+                        starChart.draw();
+                    } else {
+                        draws.drawFailedStars();
+                    }
+                    */
+
+                    graphScreen.draw();
+                    businessScreenController.draw();
+
+                    //map test
                     /*
                     map = new UnfoldingMap(this, SCREEN_X/4, 0, SCREEN_X/4, SCREEN_X/4, new OpenStreetMap.OpenStreetMapProvider());
                     Location businessLocation = new Location(selectedBusiness.getLatitude(), selectedBusiness.getLongitude());
@@ -209,43 +263,6 @@ public class Main extends PApplet {
                     }
                     */
                     // Haven't gotten map working yet ^^
-
-                    if (visitorsList == null) {
-                        visitorsList = qControl.getBusinessCheckins(id);
-                        if(visitorsList == null) {
-                            System.out.println("Checkins not available for " + name);
-                        }
-                        else {
-                            chart = new CheckinsBarChart(this, visitorsList, name);
-                        }
-                    }
-
-                    if(chart != null) {
-                        chart.draw();
-                    }
-                    else {
-                        draws.drawFailedCheckIns();
-                    }
-
-                    //Setup star chart if it is first time drawing
-                    String id2 = selectedBusiness.getBusiness_id();
-                    if (starsList == null) {
-                        starsList = qControl.getStarsList(id2);
-                        if (starsList != null) {
-                            starChart = new StarBarChart(this, starsList, name);
-                        } else {
-                            starsList = new ArrayList<Float>();
-                            System.out.println("Ratings not available for " + name);
-                        }
-                    }
-
-                    //Draw star chart or failure
-                    if(starChart != null) {
-                        starChart.draw();
-                    }
-                    else{
-                        draws.drawFailedStars();
-                    }
 
                     break;
             }
@@ -385,6 +402,18 @@ public class Main extends PApplet {
 
             currentController = BUSINESS_SCREEN;
         }
+        else if(event.getValue() == 15){
+            if(event.getName().equals("graphForward")){
+                int index = graphScreen.getActiveIndex()+1;
+                if(index == graphScreen.getGraphs().size()) index = 0;
+                graphScreen.setActive(index);
+            }
+            else{
+                int index = graphScreen.getActiveIndex()-1;
+                if(index == -1) index = graphScreen.getGraphs().size()-1;
+                graphScreen.setActive(index);
+            }
+        }
     }
 
     void drawBusinesses() {
@@ -404,7 +433,7 @@ public class Main extends PApplet {
     }
 
     void setupBusinessScreen() {
-        draws.setupBusinessScreen();
+        UI.setupBusinessScreen();
     }
 
     public static Drawable getDraw() {

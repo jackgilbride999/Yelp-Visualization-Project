@@ -1,9 +1,10 @@
 package com.LukeHackett;
 
+import javafx.util.converter.DateStringConverter;
 import org.gicentre.utils.stat.*;
 import processing.core.PApplet;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /*
 
@@ -40,7 +41,13 @@ void setup()
 
 */
 
-class StarBarChart {
+interface Graph{
+    String getName();
+    void setName(String name);
+    void draw(float xPos, float yPos, float xSize, float ySize);
+}
+
+class StarBarChart implements Graph{
     private BarChart barChart2;
     private float[] starArray;
     private String name;
@@ -81,24 +88,27 @@ class StarBarChart {
         barChart2.transposeAxes(true);
     }
 
-    void draw() {
-        // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
+    public String getName() {
+        return name;
+    }
 
-        barChart2.draw(1010, 300, canvas.width - 1000, canvas.height - 600);
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void draw(float xPos, float yPos, float xSize, float ySize) {
+        // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
+        barChart2.draw(xPos, yPos + 35, xSize, ySize);
         canvas.fill(80);
         canvas.textSize(15);
-        canvas.text(name, 1010, 280);
+        canvas.text(name, xPos, yPos + 15);
         canvas.textSize(15);
-        canvas.text("Change in rating over time.", 1010, 300);
+        canvas.text("Change in rating over time.", xPos, yPos+30);
         canvas.textSize(12);
-
-
     }
 }
 
-
-
-class CheckinsBarChart {
+class CheckinsBarChart implements Graph{
     private BarChart barChart;
     private float[] visitorsArray;
     private String name;
@@ -139,18 +149,23 @@ class CheckinsBarChart {
         barChart.transposeAxes(false);
     }
 
-    void draw() {
-        // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
+    public String getName() {
+        return name;
+    }
 
-            barChart.draw(1010, 60, canvas.width - 1000, canvas.height - 600);
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void draw(float xPos, float yPos, float xSize, float ySize) {
+        // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
+            barChart.draw(xPos, yPos + 35, xSize, ySize);
             canvas.fill(80);
             canvas.textSize(15);
-            canvas.text(name, 1010, 40);
+            canvas.text(name, xPos, yPos + 15);
             canvas.textSize(15);
-            canvas.text("check-in statistics.", 1010, 60);
+            canvas.text("check-in statistics.", xPos, yPos + 30);
             canvas.textSize(12);
-
-
     }
 }
 /*

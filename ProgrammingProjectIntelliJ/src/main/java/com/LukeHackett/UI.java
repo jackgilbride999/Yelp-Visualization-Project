@@ -4,6 +4,7 @@ import controlP5.Button;
 import controlP5.ControlP5;
 import controlP5.ControllerInterface;
 import controlP5.Label;
+import javafx.stage.Screen;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
@@ -139,11 +140,13 @@ public class UI {
                 canvas.textSize(12);
                 String spacesToOuter = " ";
                 String spacesToOuterLower = " ";
+                String address = (!b.getAddress().equals("")) ? b.getAddress() : "N/a";
+                println("address: " + address);
                 float nameWidth = canvas.textWidth(b.getName());
-                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(b.getAddress()) < 600) {
+                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(address) < 660) {
                     spacesToOuter += " ";
                 }
-                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(b.getCity()) + 125 < 700) {
+                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(b.getCity()) + 125 < 785) {
                     spacesToOuterLower += " ";
                 }
 
@@ -165,7 +168,7 @@ public class UI {
                 businessButton = Main.searchResultController.addButton(b.getBusiness_id())
                         .setValueSelf(10)
                         .setLabel(Main.spaceFromEdge + b.getName()
-                                + spacesToOuter + b.getAddress()
+                                + spacesToOuter + address
                                 + '\n' + spaceFromEdge + spacesToOuterLower + b.getCity()
                                 + '\n' + '\n'  + '\n' + '\n' + '\n' + '\n'
                                 + Main.spaceFromEdge + categories)
@@ -213,5 +216,29 @@ public class UI {
                 .setPosition(10, 10);
         homeButtonImage.resize(homeButton.getWidth(), homeButton.getHeight());
         homeButton.setImage(homeButtonImage);
+    }
+
+    public void setupBusinessScreen() {
+        Main.backButtonBusiness = Main.businessScreenController.addButton("backButton")
+                .setValue(0)
+                .setSize(50, 50)
+                .setPosition(10, 10);
+        Main.backButtonImage.resize(Main.backButtonBusiness.getWidth(), Main.backButtonBusiness.getHeight());
+        Main.backButtonBusiness.setImage(Main.backButtonImage);
+
+        Main.graphForward = Main.businessScreenController.addButton("graphForward")
+                .setValueSelf(15)
+                .setSize(50, 50)
+                .setCaptionLabel("")
+                .setImage(forwardButtonImage)
+                .setPosition(Main.SCREEN_X - 50, 300);
+
+        Main.graphBackward = Main.businessScreenController.addButton("graphBackward")
+                .setValueSelf(15)
+                .setSize(50, 50)
+                .setCaptionLabel("")
+                .setImage(backButtonImage)
+                .setPosition(Main.SCREEN_X - 250, 300);
+
     }
 }

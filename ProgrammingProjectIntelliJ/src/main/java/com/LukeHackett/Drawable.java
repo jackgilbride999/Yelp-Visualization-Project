@@ -260,12 +260,4 @@ public class Drawable {
                 .setPaddingTop(10);
     }
 
-    public void setupBusinessScreen() {
-        Main.backButtonBusiness = Main.businessScreenController.addButton("backButton")
-                .setValue(0)
-                .setSize(50, 50)
-                .setPosition(10, 10);
-        Main.backButtonImage.resize(Main.backButtonBusiness.getWidth(), Main.backButtonBusiness.getHeight());
-        Main.backButtonBusiness.setImage(Main.backButtonImage);
-    }
 }
