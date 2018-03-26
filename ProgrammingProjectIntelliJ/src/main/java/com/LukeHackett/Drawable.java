@@ -1,10 +1,8 @@
 package com.LukeHackett;
 
 import controlP5.Button;
-import controlP5.ControllerInterface;
 import controlP5.Label;
 import processing.core.PApplet;
-import processing.core.PImage;
 
 import java.util.*;
 
