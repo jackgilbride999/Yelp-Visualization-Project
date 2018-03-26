@@ -407,8 +407,8 @@ class queries {
         try {
             String businessQuery = "SELECT * " +
                     "FROM yelp_business " +
-                    "WHERE MATCH(categories) " +
-                    "AGAINST " + "(" + '\'' + category + '\'' + ")" +
+                    "WHERE (categories) " +
+                    "LIKE " + "(" + '\'' + '%' + category + '%' + '\'' + ") " +
                     "LIMIT " + start + "," + limit;
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessQuery);

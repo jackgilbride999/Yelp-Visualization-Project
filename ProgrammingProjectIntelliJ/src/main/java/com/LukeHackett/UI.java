@@ -4,7 +4,6 @@ import controlP5.Button;
 import controlP5.ControlP5;
 import controlP5.ControllerInterface;
 import controlP5.Label;
-import javafx.stage.Screen;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
@@ -142,7 +141,6 @@ public class UI {
                 String spacesToOuter = " ";
                 String spacesToOuterLower = " ";
                 String address = (!b.getAddress().equals("")) ? b.getAddress() : "N/a";
-                println("address: " + address);
                 float nameWidth = canvas.textWidth(b.getName());
                 while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(address) < 660) {
                     spacesToOuter += " ";
