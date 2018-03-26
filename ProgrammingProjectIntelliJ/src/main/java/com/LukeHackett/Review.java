@@ -34,6 +34,7 @@ public class Review {
 
         this.user_name = "";
         this.business_name = "";
+        this.formattedReview = null;
     }
 
     public String getUserId() {

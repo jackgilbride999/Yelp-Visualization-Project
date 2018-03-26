@@ -6,9 +6,7 @@ import controlP5.Label;
 import processing.core.PApplet;
 import processing.core.PImage;
 
-import java.util.ArrayList;
-
-import java.util.List;
+import java.util.*;
 
 import static oracle.jrockit.jfr.events.Bits.floatValue;
 
@@ -102,21 +100,50 @@ public class Drawable {
         Main.searchScroll.draw(0);
     }
 
-    public void drawReviews(int xStart, int yStart) {
-        for (Review r : Main.reviewCrawler.getReviews()) {
-            if (r.getUser_name().equals("")) {
-                r.setUser_name(Main.qControl.getUserName(r.getUserId()));
-                r.setBusinessName(Main.selectedBusiness.getName());
+    public void drawReviews(int xStart, int yStart){
+        try {
+            for (Review r : Main.reviews) {
+                if (r.getUser_name().equals("")) {
+                    r.setUser_name(Main.qControl.getUserName(r.getUserId()));
+                    r.setBusinessName(Main.selectedBusiness.getName());
+                }
             }
+        } catch (ConcurrentModificationException e){
+            //System.out.println("Couldn't get info this time");
         }
-        formatter.formatReviews(Main.reviewCrawler.getReviews());
         int reviewOffset = yStart;
         int borderOffsetY = 20;
         int borderOffsetX = xStart;
         float lineHeight = canvas.textAscent() + canvas.textDescent();
         int reviewBoxHeight;
         String[] dateFormat;
-        for (Review r : Main.reviewCrawler.getReviews()) {
+
+        ListIterator<Review> reviewIterator = Main.reviews.listIterator();
+        try {
+            //formatter.formatReviews(Main.reviews);
+
+            while (reviewIterator.hasNext()) {
+                Review r = reviewIterator.next();
+                if(r.getFormattedReview() == null) {
+                    formatter.formatReview(r);
+                }
+
+                dateFormat = r.getDate().split(" ");
+                reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
+                canvas.fill(175, 255, 248);
+                canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, reviewBoxHeight);
+                canvas.fill(0);
+                canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
+                canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
+
+                reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
+            }
+        } catch (ConcurrentModificationException e){
+            //System.out.println("Couldn't draw this time");
+        }
+
+        /*
+        for (Review r : Main.reviews) {
             dateFormat = r.getDate().split(" ");
             reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
             canvas.fill(175, 255, 248);
@@ -127,6 +154,7 @@ public class Drawable {
 
             reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
         }
+        */
     }
 
     public void drawFailedCheckIns() {
