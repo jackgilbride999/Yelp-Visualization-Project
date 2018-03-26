@@ -222,26 +222,26 @@ class queries {
         return businesses;
     }
 
-    public ArrayList<Review> reviews(String business_id, int start, int lim) {
-        ArrayList<Review> reviews = new ArrayList<Review>();
+    public void reviews(String business_id){//, int start, int lim) {
+        Main.reviews = new ArrayList<Review>();
         try {
             String businessQuery = "SELECT * " +
                     "FROM yelp_review " +
-                    "WHERE MATCH(business_id) AGAINST(" + '\'' + business_id + '\'' + ")" +
-                    "LIMIT " + start + "," + lim;
+                    "WHERE MATCH(business_id) AGAINST(" + '\'' + business_id + '\'' + ")" ;//+
+                    //"LIMIT " + start + "," + lim;
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessQuery);
 
             while (results.next()) {
                 Review r = new Review(results.getString("id"), results.getString("user_id"), results.getString("business_id"), results.getDouble("stars"), results.getString("date"), results.getString("text"), results.getInt("useful"), results.getInt("funny"), results.getInt("cool"));
                 r.setUser_name(getUserName(r.getUserId()));
-                reviews.add(r);
-                System.out.println(results.getString("id"));
+                Main.reviews.add(r);
+                //System.out.println(results.getString("id"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return reviews;
+        System.out.println("Done getting reviews!");
     }
 
     public String getBusinessName(String business_id) {
@@ -465,7 +465,6 @@ class queries {
     }
 
     public int getRow(String review_id) {
-
         return 0;
     }
 

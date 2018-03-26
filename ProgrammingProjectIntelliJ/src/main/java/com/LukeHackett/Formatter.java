@@ -1,12 +1,14 @@
 package com.LukeHackett;
 
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 public class Formatter {
-    void formatReviews(ArrayList<Review> reviews) {
+    void formatReview(Review r) {
         // Splits the review in order to format with a specific line length and then sets the review to the formatted review
-        ArrayList<String> formattedReviewList = new ArrayList<String>();
-        for (Review r : reviews) {
+        try {
+            //ArrayList<String> formattedReviewList = new ArrayList<String>();
+            //for (Review r : reviews) {
             String[] splitReview = r.getReview().split("");
             String formattedReview = "";
 
@@ -32,6 +34,9 @@ public class Formatter {
             r.setFormattedReview(formattedReview);
             //     formattedReviewList.add(formattedReview);
 
+            // }
+        } catch (ConcurrentModificationException e) {
+            //System.out.println("Couldn't format this time");
         }
     }
 
