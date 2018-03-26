@@ -231,14 +231,14 @@ public class UI {
                 .setSize(50, 50)
                 .setCaptionLabel("")
                 .setImage(forwardButtonImage)
-                .setPosition(Main.SCREEN_X - 50, 300);
+                .setPosition(Main.SCREEN_X - 100, 350);
 
         Main.graphBackward = Main.businessScreenController.addButton("graphBackward")
                 .setValueSelf(15)
                 .setSize(50, 50)
                 .setCaptionLabel("")
                 .setImage(backButtonImage)
-                .setPosition(Main.SCREEN_X - 250, 300);
+                .setPosition(Main.SCREEN_X - 300, 350);
 
     }
 }
