@@ -41,13 +41,15 @@ void setup()
 
 */
 
-interface Graph{
+interface Graph {
     String getName();
+
     void setName(String name);
+
     void draw(float xPos, float yPos, float xSize, float ySize);
 }
 
-class StarBarChart implements Graph{
+class StarBarChart implements Graph {
     private BarChart barChart2;
     private float[] starArray;
     private String name;
@@ -77,11 +79,11 @@ class StarBarChart implements Graph{
 
         barChart2.showValueAxis(true);
         barChart2.setValueFormat("");
-        barChart2.setBarLabels(new String[]{"Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept", "Oct", "Nov", "Dec",});
+        barChart2.setBarLabels(new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec",});
         barChart2.showCategoryAxis(true);
 
         // Bar colours and appearance
-        barChart2.setBarColour(canvas.color(65, 244, 169));
+        barChart2.setBarColour(canvas.color(200));//175, 255, 248));
         barChart2.setBarGap(5);
 
         // Bar layout
@@ -98,17 +100,17 @@ class StarBarChart implements Graph{
 
     public void draw(float xPos, float yPos, float xSize, float ySize) {
         // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
-        barChart2.draw(xPos, yPos + 35, xSize, ySize);
         canvas.fill(80);
+        barChart2.draw(xPos, yPos + 35, xSize, ySize);
         canvas.textSize(15);
         canvas.text(name, xPos, yPos + 15);
         canvas.textSize(15);
-        canvas.text("Change in rating over time.", xPos, yPos+30);
+        canvas.text("Change in rating over time.", xPos, yPos + 30);
         canvas.textSize(12);
     }
 }
 
-class CheckinsBarChart implements Graph{
+class CheckinsBarChart implements Graph {
     private BarChart barChart;
     private float[] visitorsArray;
     private String name;
@@ -142,7 +144,7 @@ class CheckinsBarChart implements Graph{
         barChart.showCategoryAxis(true);
 
         // Bar colours and appearance
-        barChart.setBarColour(canvas.color(65, 244, 169));
+        barChart.setBarColour(canvas.color(200));//175, 255, 248));
         barChart.setBarGap(10);
 
         // Bar layout
@@ -159,13 +161,13 @@ class CheckinsBarChart implements Graph{
 
     public void draw(float xPos, float yPos, float xSize, float ySize) {
         // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
-            barChart.draw(xPos, yPos + 35, xSize, ySize);
-            canvas.fill(80);
-            canvas.textSize(15);
-            canvas.text(name, xPos, yPos + 15);
-            canvas.textSize(15);
-            canvas.text("check-in statistics.", xPos, yPos + 30);
-            canvas.textSize(12);
+        canvas.fill(80);
+        barChart.draw(xPos, yPos + 35, xSize, ySize);
+        canvas.textSize(15);
+        canvas.text(name, xPos, yPos + 15);
+        canvas.textSize(15);
+        canvas.text("check-in statistics.", xPos, yPos + 30);
+        canvas.textSize(12);
     }
 }
 /*
