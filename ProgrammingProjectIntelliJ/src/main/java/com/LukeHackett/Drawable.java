@@ -28,20 +28,21 @@ public class Drawable {
 
         int controllerCount = 0;
         for(Button b : Main.searchResultButtons){
-            b.setPosition(b.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (Main.searchRatio * Main.offsetFromTopSearch));
-            controllerCount++;
+            if(b != null) {
+                b.setPosition(b.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (Main.searchRatio * Main.offsetFromTopSearch));
+                controllerCount++;
 
-            if(b.getPosition()[1] < 75 && canvas.mouseY < 75){
-                b.setValueSelf(15);
-                b.setColorBackground(canvas.color(0, 169, 154));
-                b.setColorForeground(canvas.color(0, 169, 154));
-                b.setColorActive(canvas.color(0, 169, 154));
-            }
-            else {
-                b.setValueSelf(10);
-                b.setColorBackground(canvas.color(0, 169, 154));
-                b.setColorForeground(canvas.color(0, 135, 122));
-                b.setColorActive(canvas.color(0, 100, 100));
+                if (b.getPosition()[1] < 75 && canvas.mouseY < 75) {
+                    b.setValueSelf(15);
+                    b.setColorBackground(canvas.color(0, 169, 154));
+                    b.setColorForeground(canvas.color(0, 169, 154));
+                    b.setColorActive(canvas.color(0, 169, 154));
+                } else {
+                    b.setValueSelf(10);
+                    b.setColorBackground(canvas.color(0, 169, 154));
+                    b.setColorForeground(canvas.color(0, 135, 122));
+                    b.setColorActive(canvas.color(0, 100, 100));
+                }
             }
         }
 
@@ -101,6 +102,8 @@ public class Drawable {
     }
 
     public void drawReviews(int xStart, int yStart){
+        Main.reviews = Main.reviewCrawler.getReviews();
+
         try {
             for (Review r : Main.reviews) {
                 if (r.getUser_name().equals("")) {
