@@ -240,6 +240,7 @@ class queries {
         return reviews;
     }
 
+    /*
     public ArrayList<Review> reviewsFilteredByStars(String business_id,double stars){//, int start, int lim) {
         ArrayList<Review> reviewsFilteredByStars = new ArrayList<Review>();
         try {
@@ -267,6 +268,7 @@ class queries {
         else Main.emptyReview = false;
         return reviewsFilteredByStars;
     }
+*/
 
     public void reviewsAlterMain(String business_id){//, int start, int lim) {
         Main.reviews = new ArrayList<Review>();

@@ -37,8 +37,8 @@ public class Drawable {
         offsetFromTopSearch = Main.searchScroll.getY();
 
         int controllerCount = 0;
-        for(Button b : Main.searchResultButtons){
-            if(b != null) {
+        for (Button b : Main.searchResultButtons) {
+            if (b != null) {
                 b.setPosition(b.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (searchRatio * offsetFromTopSearch));
                 controllerCount++;
 
@@ -68,15 +68,13 @@ public class Drawable {
                 //Draw stars piggybacking here
                 double stars = image.getBusiness().getStars();
                 float starX = 210;
-                for(int i = 0; i < 5; i++){
-                    if(stars <= 0){
+                for (int i = 0; i < 5; i++) {
+                    if (stars <= 0) {
                         canvas.image(Main.emptyStar, starX, y + 115 - (searchRatio * offsetFromTopSearch), 20, 20);
-                    }
-                    else{
-                        if(stars == 0.5){
+                    } else {
+                        if (stars == 0.5) {
                             canvas.image(Main.halfStar, starX, y + 115 - (searchRatio * offsetFromTopSearch), 20, 20);
-                        }
-                        else{
+                        } else {
                             canvas.image(Main.fullStar, starX, y + 115 - (searchRatio * offsetFromTopSearch), 20, 20);
                         }
                         stars--;
@@ -104,18 +102,18 @@ public class Drawable {
         canvas.rect(0, 0, Main.SCREEN_X, 75);
         canvas.fill(255);
         canvas.textSize(32);
-        canvas.text("Search results for " + Main.searchString, Main.SCREEN_X/2-canvas.textWidth("Search results for " + Main.searchString)/2, 40);
+        canvas.text("Search results for " + Main.searchString, Main.SCREEN_X / 2 - canvas.textWidth("Search results for " + Main.searchString) / 2, 40);
         canvas.textSize(12);
 
         Main.searchResultHeaders.draw();
         Main.searchScroll.draw(0);
     }
 
-    public void drawBusinessScreen(){
+    public void drawBusinessScreen() {
         float businessInfoX = 100;
         float businessInfoY = 100;
         previousReviewMouseY = canvas.mouseY;
-        if(Main.reviewScroll != null){
+        if (Main.reviewScroll != null) {
             offsetFromTopReview = Main.reviewScroll.getY();
         }
 
@@ -124,19 +122,19 @@ public class Drawable {
         canvas.rect(0, 0, Main.SCREEN_X, 500 - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
         canvas.fill(255);
         canvas.textSize(25);
-        canvas.text(Main.selectedBusiness.getName().substring(1, Main.selectedBusiness.getName().length()-1) + '\n' + '\n'
-                + Main.selectedBusiness.getAddress() + '\n'
-                + Main.selectedBusiness.getCity() + ", "
-                + Main.selectedBusiness.getPostal_code()
-                , businessInfoX, businessInfoY - Main.offsetFromTop  - (reviewRatio * offsetFromTopReview));
+        canvas.text(Main.selectedBusiness.getName().substring(1, Main.selectedBusiness.getName().length() - 1) + '\n' + '\n'
+                        + Main.selectedBusiness.getAddress() + '\n'
+                        + Main.selectedBusiness.getCity() + ", "
+                        + Main.selectedBusiness.getPostal_code()
+                , businessInfoX, businessInfoY - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
         canvas.textFont(reviewFont);
         canvas.text(selectedBusiness.getReview_count() + " reviews", 240, 470 - (reviewRatio * offsetFromTopReview));
         drawReviews(10, 510);
 
-        float stars = (float)selectedBusiness.getStars();
-        int starX = (int)businessInfoX;
-        int y = (int)businessInfoY + 18;
-        drawStars(starX,stars,y);
+        float stars = (float) selectedBusiness.getStars();
+        int starX = (int) businessInfoX;
+        int y = (int) businessInfoY + 18;
+        drawStars(starX, stars, y);
 
         // Start graph drawings
         String name = Main.selectedBusiness.getName();
@@ -150,7 +148,7 @@ public class Drawable {
                 System.out.println("Checkins not available for " + name);
             } else {
                 Main.chart = new CheckinsBarChart(canvas, Main.visitorsList, name);
-                if(Main.chart != null) {
+                if (Main.chart != null) {
                     Main.graphScreen.addGraph(Main.chart, false);
                 }
             }
@@ -162,7 +160,7 @@ public class Drawable {
             Main.starsList = Main.qControl.getStarsList(id2);
             if (Main.starsList != null) {
                 Main.starChart = new StarBarChart(canvas, Main.starsList, name);
-                if(Main.starChart != null) {
+                if (Main.starChart != null) {
                     Main.graphScreen.addGraph(Main.starChart, true);
                 }
             } else {
@@ -203,14 +201,16 @@ public class Drawable {
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 75);
         reviewHeaders.draw();
-        if(Main.reviewScroll != null)Main.reviewScroll.draw(0);
+        if (Main.reviewScroll != null && reviewRatio > 1) Main.reviewScroll.draw(0);
     }
 
-    public void drawReviews(int xStart, int yStart){
-        Main.reviews = Main.reviewCrawler.getReviews();
-        if(Main.reviews.size() > 0) {
+    public void drawReviews(int xStart, int yStart) {
+        if(Main.selectedFilter == 0){
+            Main.reviewsToShow = Main.reviews;
+        }
+        if (Main.reviewsToShow.size() > 0) {
             try {
-                for (Review r : Main.reviews) {
+                for (Review r : Main.reviewsToShow) {
                     if (r.getUser_name().equals("")) {
                         r.setUser_name(Main.qControl.getUserName(r.getUserId()));
                         r.setBusinessName(Main.selectedBusiness.getName());
@@ -225,8 +225,8 @@ public class Drawable {
             float lineHeight = canvas.textAscent() + canvas.textDescent();
             int reviewBoxHeight;
             String[] dateFormat;
-
-            ListIterator<Review> reviewIterator = Main.reviews.subList(Main.currentReview, Main.currentReview+10).listIterator();
+            List<Review> iterableList = Main.reviewsToShow.subList(Main.currentReview, (Main.reviewsToShow.size() < 10) ? Main.reviewsToShow.size() : Main.currentReview + 10);
+            ListIterator<Review> reviewIterator = iterableList.listIterator();
             try {
                 while (reviewIterator.hasNext()) {
                     Review r = reviewIterator.next();
@@ -235,34 +235,33 @@ public class Drawable {
                     }
 
 
-                    if(initialReviewYs.size() < Main.reviews.size()){
-                        initialReviewYs.add((float)reviewOffset);
+                    if (initialReviewYs.size() < Main.reviews.size()) {
+                        initialReviewYs.add((float) reviewOffset);
                         System.out.println(reviewOffset);
                     }
 
                     canvas.textSize(15);
                     dateFormat = r.getDate().split(" ");
                     reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
-                    if(reviewRatio != 0) {
+                    if (reviewRatio != 0) {
                         canvas.fill(175, 255, 248);
                         canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop - (reviewRatio * offsetFromTopReview), Main.SCREEN_X - 10, reviewBoxHeight);
                         canvas.fill(0);
-                        canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20 , reviewOffset + borderOffsetY - Main.offsetFromTop- Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
+                        canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
                         canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
-                    }
-                    else{
+                    } else {
                         canvas.fill(175, 255, 248);
                         canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, reviewBoxHeight);
                         canvas.fill(0);
                         canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
                         canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
                     }
-                    drawStars((int)canvas.textWidth(r.getUser_name()) + 20, (float)r.getStars(), reviewOffset + 5);
+                    drawStars((int) canvas.textWidth(r.getUser_name()) + 20, (float) r.getStars(), reviewOffset + 5);
                     //if(r != Main.reviews.get(Main.reviews.size()-1))
-                        reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
+                    reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
                 }
 
-                if(Main.reviewScroll == null){
+                if (Main.reviewScroll == null) {
                     Main.reviewScroll = new Scrollbar(canvas, 20, reviewOffset, canvas.color(150), SCROLLBAR_EVENT);
                     reviewRatio = Main.reviewScroll.getRatio();
                     System.out.println(reviewOffset + "  " + reviewRatio);
@@ -272,39 +271,37 @@ public class Drawable {
             } catch (ConcurrentModificationException e) {
                 System.out.println("Couldn't draw this time");
             }
-        }
-        else {
+        } else {
             canvas.fill(0);
-            if(emptyReview){
+            if (emptyReview || reviewsToShow.size() == 0) {
                 canvas.text("No reviews to show!", Main.SCREEN_X / 2 - canvas.textWidth("loading reviews...") / 2, Main.SCREEN_Y - 200);
-            }
-            else {
+            } else {
                 canvas.text("loading reviews...", Main.SCREEN_X / 2 - canvas.textWidth("loading reviews...") / 2, Main.SCREEN_Y - 200);
             }
         }
     }
 
     public void drawFailedCheckIns() {
-        canvas.text("No Check-Ins available",1010,60);
+        canvas.text("No Check-Ins available", 1010, 60);
 
     }
 
     public void drawFailedStars() {
-        canvas.text("No ratings available",1030,300);
+        canvas.text("No ratings available", 1030, 300);
     }
 
     public boolean starChartInvalid(StarBarChart chart) {
-	if(chart == null) {
-		return true;
-	}
-	return false;
+        if (chart == null) {
+            return true;
+        }
+        return false;
     }
 
-	public boolean checkinChartInvalid(CheckinsBarChart chart) {
-	if(chart == null) {
-		return true;
-	}
-	return false;
+    public boolean checkinChartInvalid(CheckinsBarChart chart) {
+        if (chart == null) {
+            return true;
+        }
+        return false;
     }
 
     public void setupHomeScreen() {
@@ -315,7 +312,7 @@ public class Drawable {
 
         Main.beautyButton = Main.homeScreenController.addButton("beautyButton")
                 .setSize(110, 110)
-                .setPosition( startX,  y)
+                .setPosition(startX, y)
                 .setImage(Main.beautyImage);
 
         Main.sportsButton = Main.homeScreenController.addButton("sportsButton")
@@ -325,23 +322,23 @@ public class Drawable {
 
         Main.restaurantsButton = Main.homeScreenController.addButton("restaurantsButton")
                 .setSize(110, 110)
-                .setPosition(startX+414, y)
+                .setPosition(startX + 414, y)
                 .setImage(Main.restaurantImage);
 
 
         Main.shoppingButton = Main.homeScreenController.addButton("shoppingButton")
                 .setSize(110, 110)
-                .setPosition(startX+621, y)
+                .setPosition(startX + 621, y)
                 .setImage(Main.shoppingImage);
 
         Main.automotiveButton = Main.homeScreenController.addButton("autoButton")
                 .setSize(110, 110)
-                .setPosition(startX+828, y)
+                .setPosition(startX + 828, y)
                 .setImage(Main.automotiveImage);
 
         Main.nightLifeButton = Main.homeScreenController.addButton("nightlifeButton")
                 .setSize(110, 110)
-                .setPosition(startX+1035, y)
+                .setPosition(startX + 1035, y)
                 .setImage(Main.nightLifeImage);
 
         Main.searchBar = Main.homeScreenController.addTextfield("searchBar")
@@ -386,16 +383,14 @@ public class Drawable {
     }
 
     public void drawStars(int starX, float stars, int y) {
-        for(int i = 0; i < 5; i++){
-            if(stars <= 0){
+        for (int i = 0; i < 5; i++) {
+            if (stars <= 0) {
                 // canvas.image(Main.emptyStar, starX, y + 115, 20, 20);
-            }
-            else{
-                if(stars == 0.5){
-                    canvas.image(Main.halfStar, starX, y  - (reviewRatio * offsetFromTopReview), 20, 20);
-                }
-                else{
-                    canvas.image(Main.fullStar, starX, y  - (reviewRatio * offsetFromTopReview), 20, 20);
+            } else {
+                if (stars == 0.5) {
+                    canvas.image(Main.halfStar, starX, y - (reviewRatio * offsetFromTopReview), 20, 20);
+                } else {
+                    canvas.image(Main.fullStar, starX, y - (reviewRatio * offsetFromTopReview), 20, 20);
                 }
                 stars--;
             }

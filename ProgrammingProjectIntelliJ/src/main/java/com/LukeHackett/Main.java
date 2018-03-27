@@ -29,7 +29,6 @@ public class Main extends PApplet {
     public static int currentSearch = 0;
     public static int currentReview = 0;
     public static int selected = 0;
-    public static int selectedFiter = 0;
     public static int selectedFilter = 0;
     public static int yOffset;
     public static int offsetFromTop = 0;
@@ -92,6 +91,7 @@ public class Main extends PApplet {
     public static Scrollbar reviewScroll;
     public static Business selectedBusiness;
     public static ArrayList<Review> reviews;
+    public static ArrayList<Review> reviewsToShow;
 
     public static ArrayList<Float> starsList;
     public static StarBarChart starChart;
@@ -174,6 +174,8 @@ public class Main extends PApplet {
 
         searchResultButtons = new Button[10];
         businessesSearch = new ImageCrawler[10];
+        reviews = new ArrayList<Review>();
+        reviewsToShow = new ArrayList<Review>();
         //starsList = null;
 
         //Graph screen setup
@@ -330,11 +332,59 @@ public class Main extends PApplet {
     public void Options(int n) {
         selected = n;
     }
+
     public void Filter(int n) {
-        selectedFiter = n;
+        selectedFilter = n;
         reviewScroll = null;
 
-        reviewCrawler = new ReviewCrawler(selectedBusiness, qControl);
+        switch(selectedFilter) {
+            case 0:
+                reviewsToShow = reviews;
+                break;
+            case 1:
+                reviewsToShow = new ArrayList<Review>();
+                for(Review r : reviews){
+                    if(r.getStars() == 5){
+                        reviewsToShow.add(r);
+                    }
+                }
+                break;
+            case 2:
+                reviewsToShow = new ArrayList<Review>();
+                println("hereeeee");
+                for(Review r : reviews){
+                    if(r.getStars() == 4){
+                        reviewsToShow.add(r);
+                        println(r);
+                    }
+                }
+                break;
+            case 3:
+                reviewsToShow = new ArrayList<Review>();
+                for(Review r : reviews){
+                    if(r.getStars() == 3){
+                        reviewsToShow.add(r);
+                    }
+                }
+                break;
+            case 4:
+                reviewsToShow = new ArrayList<Review>();
+                for(Review r : reviews){
+                    if(r.getStars() == 2){
+                        reviewsToShow.add(r);
+                    }
+                }
+                break;
+            case 5:
+                reviewsToShow = new ArrayList<Review>();
+                for(Review r : reviews){
+                    if(r.getStars() == 1){
+                        reviewsToShow.add(r);
+                    }
+                }
+                break;
+        }
+        //reviewCrawler = new ReviewCrawler(selectedBusiness, qControl);
     }
 
     public void keyPressed() {
@@ -348,9 +398,9 @@ public class Main extends PApplet {
         }
     }
 
-    public void selectedFilter(int n){
-        selectedFilter = n;
-    }
+    //public void selectedFilter(int n){
+
+   // }
 
     public void backButton() {
         ArrayList<Business> businessList = UI.backButton();

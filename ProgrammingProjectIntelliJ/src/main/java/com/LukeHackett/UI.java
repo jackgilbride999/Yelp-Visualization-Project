@@ -238,7 +238,7 @@ public class UI {
     }
 
     public void setupBusinessScreen() {
-        Main.selectedFiter = 0;
+        Main.selectedFilter = 0;
         Main.backButtonBusiness = Main.businessScreenController.addButton("backButton")
                 .setValue(0)
                 .setSize(50, 50)

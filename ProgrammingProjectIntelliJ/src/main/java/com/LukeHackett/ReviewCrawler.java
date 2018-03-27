@@ -18,7 +18,8 @@ public class ReviewCrawler extends Thread {
     }
 
     public void run(){
-        switch(Main.selectedFiter) {
+        Main.reviews.addAll(qControl.reviews(business.getBusiness_id()));//, start, 10));
+/*        switch(Main.selectedFiter) {
             case 0:
                 reviews.addAll(qControl.reviews(business.getBusiness_id()));//, start, 10));
                 break;
@@ -38,6 +39,7 @@ public class ReviewCrawler extends Thread {
                 reviews.addAll(qControl.reviewsFilteredByStars(business.getBusiness_id(), 1));
                 break;
         }
+        */
     }
 
     public ArrayList<Review> getReviews() {
