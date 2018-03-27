@@ -99,6 +99,7 @@ public class Main extends PApplet {
     public static GraphScreen graphScreen;
 
     public static PFont searchFont;
+    public static PFont reviewFont;
     public static float searchMouseDifference;
     public static boolean searchScrollPressed;
     public static float reviewMouseDifference;
@@ -122,6 +123,7 @@ public class Main extends PApplet {
         UI = new UI(this);
         draws = new Drawable(this);
         searchFont = createFont("OpenSans-Regular", 22);
+        reviewFont = createFont("OpenSans-Regular", 18);
         spaceFromEdge = " ";
         while (textWidth(spaceFromEdge) < 120) {
             spaceFromEdge += " ";

@@ -250,7 +250,7 @@ public class UI {
                 .addItem("3 Star Reviews", 3)
                 .addItem("2 Star Reviews", 4)
                 .addItem("1 Star Reviews", 5)
-                .setFont(Main.searchFont)
+                .setFont(Main.reviewFont)
                 .setColorBackground(canvas.color(0, 145, 135))
                 .setColorForeground(canvas.color(0, 135, 122))
                 .setColorActive(canvas.color(0, 100, 100))
