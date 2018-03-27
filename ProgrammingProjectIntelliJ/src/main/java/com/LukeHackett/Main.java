@@ -64,6 +64,7 @@ public class Main extends PApplet {
     public static Button graphForward;
     public static Button graphBackward;
 
+    public static PImage background;
     public static PImage restaurantImage;
     public static PImage beautyImage;
     public static PImage sportsImage;
@@ -105,7 +106,11 @@ public class Main extends PApplet {
     public static float reviewMouseDifference;
     public static boolean reviewScrollPressed;
     public static boolean emptyReview;
+    public static boolean moveBackground;
+    public static boolean returnBackgroundToStart;
 
+    public static int backgroundX;
+    public static int backgroundXTimer;
 //    public UnfoldingMap map;
 
 
@@ -119,6 +124,9 @@ public class Main extends PApplet {
 
     @Override
     public void setup() {
+        backgroundX = 0;
+        moveBackground = false;
+        returnBackgroundToStart = false;
         qControl = null;
         UI = new UI(this);
         draws = new Drawable(this);
@@ -140,6 +148,7 @@ public class Main extends PApplet {
         textFont(searchFont);
         text("loading...", SCREEN_X / 2 - textWidth("loading") / 2, SCREEN_Y / 2);
 
+        background = loadImage("background_scroll_2.jpg");
         backButtonImage = loadImage("backButton.png");
         forwardButtonImage = loadImage("forwardButton.png");
         homeButtonImage = loadImage("home.png");
@@ -149,7 +158,7 @@ public class Main extends PApplet {
         beautyImage = loadImage("72x72_beauty.png");
         automotiveImage = loadImage("72x72_automotive.png");
         restaurantImage = loadImage("72x72_restaurants.png");
-        testLogo = loadImage("testLogo_white_2.png");
+        testLogo = loadImage("testLogo_green_small.png");
         fullStar = loadImage("fullStar.png");
         halfStar = loadImage("halfStar.png");
         emptyStar = loadImage("emptyStar.png");
@@ -184,8 +193,10 @@ public class Main extends PApplet {
                 case HOME_SCREEN:
                     fill(0, 169, 154);
                     noStroke();
-                    rect(0, 0, SCREEN_X, 340);
-                    image(testLogo, SCREEN_X / 2 - 400, -90);
+                    //rect(0, 0, SCREEN_X, 600);
+                    image(background,backgroundX,0);
+                    changePicture();
+                    image(testLogo, SCREEN_X / 2 - 240, 100);
                     homeScreenController.draw();
                     break;
                 case SEARCH_RESULT_SCREEN:
@@ -201,6 +212,40 @@ public class Main extends PApplet {
             textFont(searchFont);
             text("loading...", SCREEN_X / 2 - textWidth("loading") / 2, SCREEN_Y / 2);
             connected = true;
+        }
+    }
+    public void changePicture() {
+        int pic1 = 0;
+        int pic2 = -SCREEN_X;
+        int pic3 = -SCREEN_X*2;
+        int pic4 = -SCREEN_X*3;
+        backgroundXTimer++;
+        System.out.println(backgroundXTimer + "     " + backgroundX);
+        if(backgroundXTimer % 300 == 0)
+        {
+            moveBackground = true;
+        }
+        if(moveBackground)
+        {
+            backgroundX = backgroundX - 4;
+            if(backgroundX == pic2 || backgroundX == pic3 || backgroundX == pic4 || backgroundX == pic1)
+            {
+                backgroundXTimer = 1;
+                if(backgroundX == pic4)
+                {
+                    returnBackgroundToStart = true;
+                }
+                if(backgroundX == pic1 && returnBackgroundToStart)
+                {
+                    returnBackgroundToStart = false;
+                }
+                moveBackground = false;
+
+            }
+        }
+        if(returnBackgroundToStart && moveBackground)
+        {
+            backgroundX = backgroundX + 16;
         }
     }
 
