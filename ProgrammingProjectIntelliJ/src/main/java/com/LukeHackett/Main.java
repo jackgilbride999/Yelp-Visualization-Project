@@ -23,7 +23,7 @@ public class Main extends PApplet {
     public static final int SEARCH_RESULT_SCREEN = 1;
     public static final int BUSINESS_SCREEN = 2;
     public static final int BORDER_OFFSET_Y = 10;
-    public static final int LINE_LENGTH = 170;
+    public static final int LINE_LENGTH = SCREEN_X / 10;
 
     public static int currentController;
     public static int currentSearch = 0;
@@ -45,6 +45,7 @@ public class Main extends PApplet {
     public static Textfield searchBarSearch;
     public static ScrollableList searchOptions;
     public static ScrollableList searchOptionsSearch;
+    public static ScrollableList reviewFilterOptions;
 
     public static Button backButton;
     public static Button forwardButton;
@@ -94,6 +95,7 @@ public class Main extends PApplet {
     public static GraphScreen graphScreen;
 
     public static PFont searchFont;
+    public static PFont reviewFont;
     public static float searchRatio;
     public static float previousSearchMouseY;
     public static float offsetFromTopSearch;
@@ -117,6 +119,7 @@ public class Main extends PApplet {
         UI = new UI(this);
         draws = new Drawable(this);
         searchFont = createFont("OpenSans-Regular", 22);
+        reviewFont = createFont("OpenSans-Regular", 14);
         spaceFromEdge = " ";
         while (textWidth(spaceFromEdge) < 120) {
             spaceFromEdge += " ";
@@ -185,6 +188,7 @@ public class Main extends PApplet {
                     drawBusinesses();
                     break;
                 case BUSINESS_SCREEN:
+                    //textFont(reviewFont);
                     drawBusinessScreen();
                     break;
             }
@@ -194,6 +198,16 @@ public class Main extends PApplet {
             textFont(searchFont);
             text("loading...", SCREEN_X / 2 - textWidth("loading") / 2, SCREEN_Y / 2);
             connected = true;
+        }
+    }
+    public void keyPressed() {
+        if(key == '+')
+        {
+            offsetFromTop = offsetFromTop + 20;
+        }
+        else if(key == '-')
+        {
+            offsetFromTop = offsetFromTop - 20;
         }
     }
 

@@ -110,7 +110,6 @@ public class Drawable {
                 + Main.selectedBusiness.getCity() + ", "
                 + Main.selectedBusiness.getPostal_code()
                 , 100, 100 - Main.offsetFromTop);
-
         drawReviews(10, 510);
 
         // Start graph drawings
@@ -182,7 +181,7 @@ public class Drawable {
             } catch (ConcurrentModificationException e) {
                 //System.out.println("Couldn't get info this time");
             }
-            int reviewOffset = yStart+5;
+            int reviewOffset = yStart;
             int borderOffsetY = 20;
             int borderOffsetX = xStart;
             float lineHeight = canvas.textAscent() + canvas.textDescent();
@@ -319,5 +318,6 @@ public class Drawable {
                 .setPaddingLeft(5)
                 .setPaddingTop(10);
     }
+
 
 }
