@@ -27,6 +27,7 @@ public class Main extends PApplet {
 
     public static int currentController;
     public static int currentSearch = 0;
+    public static int currentReview = 0;
     public static int selected = 0;
     public static int selectedFiter = 0;
     public static int selectedFilter = 0;
@@ -41,6 +42,7 @@ public class Main extends PApplet {
     public static ControlP5 homeScreenController;
     public static ControlP5 searchResultController;
     public static ControlP5 searchResultHeaders;
+    public static ControlP5 reviewHeaders;
     public static ControlP5 businessScreenController;
 
     public static Textfield searchBar;
@@ -49,10 +51,14 @@ public class Main extends PApplet {
     public static ScrollableList searchOptionsSearch;
     public static ScrollableList reviewFilterOptions;
 
-
     public static Button backButton;
     public static Button forwardButton;
+    public static Button backButtonReview;
+    public static Button forwardButtonReview;
     public static Button homeButton;
+    public static Button reviewBackButton;
+    public static Button reviewForwardButton;
+    public static Button reviewHomeButton;
     public static Button backButtonBusiness;
     public static Button nightLifeButton;
     public static Button beautyButton;
@@ -143,6 +149,7 @@ public class Main extends PApplet {
         searchResultController = new ControlP5(this);
         searchResultHeaders = new ControlP5(this);
         businessScreenController = new ControlP5(this);
+        reviewHeaders = new ControlP5(this);
 
         background(0, 169, 154);
         textFont(searchFont);
@@ -170,16 +177,18 @@ public class Main extends PApplet {
         //starsList = null;
 
         //Graph screen setup
-        graphScreen = new GraphScreen(this, SCREEN_X - 300, 50, 250, 250);
+        graphScreen = new GraphScreen(this, SCREEN_X - 300, 100, 250, 250);
 
         //Control P5 setup
         setupHomeScreen();
         setupSearchHeader();
         setupBusinessScreen();
+        setupReviewScreen();
         homeScreenController.setAutoDraw(false);
         searchResultController.setAutoDraw(false);
         searchResultHeaders.setAutoDraw(false);
         businessScreenController.setAutoDraw(false);
+        reviewHeaders.setAutoDraw(false);
         //End Control P5 setup
     }
 
@@ -343,7 +352,6 @@ public class Main extends PApplet {
         selectedFilter = n;
     }
 
-
     public void backButton() {
         ArrayList<Business> businessList = UI.backButton();
         if (businessList != null) {
@@ -354,6 +362,14 @@ public class Main extends PApplet {
     public void forwardButton() {
         ArrayList<Business> businessList = UI.forwardButton();
         if (businessList != null) buttonBusinessList(businessList);
+    }
+
+    public void backButtonReview(){
+        UI.backButtonReview();
+    }
+
+    public void forwardButtonReview(){
+        UI.forwardButtonReview();
     }
 
     public void homeButton() {
@@ -444,8 +460,12 @@ public class Main extends PApplet {
         UI.searchHeader();
     }
 
-    void setupBusinessScreen() {
+    public void setupBusinessScreen() {
         UI.setupBusinessScreen();
+    }
+
+    public void setupReviewScreen() {
+        UI.setupReviewHeader();
     }
 
     public static Drawable getDraw() {

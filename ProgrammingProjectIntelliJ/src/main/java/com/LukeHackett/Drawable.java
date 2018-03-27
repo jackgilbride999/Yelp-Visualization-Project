@@ -182,7 +182,6 @@ public class Drawable {
         Main.businessScreenController.get("Filter").setPosition(Main.businessScreenController.get("Filter").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
 
         Main.businessScreenController.draw();
-        if(Main.reviewScroll != null)Main.reviewScroll.draw(0);
 
         //map test
                     /*
@@ -200,6 +199,11 @@ public class Drawable {
                     */
         // Haven't gotten map working yet ^^
 
+        canvas.fill(0, 169, 154);
+        canvas.noStroke();
+        canvas.rect(0, 0, Main.SCREEN_X, 75);
+        reviewHeaders.draw();
+        if(Main.reviewScroll != null)Main.reviewScroll.draw(0);
     }
 
     public void drawReviews(int xStart, int yStart){
@@ -222,7 +226,7 @@ public class Drawable {
             int reviewBoxHeight;
             String[] dateFormat;
 
-            ListIterator<Review> reviewIterator = Main.reviews.listIterator();
+            ListIterator<Review> reviewIterator = Main.reviews.subList(Main.currentReview, Main.currentReview+10).listIterator();
             try {
                 while (reviewIterator.hasNext()) {
                     Review r = reviewIterator.next();
