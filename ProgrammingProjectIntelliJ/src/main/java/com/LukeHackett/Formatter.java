@@ -19,7 +19,7 @@ public class Formatter {
             }
             formattedReview = formattedReview + "\n";
             boolean toNextLine = false;
-            int lines = 4;
+            int lines = 2;
             for (int i = 0; i < splitReview.length; i++) {
                 // Checks to see if line length has exceeded
                 if ((i % Main.LINE_LENGTH == 0) && (i != 0)) {

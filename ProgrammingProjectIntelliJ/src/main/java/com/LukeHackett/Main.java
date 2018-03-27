@@ -28,6 +28,7 @@ public class Main extends PApplet {
     public static int currentController;
     public static int currentSearch = 0;
     public static int selected = 0;
+    public static int selectedFiter = 0;
     public static int selectedFilter = 0;
     public static int yOffset;
     public static int offsetFromTop = 0;
@@ -102,6 +103,7 @@ public class Main extends PApplet {
     public static boolean searchScrollPressed;
     public static float reviewMouseDifference;
     public static boolean reviewScrollPressed;
+    public static boolean emptyReview;
 
 //    public UnfoldingMap map;
 
@@ -272,10 +274,28 @@ public class Main extends PApplet {
     public void Options(int n) {
         selected = n;
     }
+    public void Filter(int n) {
+        selectedFiter = n;
+        reviewScroll = null;
+
+        reviewCrawler = new ReviewCrawler(selectedBusiness, qControl);
+    }
+
+    public void keyPressed() {
+        if(key == '+')
+        {
+            offsetFromTop = offsetFromTop + 20;
+        }
+        else if(key == '-')
+        {
+            offsetFromTop = offsetFromTop - 20;
+        }
+    }
 
     public void selectedFilter(int n){
         selectedFilter = n;
     }
+
 
     public void backButton() {
         ArrayList<Business> businessList = UI.backButton();

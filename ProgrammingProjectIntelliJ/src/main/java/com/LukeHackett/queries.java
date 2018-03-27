@@ -235,6 +235,8 @@ class queries {
             e.printStackTrace();
         }
         System.out.println("Done!!");
+        if(reviews.size() == 0) Main.emptyReview = true;
+        else Main.emptyReview = false;
         return reviews;
     }
 
@@ -261,6 +263,8 @@ class queries {
             e.printStackTrace();
         }
         System.out.println("Done!!");
+        if(reviewsFilteredByStars.size() == 0) Main.emptyReview = true;
+        else Main.emptyReview = false;
         return reviewsFilteredByStars;
     }
 

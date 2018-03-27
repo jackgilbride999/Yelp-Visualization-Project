@@ -61,6 +61,7 @@ public class UI {
         Main.starsList = null;
         Main.visitorsList = null;
         Main.reviewScroll = null;
+        //Main.searchScroll = null;
         if(Main.graphScreen != null) Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
         switch (Main.currentController) {
             case SEARCH_RESULT_SCREEN:
@@ -90,32 +91,32 @@ public class UI {
 
     public ArrayList<Business> beautyButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
-        return qControl.businessSearch("Beauty", 0, 10);
+        return qControl.categorySearch("Beauty", 0, 10);
     }
 
     public ArrayList<Business> autoButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
-        return qControl.businessSearch("Automotive", 0, 10);
+        return qControl.categorySearch("Automotive", 0, 10);
     }
 
     public ArrayList<Business> shoppingButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
-        return qControl.businessSearch("Shopping", 0, 10);
+        return qControl.categorySearch("Shopping", 0, 10);
     }
 
     public ArrayList<Business> nightlifeButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
-        return qControl.businessSearch("nightlife", 0, 10);
+        return qControl.categorySearch("nightlife", 0, 10);
     }
 
     public ArrayList<Business> restaurantsButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
-        return qControl.businessSearch("Restaurant", 0, 10);
+        return qControl.categorySearch("Restaurant", 0, 10);
     }
 
     public ArrayList<Business> sportsButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
-        return qControl.businessSearch("sports", 0, 10);
+        return qControl.categorySearch("sports", 0, 10);
     }
 
     public void buttonBusinessList(ArrayList<Business> businessList) {
@@ -220,6 +221,7 @@ public class UI {
     }
 
     public void setupBusinessScreen() {
+        Main.selectedFiter = 0;
         Main.backButtonBusiness = Main.businessScreenController.addButton("backButton")
                 .setValue(0)
                 .setSize(50, 50)
@@ -260,12 +262,12 @@ public class UI {
                 .setItemHeight(40)
                 .setPosition(20, 440 - Main.offsetFromTop);
 
-        Label label = Main.searchOptions.getCaptionLabel();
+        Label label = Main.reviewFilterOptions.getCaptionLabel();
         label.toUpperCase(false);
         label.getStyle()
                 .setPaddingLeft(5)
                 .setPaddingTop(10);
-        label = Main.searchOptions.getValueLabel();
+        label = Main.reviewFilterOptions.getValueLabel();
         label.toUpperCase(false);
         label.getStyle()
                 .setPaddingLeft(5)

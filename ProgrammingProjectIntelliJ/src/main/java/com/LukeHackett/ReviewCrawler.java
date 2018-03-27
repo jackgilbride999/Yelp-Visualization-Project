@@ -18,7 +18,26 @@ public class ReviewCrawler extends Thread {
     }
 
     public void run(){
-        reviews.addAll(qControl.reviewsFilteredByStars(business.getBusiness_id(),5));//, start, 10));
+        switch(Main.selectedFiter) {
+            case 0:
+                reviews.addAll(qControl.reviews(business.getBusiness_id()));//, start, 10));
+                break;
+            case 1:
+                reviews.addAll(qControl.reviewsFilteredByStars(business.getBusiness_id(), 5));
+                break;
+            case 2:
+                reviews.addAll(qControl.reviewsFilteredByStars(business.getBusiness_id(), 4));
+                break;
+            case 3:
+                reviews.addAll(qControl.reviewsFilteredByStars(business.getBusiness_id(), 3));
+                break;
+            case 4:
+                reviews.addAll(qControl.reviewsFilteredByStars(business.getBusiness_id(), 2));
+                break;
+            case 5:
+                reviews.addAll(qControl.reviewsFilteredByStars(business.getBusiness_id(), 1));
+                break;
+        }
     }
 
     public ArrayList<Review> getReviews() {
