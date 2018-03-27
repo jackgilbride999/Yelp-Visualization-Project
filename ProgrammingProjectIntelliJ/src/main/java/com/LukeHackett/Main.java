@@ -220,7 +220,7 @@ public class Main extends PApplet {
         int pic3 = -SCREEN_X*2;
         int pic4 = -SCREEN_X*3;
         backgroundXTimer++;
-        System.out.println(backgroundXTimer + "     " + backgroundX);
+       // System.out.println(backgroundXTimer + "     " + backgroundX);
         if(backgroundXTimer % 300 == 0)
         {
             moveBackground = true;
