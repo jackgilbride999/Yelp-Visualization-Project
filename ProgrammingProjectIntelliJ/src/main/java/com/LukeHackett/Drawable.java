@@ -112,6 +112,8 @@ public class Drawable {
     }
 
     public void drawBusinessScreen(){
+        float businessInfoX = 100;
+        float businessInfoY = 100;
         previousReviewMouseY = canvas.mouseY;
         if(Main.reviewScroll != null){
             offsetFromTopReview = Main.reviewScroll.getY();
@@ -122,14 +124,33 @@ public class Drawable {
         canvas.rect(0, 0, Main.SCREEN_X, 500 - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
         canvas.fill(255);
         canvas.textSize(25);
-        canvas.text(Main.selectedBusiness.getName().substring(1, Main.selectedBusiness.getName().length()-1) + '\n'
+        canvas.text(Main.selectedBusiness.getName().substring(1, Main.selectedBusiness.getName().length()-1) + '\n' + '\n'
                 + Main.selectedBusiness.getAddress() + '\n'
                 + Main.selectedBusiness.getCity() + ", "
                 + Main.selectedBusiness.getPostal_code()
-                , 100, 100 - Main.offsetFromTop  - (reviewRatio * offsetFromTopReview));
+                , businessInfoX, businessInfoY - Main.offsetFromTop  - (reviewRatio * offsetFromTopReview));
         canvas.textFont(reviewFont);
         canvas.text(selectedBusiness.getReview_count() + " reviews", 240, 470 - (reviewRatio * offsetFromTopReview));
         drawReviews(10, 510);
+
+        double stars = selectedBusiness.getStars();
+        float starX = businessInfoX;
+        int y = (int)businessInfoY + 18;
+        for(int i = 0; i < 5; i++){
+            if(stars <= 0){
+                //canvas.image(Main.emptyStar, starX, y + 115, 20, 20);
+            }
+            else{
+                if(stars == 0.5){
+                    canvas.image(Main.halfStar, starX, y  - (reviewRatio * offsetFromTopReview), 20, 20);
+                }
+                else{
+                    canvas.image(Main.fullStar, starX, y  - (reviewRatio * offsetFromTopReview), 20, 20);
+                }
+                stars--;
+            }
+            starX += 25;
+        }
 
         // Start graph drawings
         String name = Main.selectedBusiness.getName();
