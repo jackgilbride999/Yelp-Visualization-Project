@@ -58,9 +58,6 @@ public class UI {
     }
 
     public ArrayList<Business> backButton() {
-        Main.starsList = null;
-        Main.visitorsList = null;
-        Main.reviewScroll = null;
         //Main.searchScroll = null;
         if(Main.graphScreen != null) Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
 
@@ -92,6 +89,12 @@ public class UI {
     }
 
     public int homeButton() {
+        Main.starsList = null;
+        Main.visitorsList = null;
+        Main.reviewScroll = null;
+        Main.reviews = new ArrayList<Review>();
+        Main.reviewsToShow = new ArrayList<Review>();
+        Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
         switch (Main.currentController) {
             case SEARCH_RESULT_SCREEN:
                 //if (Main.currentSearch != 0) {

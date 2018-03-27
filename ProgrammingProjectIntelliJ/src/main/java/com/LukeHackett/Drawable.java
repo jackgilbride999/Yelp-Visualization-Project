@@ -136,41 +136,6 @@ public class Drawable {
         int y = (int) businessInfoY + 18;
         drawStars(starX, stars, y);
 
-        // Start graph drawings
-        String name = Main.selectedBusiness.getName();
-        name = name.replace("\"", "");
-
-        String id = Main.selectedBusiness.getBusiness_id();
-
-        if (Main.visitorsList == null) {
-            Main.visitorsList = Main.qControl.getBusinessCheckins(id);
-            if (Main.visitorsList == null) {
-                System.out.println("Checkins not available for " + name);
-            } else {
-                Main.chart = new CheckinsBarChart(canvas, Main.visitorsList, name);
-                if (Main.chart != null) {
-                    Main.graphScreen.addGraph(Main.chart, false);
-                }
-            }
-        }
-
-        //Setup star chart if it is first time drawing
-        String id2 = Main.selectedBusiness.getBusiness_id();
-        if (Main.starsList == null) {
-            Main.starsList = Main.qControl.getStarsList(id2);
-            if (Main.starsList != null) {
-                Main.starChart = new StarBarChart(canvas, Main.starsList, name);
-                if (Main.starChart != null) {
-                    Main.graphScreen.addGraph(Main.starChart, true);
-                }
-            } else {
-                Main.starsList = new ArrayList<Float>();
-                System.out.println("Ratings not available for " + name);
-            }
-        }
-
-        //Draw star chart or failure
-
         Main.graphScreen.setyPos(initialReviewYs.get(3) - (reviewRatio * offsetFromTopReview));
         Main.graphScreen.draw();
 
@@ -273,10 +238,15 @@ public class Drawable {
             }
         } else {
             canvas.fill(0);
-            if (emptyReview || reviewsToShow.size() == 0) {
-                canvas.text("No reviews to show!", Main.SCREEN_X / 2 - canvas.textWidth("loading reviews...") / 2, Main.SCREEN_Y - 200);
+            if (emptyReview) {
+                canvas.text("No reviews to show!", Main.SCREEN_X / 2 - canvas.textWidth("No reviews to show!") / 2, Main.SCREEN_Y - 200);
             } else {
-                canvas.text("loading reviews...", Main.SCREEN_X / 2 - canvas.textWidth("loading reviews...") / 2, Main.SCREEN_Y - 200);
+                if(reviewsToShow.size() == 0 && selectedFilter != 0){
+                    canvas.text("No reviews to show!", Main.SCREEN_X / 2 - canvas.textWidth("No reviews to show!") / 2, Main.SCREEN_Y - 200);
+                }
+                else {
+                    canvas.text("loading reviews...", Main.SCREEN_X / 2 - canvas.textWidth("loading reviews...") / 2, Main.SCREEN_Y - 200);
+                }
             }
         }
     }

@@ -24,6 +24,8 @@ public class Main extends PApplet {
     public static final int BUSINESS_SCREEN = 2;
     public static final int BORDER_OFFSET_Y = 10;
     public static final int LINE_LENGTH = 170;
+    public static final int CHECKIN_CHART = 1;
+    public static final int STARS_CHART = 2;
 
     public static int currentController;
     public static int currentSearch = 0;
@@ -473,6 +475,9 @@ public class Main extends PApplet {
             selectedBusiness = qControl.getBusinessInfo(business);
             selectedBusiness.setName(qControl.getBusinessName(selectedBusiness.getBusiness_id()));
             reviewCrawler = new ReviewCrawler(selectedBusiness, qControl);
+
+            new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), CHECKIN_CHART, graphScreen);
+            new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), STARS_CHART, graphScreen);
 
             currentController = BUSINESS_SCREEN;
         }
