@@ -18,7 +18,7 @@ public class ReviewCrawler extends Thread {
     }
 
     public void run(){
-        reviews.addAll(qControl.reviews(business.getBusiness_id()));//, start, 10));
+        reviews.addAll(qControl.reviewsFilteredByStars(business.getBusiness_id(),5));//, start, 10));
     }
 
     public ArrayList<Review> getReviews() {
