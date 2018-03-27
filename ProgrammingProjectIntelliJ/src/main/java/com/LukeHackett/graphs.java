@@ -169,10 +169,3 @@ class CheckinsBarChart implements Graph {
         //canvas.textSize(12);
     }
 }
-/*
-    void draw() {
-        chart2.draw();
-        chart.draw();
-    }
-
-*/

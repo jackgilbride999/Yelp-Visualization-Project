@@ -1,33 +1,47 @@
 package com.LukeHackett;
 
 import controlP5.Button;
+import controlP5.ControlElement;
 import controlP5.Label;
 import processing.core.PApplet;
 
 import java.util.*;
 
+import static com.LukeHackett.Main.SCROLLBAR_EVENT;
+import static com.LukeHackett.Main.reviewScroll;
+import static com.LukeHackett.Main.yOffset;
 import static oracle.jrockit.jfr.events.Bits.floatValue;
 
 public class Drawable {
     private final PApplet canvas;
     private final Formatter formatter;
 
-    ArrayList<Float> initialBusinessYs;
+    public static float searchRatio;
+    public static float previousSearchMouseY;
+    public static float offsetFromTopSearch;
+
+    public static float reviewRatio;
+    public static float previousReviewMouseY;
+    public static float offsetFromTopReview;
+
+    public static ArrayList<Float> initialBusinessYs;
+    public static ArrayList<Float> initialReviewYs;
 
     Drawable(PApplet canvas) {
         this.canvas = canvas;
         formatter = new Formatter();
         initialBusinessYs = new ArrayList<Float>();
+        initialReviewYs = new ArrayList<Float>();
     }
 
     public void drawBusinesses() {
-        Main.previousSearchMouseY = canvas.mouseY;
-        Main.offsetFromTopSearch = Main.searchScroll.getY();
+        previousSearchMouseY = canvas.mouseY;
+        offsetFromTopSearch = Main.searchScroll.getY();
 
         int controllerCount = 0;
         for(Button b : Main.searchResultButtons){
             if(b != null) {
-                b.setPosition(b.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (Main.searchRatio * Main.offsetFromTopSearch));
+                b.setPosition(b.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (searchRatio * offsetFromTopSearch));
                 controllerCount++;
 
                 if (b.getPosition()[1] < 75 && canvas.mouseY < 75) {
@@ -51,21 +65,21 @@ public class Drawable {
         for (ImageCrawler image : Main.businessesSearch) {
             if (image != null) {
                 //Draw images
-                canvas.image(image.getBusiness().getImage(), x, y + 90 - (Main.searchRatio * Main.offsetFromTopSearch), 180, 180);
+                canvas.image(image.getBusiness().getImage(), x, y + 90 - (searchRatio * offsetFromTopSearch), 180, 180);
 
                 //Draw stars piggybacking here
                 double stars = image.getBusiness().getStars();
                 float starX = 210;
                 for(int i = 0; i < 5; i++){
                     if(stars <= 0){
-                        canvas.image(Main.emptyStar, starX, y + 115 - (Main.searchRatio * Main.offsetFromTopSearch), 20, 20);
+                        canvas.image(Main.emptyStar, starX, y + 115 - (searchRatio * offsetFromTopSearch), 20, 20);
                     }
                     else{
                         if(stars == 0.5){
-                            canvas.image(Main.halfStar, starX, y + 115 - (Main.searchRatio * Main.offsetFromTopSearch), 20, 20);
+                            canvas.image(Main.halfStar, starX, y + 115 - (searchRatio * offsetFromTopSearch), 20, 20);
                         }
                         else{
-                            canvas.image(Main.fullStar, starX, y + 115 - (Main.searchRatio * Main.offsetFromTopSearch), 20, 20);
+                            canvas.image(Main.fullStar, starX, y + 115 - (searchRatio * offsetFromTopSearch), 20, 20);
                         }
                         stars--;
                     }
@@ -100,16 +114,21 @@ public class Drawable {
     }
 
     public void drawBusinessScreen(){
+        previousReviewMouseY = canvas.mouseY;
+        if(Main.reviewScroll != null){
+            offsetFromTopReview = Main.reviewScroll.getY();
+        }
+
         canvas.fill(0, 169, 154);
         canvas.noStroke();
-        canvas.rect(0, 0, Main.SCREEN_X, 500 - Main.offsetFromTop);
+        canvas.rect(0, 0, Main.SCREEN_X, 500 - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
         canvas.fill(255);
         canvas.textSize(25);
         canvas.text(Main.selectedBusiness.getName().substring(1, Main.selectedBusiness.getName().length()-1) + '\n'
                 + Main.selectedBusiness.getAddress() + '\n'
                 + Main.selectedBusiness.getCity() + ", "
                 + Main.selectedBusiness.getPostal_code()
-                , 100, 100 - Main.offsetFromTop);
+                , 100, 100 - Main.offsetFromTop  - (reviewRatio * offsetFromTopReview));
         drawReviews(10, 510);
 
         // Start graph drawings
@@ -147,8 +166,15 @@ public class Drawable {
 
         //Draw star chart or failure
 
+        Main.graphScreen.setyPos(initialReviewYs.get(3) - (reviewRatio * offsetFromTopReview));
         Main.graphScreen.draw();
+
+        Main.businessScreenController.get("backButton").setPosition(Main.businessScreenController.get("backButton").getPosition()[0], initialReviewYs.get(0) - (reviewRatio * offsetFromTopReview));
+        Main.businessScreenController.get("graphForward").setPosition(Main.businessScreenController.get("graphForward").getPosition()[0], initialReviewYs.get(1) - (reviewRatio * offsetFromTopReview));
+        Main.businessScreenController.get("graphBackward").setPosition(Main.businessScreenController.get("graphBackward").getPosition()[0], initialReviewYs.get(2) - (reviewRatio * offsetFromTopReview));
+
         Main.businessScreenController.draw();
+        if(Main.reviewScroll != null)Main.reviewScroll.draw(0);
 
         //map test
                     /*
@@ -179,7 +205,7 @@ public class Drawable {
                     }
                 }
             } catch (ConcurrentModificationException e) {
-                //System.out.println("Couldn't get info this time");
+                System.out.println("Couldn't get info this time");
             }
             int reviewOffset = yStart;
             int borderOffsetY = 20;
@@ -190,27 +216,45 @@ public class Drawable {
 
             ListIterator<Review> reviewIterator = Main.reviews.listIterator();
             try {
-                //formatter.formatReviews(Main.reviews);
-
                 while (reviewIterator.hasNext()) {
                     Review r = reviewIterator.next();
                     if (r.getFormattedReview() == null) {
                         formatter.formatReview(r);
                     }
 
+                    if(initialReviewYs.size() < Main.reviews.size()){
+                        initialReviewYs.add((float)reviewOffset);
+                        System.out.println(reviewOffset);
+                    }
+
                     canvas.textSize(15);
                     dateFormat = r.getDate().split(" ");
                     reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
-                    canvas.fill(175, 255, 248);
-                    canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, reviewBoxHeight);
-                    canvas.fill(0);
-                    canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
-                    canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
+                    if(reviewRatio != 0) {
+                        canvas.fill(175, 255, 248);
+                        canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop - (reviewRatio * offsetFromTopReview), Main.SCREEN_X - 10, reviewBoxHeight);
+                        canvas.fill(0);
+                        canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20 , reviewOffset + borderOffsetY - Main.offsetFromTop- Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
+                        canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
+                    }
+                    else{
+                        canvas.fill(175, 255, 248);
+                        canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, reviewBoxHeight);
+                        canvas.fill(0);
+                        canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
+                        canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
+                    }
 
-                    reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
+                    if(r != Main.reviews.get(Main.reviews.size()-1)) reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
                 }
+
+                if(Main.reviewScroll == null){
+                    Main.reviewScroll = new Scrollbar(canvas, 20, reviewOffset, canvas.color(150), SCROLLBAR_EVENT);
+                    reviewRatio = Main.reviewScroll.getRatio();
+                }
+
             } catch (ConcurrentModificationException e) {
-                //System.out.println("Couldn't draw this time");
+                System.out.println("Couldn't draw this time");
             }
         }
         else {

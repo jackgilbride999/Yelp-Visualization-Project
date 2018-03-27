@@ -120,12 +120,15 @@ public class Review {
     public int getNumberOfLines() {
         return numberOfLines;
     }
+
     public void setNumberOfLines(int numberOfLines) {
         this.numberOfLines = numberOfLines;
     }
+
     public void setFormattedReview(String review) {
         this.formattedReview = review;
     }
+
     public String getFormattedReview() {
         return this.formattedReview;
     }
