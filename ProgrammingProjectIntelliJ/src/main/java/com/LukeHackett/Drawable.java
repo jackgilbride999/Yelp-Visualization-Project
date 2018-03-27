@@ -7,9 +7,7 @@ import processing.core.PApplet;
 
 import java.util.*;
 
-import static com.LukeHackett.Main.SCROLLBAR_EVENT;
-import static com.LukeHackett.Main.reviewScroll;
-import static com.LukeHackett.Main.yOffset;
+import static com.LukeHackett.Main.*;
 import static oracle.jrockit.jfr.events.Bits.floatValue;
 
 public class Drawable {
@@ -246,12 +244,14 @@ public class Drawable {
                         canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
                     }
 
-                    if(r != Main.reviews.get(Main.reviews.size()-1)) reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
+                    //if(r != Main.reviews.get(Main.reviews.size()-1))
+                        reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
                 }
 
                 if(Main.reviewScroll == null){
                     Main.reviewScroll = new Scrollbar(canvas, 20, reviewOffset, canvas.color(150), SCROLLBAR_EVENT);
                     reviewRatio = Main.reviewScroll.getRatio();
+                    System.out.println(reviewOffset + "  " + reviewRatio);
                 }
 
             } catch (ConcurrentModificationException e) {
@@ -260,7 +260,12 @@ public class Drawable {
         }
         else {
             canvas.fill(0);
-            canvas.text("loading reviews...", Main.SCREEN_X/2 - canvas.textWidth("loading reviews...")/2, Main.SCREEN_Y-200);
+            if(emptyReview){
+                canvas.text("No reviews to show!", Main.SCREEN_X / 2 - canvas.textWidth("loading reviews...") / 2, Main.SCREEN_Y - 200);
+            }
+            else {
+                canvas.text("loading reviews...", Main.SCREEN_X / 2 - canvas.textWidth("loading reviews...") / 2, Main.SCREEN_Y - 200);
+            }
         }
     }
 
