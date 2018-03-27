@@ -55,24 +55,23 @@ public class GraphScreen {
         int tempIndex = 0;
         if (active) {
             Set<Graph> graphSet = graphs.keySet();
-            for(Graph g : graphSet){
+            for (Graph g : graphSet) {
                 graphs.put(g, false);
                 tempIndex++;
             }
             graphs.put(graph, true);
             activeIndex = tempIndex;
-        }
-        else{
+        } else {
             graphs.put(graph, false);
         }
     }
 
-    public void setActive(String graphName){
+    public void setActive(String graphName) {
         Set<Graph> graphSet = graphs.keySet();
         boolean activated = false;
         int tempIndex = 0;
-        for(Graph g : graphSet){
-            if(graphName.equals(g.getName())){
+        for (Graph g : graphSet) {
+            if (graphName.equals(g.getName())) {
                 graphs.put(g, true);
                 activated = true;
                 activeIndex = tempIndex;
@@ -80,18 +79,17 @@ public class GraphScreen {
             graphs.put(g, false);
             tempIndex++;
         }
-        if(!activated) System.out.println("Could not find graph to activate");
+        if (!activated) System.out.println("Could not find graph to activate");
     }
 
-    public void setActive(int index){
+    public void setActive(int index) {
         Set<Graph> graphSet = graphs.keySet();
         boolean activated = false;
         int tempIndex = 0;
-        for(Graph g : graphSet) {
-            if(tempIndex != index){
+        for (Graph g : graphSet) {
+            if (tempIndex != index) {
                 graphs.put(g, false);
-            }
-            else{
+            } else {
                 activeIndex = tempIndex;
                 graphs.put(g, true);
             }
@@ -109,13 +107,19 @@ public class GraphScreen {
 
     public void draw() {
         canvas.textSize(12);
-        canvas.fill(74,75,75,120);
-        canvas.rect(xPos, yPos, xSize, ySize+35);
+        canvas.fill(74, 75, 75, 120);
+        canvas.rect(xPos, yPos, xSize, ySize + 35);
 
-        Set<Graph> graphSet = graphs.keySet();
-        for(Graph g : graphSet){
-            if(graphs.get(g)){
-                g.draw(xPos, yPos, xSize, ySize);
+        if (graphs.isEmpty()) {
+            canvas.textSize(15);
+            canvas.fill(255);
+            canvas.text("loading...", (xPos + xSize/2) - canvas.textWidth("loading...")/2, yPos + ySize/2);
+        } else {
+            Set<Graph> graphSet = graphs.keySet();
+            for (Graph g : graphSet) {
+                if (graphs.get(g)) {
+                    g.draw(xPos, yPos, xSize, ySize);
+                }
             }
         }
     }
