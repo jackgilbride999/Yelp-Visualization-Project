@@ -63,16 +63,10 @@ public class UI {
         Main.reviewScroll = null;
         //Main.searchScroll = null;
         if(Main.graphScreen != null) Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
-        switch (Main.currentController) {
-            case SEARCH_RESULT_SCREEN:
-                if (Main.currentSearch != 0) {
-                    Main.currentSearch -= 10;
-                    return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);
-                }
-                break;
-            case BUSINESS_SCREEN:
-                Main.currentController = SEARCH_RESULT_SCREEN;
-                break;
+
+        if (Main.currentSearch != 0) {
+            Main.currentSearch -= 10;
+            return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);
         }
         return null;
     }
@@ -85,8 +79,31 @@ public class UI {
         return null;
     }
 
+    public void backButtonReview() {
+        if (Main.currentReview != 0) {
+            Main.currentReview += 10;
+        }
+    }
+
+    public void forwardButtonReview(){
+        if((Main.currentReview+10) < Main.reviews.size()){
+            Main.currentReview += 10;
+        }
+    }
+
     public int homeButton() {
-        return HOME_SCREEN;
+        switch (Main.currentController) {
+            case SEARCH_RESULT_SCREEN:
+                //if (Main.currentSearch != 0) {
+                //    Main.currentSearch -= 10;
+                    //return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);
+                //}
+                return HOME_SCREEN;
+            case BUSINESS_SCREEN:
+                //Main.currentController = SEARCH_RESULT_SCREEN;
+                return SEARCH_RESULT_SCREEN;
+        }
+        return 0;
     }
 
     public ArrayList<Business> beautyButton(queries qControl) {
@@ -234,14 +251,14 @@ public class UI {
                 .setSize(50, 50)
                 .setCaptionLabel("")
                 .setImage(forwardButtonImage)
-                .setPosition(Main.SCREEN_X - 100, 350);
+                .setPosition(Main.SCREEN_X - 100, 400);
 
         Main.graphBackward = Main.businessScreenController.addButton("graphBackward")
                 .setValueSelf(15)
                 .setSize(50, 50)
                 .setCaptionLabel("")
                 .setImage(backButtonImage)
-                .setPosition(Main.SCREEN_X - 300, 350);
+                .setPosition(Main.SCREEN_X - 300, 400);
 
         Main.reviewFilterOptions = Main.businessScreenController.addScrollableList("Filter")
                 .addItem("All", 0)
@@ -278,5 +295,25 @@ public class UI {
         Drawable.initialReviewYs.add(Main.graphBackward.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.graphScreen.getyPos());
         Drawable.initialReviewYs.add(Main.reviewFilterOptions.getPosition()[1]);
+    }
+
+    public void setupReviewHeader(){
+        reviewBackButton = reviewHeaders.addButton("backButtonReview")
+                .setSize(50, 50)
+                .setPosition(SCREEN_X - 120, 10);
+        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
+        reviewBackButton.setImage(backButtonImage);
+
+        reviewForwardButton = reviewHeaders.addButton("forwardButtonReview")
+                .setSize(50, 50)
+                .setPosition(SCREEN_X - 60, 10);
+        forwardButtonImage.resize(forwardButton.getWidth(), forwardButton.getHeight());
+        reviewForwardButton.setImage(forwardButtonImage);
+
+        reviewHomeButton = reviewHeaders.addButton("homeButton")
+                .setSize(60, 60)
+                .setPosition(10, 10);
+        homeButtonImage.resize(homeButton.getWidth(), homeButton.getHeight());
+        reviewHomeButton.setImage(homeButtonImage);
     }
 }
