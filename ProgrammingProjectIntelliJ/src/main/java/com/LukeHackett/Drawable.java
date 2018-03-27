@@ -172,6 +172,7 @@ public class Drawable {
         Main.businessScreenController.get("backButton").setPosition(Main.businessScreenController.get("backButton").getPosition()[0], initialReviewYs.get(0) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("graphForward").setPosition(Main.businessScreenController.get("graphForward").getPosition()[0], initialReviewYs.get(1) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("graphBackward").setPosition(Main.businessScreenController.get("graphBackward").getPosition()[0], initialReviewYs.get(2) - (reviewRatio * offsetFromTopReview));
+        Main.businessScreenController.get("Filter").setPosition(Main.businessScreenController.get("Filter").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
 
         Main.businessScreenController.draw();
         if(Main.reviewScroll != null)Main.reviewScroll.draw(0);

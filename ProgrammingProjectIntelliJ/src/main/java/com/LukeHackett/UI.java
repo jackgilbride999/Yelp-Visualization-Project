@@ -241,9 +241,40 @@ public class UI {
                 .setImage(backButtonImage)
                 .setPosition(Main.SCREEN_X - 300, 350);
 
+        Main.reviewFilterOptions = Main.businessScreenController.addScrollableList("Filter")
+                .addItem("All", 0)
+                .addItem("5 Star Reviews", 1)
+                .addItem("4 Star Reviews", 2)
+                .addItem("3 Star Reviews", 3)
+                .addItem("2 Star Reviews", 4)
+                .addItem("1 Star Reviews", 5)
+                .setFont(Main.searchFont)
+                .setColorBackground(canvas.color(0, 145, 135))
+                .setColorForeground(canvas.color(0, 135, 122))
+                .setColorActive(canvas.color(0, 100, 100))
+                .setMouseOver(false)
+                .setOpen(false)
+                .setHeight(300)
+                .setWidth(200)
+                .setBarHeight(40)
+                .setItemHeight(40)
+                .setPosition(20, 440 - Main.offsetFromTop);
+
+        Label label = Main.searchOptions.getCaptionLabel();
+        label.toUpperCase(false);
+        label.getStyle()
+                .setPaddingLeft(5)
+                .setPaddingTop(10);
+        label = Main.searchOptions.getValueLabel();
+        label.toUpperCase(false);
+        label.getStyle()
+                .setPaddingLeft(5)
+                .setPaddingTop(10);
+
         Drawable.initialReviewYs.add(Main.backButtonBusiness.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.graphForward.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.graphBackward.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.graphScreen.getyPos());
+        Drawable.initialReviewYs.add(Main.reviewFilterOptions.getPosition()[1]);
     }
 }

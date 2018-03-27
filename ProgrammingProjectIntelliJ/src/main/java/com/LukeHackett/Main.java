@@ -28,6 +28,7 @@ public class Main extends PApplet {
     public static int currentController;
     public static int currentSearch = 0;
     public static int selected = 0;
+    public static int selectedFilter = 0;
     public static int yOffset;
     public static int offsetFromTop = 0;
 
@@ -45,6 +46,8 @@ public class Main extends PApplet {
     public static Textfield searchBarSearch;
     public static ScrollableList searchOptions;
     public static ScrollableList searchOptionsSearch;
+    public static ScrollableList reviewFilterOptions;
+
 
     public static Button backButton;
     public static Button forwardButton;
@@ -268,6 +271,10 @@ public class Main extends PApplet {
 
     public void Options(int n) {
         selected = n;
+    }
+
+    public void selectedFilter(int n){
+        selectedFilter = n;
     }
 
     public void backButton() {
