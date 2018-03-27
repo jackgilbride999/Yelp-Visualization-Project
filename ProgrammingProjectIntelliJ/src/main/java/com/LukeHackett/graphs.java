@@ -4,6 +4,9 @@ import org.gicentre.utils.stat.*;
 import processing.core.PApplet;
 
 import java.util.*;
+import java.util.Scanner;
+
+import static javafx.scene.paint.Color.color;
 
 /*
 
@@ -167,5 +170,124 @@ class CheckinsBarChart implements Graph {
         canvas.textSize(15);
         canvas.text("check-in statistics.", xPos, yPos + 30);
         //canvas.textSize(12);
+    }
+}
+/*
+    void draw() {
+        chart2.draw();
+        chart.draw();
+    }
+
+*/
+
+/*class BusinessHoursBarChart{
+    private BarChart barChart;
+    private String[] hoursArray;
+    private String name;
+    private float max;
+    private float min;
+    private PApplet canvas;
+
+    public BusinessHoursBarChart(PApplet canvas, String[] hoursArray, String name){
+        this.canvas = canvas;
+        barChart = new BarChart(canvas);
+        this.hoursArray=hoursArray;
+        max = 0;
+        min = 0;
+    }
+}*/
+
+class BusinessHoursChart {
+    private PApplet canvas;
+    private boolean[][] openingHours;
+    private static final int DAYS_PER_WEEK = 7;
+    private static final int HALF_HOURS_PER_DAY = 48;
+    private static final int BOX_WIDTH = 20;
+    private static final int BOX_HEIGHT = 20;
+    private int graphX, graphY;
+
+    public BusinessHoursChart(PApplet canvas, String[] hoursArray, int x, int y) {
+        this.canvas=canvas;
+        this.graphX=x;
+        this.graphY=y;
+        openingHours = new boolean[DAYS_PER_WEEK][HALF_HOURS_PER_DAY];
+        if (hoursArray!=null) {
+            for (int i=0; i<hoursArray.length; i++) {
+                try {
+                    String hoursOpen = hoursArray[i];
+                    if (!hoursOpen.equals("None")) {
+                        String[] hours = hoursOpen.split("-"); // opening time will be at index  0,  closing time at index  1
+                        String openingTime = hours[0];
+                        int indexToOpenAt = 2*Integer.parseInt(openingTime.split(":")[0]); //eg if the business opens at 7:00, will start indexing at index 14 as we are working with half hours
+                        if (Integer.parseInt(openingTime.split(":")[1])>=30) { // but if it opens at 7:30 we will start indexing at index 15
+                            indexToOpenAt++;
+                        }
+                        String closingTime = hours[1];
+                        int indexToCloseAt = 2*Integer.parseInt(closingTime.split(":")[0]);
+                        if (Integer.parseInt(closingTime.split(":")[1])<30) {
+                            indexToCloseAt--;
+                        }
+                        else if(Integer.parseInt(closingTime.split(":")[1])>45){
+                            indexToCloseAt++;
+                        }
+                        for (int count = indexToOpenAt; count<=indexToCloseAt; count++) {
+                            openingHours[i][count] = true;
+                        }
+                    }
+                }
+                catch(Exception e) {
+                }
+            }
+        }
+    }
+    void draw() {
+        canvas.fill(0);
+        drawAxes();
+        drawXLabels();
+        drawYLabels();
+        for (int dayCount = 0; dayCount<openingHours.length; dayCount++) {
+            for (int hourCount = 0; hourCount<openingHours[dayCount].length; hourCount++) {
+                boolean isOpen = openingHours[dayCount][hourCount];
+                if (isOpen) { // draw full boxes if the business is open during the specific half-hour
+                    canvas.fill(65, 244, 169);
+                } else {
+                    canvas.fill(255, 0, 0);
+                }
+                canvas.stroke(0);
+                canvas.rect(graphX+hourCount*BOX_WIDTH, graphY+dayCount*BOX_HEIGHT+BOX_HEIGHT, BOX_WIDTH, BOX_HEIGHT);
+            }
+        }
+    }
+
+    void drawAxes() {
+        canvas.line(graphX, graphY+BOX_HEIGHT, graphX+HALF_HOURS_PER_DAY*BOX_WIDTH, graphY+BOX_HEIGHT);
+        canvas.line(graphX, graphY+BOX_HEIGHT, graphX, graphY + DAYS_PER_WEEK*BOX_HEIGHT+BOX_HEIGHT);
+        String title = "Opening Hours:";
+        canvas.text(title, graphX+(HALF_HOURS_PER_DAY*BOX_WIDTH)/2-canvas.textWidth(title)/2, graphY);
+    }
+
+    void drawYLabels() {
+        canvas.text("Mon", graphX-canvas.textWidth("Mon")-2, graphY+2*BOX_HEIGHT);
+        canvas.text("Tue", graphX-canvas.textWidth("Tue")-2, graphY+3*BOX_HEIGHT);
+        canvas.text("Wed", graphX-canvas.textWidth("Wed")-2, graphY+4*BOX_HEIGHT);
+        canvas.text("Thu", graphX-canvas.textWidth("Thu")-2, graphY+5*BOX_HEIGHT);
+        canvas.text("Fri", graphX-canvas.textWidth("Fri")-2, graphY+6*BOX_HEIGHT);
+        canvas.text("Sat", graphX-canvas.textWidth("Sat")-2, graphY+7*BOX_HEIGHT);
+        canvas.text("Sun", graphX-canvas.textWidth("Sun")-2, graphY+8*BOX_HEIGHT);
+    }
+
+    void drawXLabels() {
+        for (int hour = 0; hour<24; hour++) {
+            String time = "" + hour + ":00";
+            canvas.text(time, graphX+BOX_WIDTH+2*BOX_WIDTH*hour-canvas.textWidth(time)/2, graphY+BOX_HEIGHT-2);
+        }
+    }
+
+    boolean hasBusinessHours() {
+        for (int day=0; day<openingHours.length; day++)
+            for (int halfHour=0; halfHour<openingHours[day].length; halfHour++)
+                if (openingHours[day][halfHour]==true)  // This means that in at least one day there are business hours for this business
+                    return true;
+        return false;
     }
 }
