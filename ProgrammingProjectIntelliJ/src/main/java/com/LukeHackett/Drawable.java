@@ -306,43 +306,44 @@ public class Drawable {
     public void setupHomeScreen() {
         int searchbarHeight = 40;
         int searchbarWidth = 3 * (Main.SCREEN_X / 4);
+        int y = 640;
+        int startX = Main.SCREEN_X / 6 - 72 - 85;
 
         Main.beautyButton = Main.homeScreenController.addButton("beautyButton")
                 .setSize(110, 110)
-                .setPosition( Main.SCREEN_X / 2 - (72 / 2) - 250 - 72,  Main.SCREEN_Y / 2)
-                .setPosition( Main.SCREEN_X / 2 - (72 / 2) - 250 - 72,  Main.SCREEN_Y / 2)
+                .setPosition( startX,  y)
                 .setImage(Main.beautyImage);
 
         Main.sportsButton = Main.homeScreenController.addButton("sportsButton")
                 .setSize(110, 110)
-                .setPosition(Main.SCREEN_X / 2 - (72 / 2), Main.SCREEN_Y / 2)
+                .setPosition(startX + 207, y)
                 .setImage(Main.sportsImage);
 
         Main.restaurantsButton = Main.homeScreenController.addButton("restaurantsButton")
                 .setSize(110, 110)
-                .setPosition(Main.SCREEN_X / 2 + (72 / 2) + 250, Main.SCREEN_Y / 2)
+                .setPosition(startX+414, y)
                 .setImage(Main.restaurantImage);
 
 
         Main.shoppingButton = Main.homeScreenController.addButton("shoppingButton")
                 .setSize(110, 110)
-                .setPosition(Main.SCREEN_X / 2 - (72 / 2) - 250 - 72, Main.SCREEN_Y / 2 + 190)
+                .setPosition(startX+621, y)
                 .setImage(Main.shoppingImage);
 
         Main.automotiveButton = Main.homeScreenController.addButton("autoButton")
                 .setSize(110, 110)
-                .setPosition(Main.SCREEN_X / 2 - (72 / 2), Main.SCREEN_Y / 2 + 190)
+                .setPosition(startX+828, y)
                 .setImage(Main.automotiveImage);
 
         Main.nightLifeButton = Main.homeScreenController.addButton("nightlifeButton")
                 .setSize(110, 110)
-                .setPosition(Main.SCREEN_X / 2 + (72 / 2) + 250, Main.SCREEN_Y / 2 + 190)
+                .setPosition(startX+1035, y)
                 .setImage(Main.nightLifeImage);
 
         Main.searchBar = Main.homeScreenController.addTextfield("searchBar")
                 .setCaptionLabel("")
                 .setColorBackground(canvas.color(255, 255, 255))
-                .setPosition(Main.SCREEN_X / 2 - searchbarWidth / 2, 250)
+                .setPosition(Main.SCREEN_X / 2 - searchbarWidth / 2, 350)
                 .setSize(searchbarWidth - 200, searchbarHeight)
                 .setFont(Main.searchFont)
                 .setFocus(false)
@@ -366,7 +367,7 @@ public class Drawable {
                 .setWidth(200)
                 .setBarHeight(40)
                 .setItemHeight(40)
-                .setPosition(Main.SCREEN_X / 2 + 3 * (Main.SCREEN_X / 4) / 2 - 200, 250);
+                .setPosition(Main.SCREEN_X / 2 + 3 * (Main.SCREEN_X / 4) / 2 - 200, 350);
 
         Label label = Main.searchOptions.getCaptionLabel();
         label.toUpperCase(false);
