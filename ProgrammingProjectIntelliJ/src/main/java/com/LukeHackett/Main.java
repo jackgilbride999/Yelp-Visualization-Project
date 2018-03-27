@@ -23,7 +23,7 @@ public class Main extends PApplet {
     public static final int SEARCH_RESULT_SCREEN = 1;
     public static final int BUSINESS_SCREEN = 2;
     public static final int BORDER_OFFSET_Y = 10;
-    public static final int LINE_LENGTH = SCREEN_X / 10;
+    public static final int LINE_LENGTH = 170;
 
     public static int currentController;
     public static int currentSearch = 0;
@@ -45,7 +45,6 @@ public class Main extends PApplet {
     public static Textfield searchBarSearch;
     public static ScrollableList searchOptions;
     public static ScrollableList searchOptionsSearch;
-    public static ScrollableList reviewFilterOptions;
 
     public static Button backButton;
     public static Button forwardButton;
@@ -79,6 +78,7 @@ public class Main extends PApplet {
 
     public static ImageCrawler[] businessesSearch;
     public static Scrollbar searchScroll;
+    public static Scrollbar reviewScroll;
     public static Business selectedBusiness;
     public static ArrayList<Review> reviews;
 
@@ -95,12 +95,10 @@ public class Main extends PApplet {
     public static GraphScreen graphScreen;
 
     public static PFont searchFont;
-    public static PFont reviewFont;
-    public static float searchRatio;
-    public static float previousSearchMouseY;
-    public static float offsetFromTopSearch;
     public static float searchMouseDifference;
     public static boolean searchScrollPressed;
+    public static float reviewMouseDifference;
+    public static boolean reviewScrollPressed;
 
 //    public UnfoldingMap map;
 
@@ -119,7 +117,6 @@ public class Main extends PApplet {
         UI = new UI(this);
         draws = new Drawable(this);
         searchFont = createFont("OpenSans-Regular", 22);
-        reviewFont = createFont("OpenSans-Regular", 14);
         spaceFromEdge = " ";
         while (textWidth(spaceFromEdge) < 120) {
             spaceFromEdge += " ";
@@ -156,6 +153,9 @@ public class Main extends PApplet {
         businessesSearch = new ImageCrawler[10];
         //starsList = null;
 
+        //Graph screen setup
+        graphScreen = new GraphScreen(this, SCREEN_X - 300, 50, 250, 250);
+
         //Control P5 setup
         setupHomeScreen();
         setupSearchHeader();
@@ -165,9 +165,6 @@ public class Main extends PApplet {
         searchResultHeaders.setAutoDraw(false);
         businessScreenController.setAutoDraw(false);
         //End Control P5 setup
-
-        //Graph screen setup
-        graphScreen = new GraphScreen(this, SCREEN_X - 300, 50, 250, 250);
     }
 
     public void draw() {
@@ -188,7 +185,6 @@ public class Main extends PApplet {
                     drawBusinesses();
                     break;
                 case BUSINESS_SCREEN:
-                    //textFont(reviewFont);
                     drawBusinessScreen();
                     break;
             }
@@ -200,26 +196,21 @@ public class Main extends PApplet {
             connected = true;
         }
     }
-    public void keyPressed() {
-        if(key == '+')
-        {
-            offsetFromTop = offsetFromTop + 20;
-        }
-        else if(key == '-')
-        {
-            offsetFromTop = offsetFromTop - 20;
-        }
-    }
 
     public void mousePressed() {                                        // when these three mouse methods are used in the main program, make sure to have this code within them to control scrollbar
         if (searchScroll != null && searchScroll.getEvent(mouseX, mouseY) == SCROLLBAR_EVENT) {
             searchScrollPressed = true;
             searchMouseDifference = mouseY - searchScroll.getY();
         }
+        if (reviewScroll != null && reviewScroll.getEvent(mouseX, mouseY) == SCROLLBAR_EVENT) {
+            reviewScrollPressed = true;
+            reviewMouseDifference = mouseY - reviewScroll.getY();
+        }
     }
 
     public void mouseReleased() {
         searchScrollPressed = false;
+        reviewScrollPressed = false;
     }
 
     public void mouseDragged() {
@@ -229,6 +220,13 @@ public class Main extends PApplet {
                 searchScroll.setY(0);
             else if (searchScroll.getY() + searchScroll.getHeight() > SCREEN_Y)
                 searchScroll.setY(SCREEN_Y - searchScroll.getHeight());
+        }
+        else if (reviewScrollPressed) {
+            reviewScroll.setY(mouseY - reviewMouseDifference);
+            if (reviewScroll.getY() < 0)
+                reviewScroll.setY(0);
+            else if (reviewScroll.getY() + reviewScroll.getHeight() > SCREEN_Y)
+                reviewScroll.setY(SCREEN_Y - reviewScroll.getHeight());
         }
     }
 

@@ -35,7 +35,6 @@ class queries {
         }
     }
 
-
     public ResultSet getQueryResultAnton(String query) {
 
         try {
@@ -90,9 +89,6 @@ class queries {
         }
     }
 
-
-
-
     public ArrayList<Float> getStarsList(String businessId)
     {
         ArrayList<Float> starsList= new ArrayList<Float>();
@@ -118,8 +114,6 @@ class queries {
         return starsList;
 
     }
-
-
 
     public String getBusinessIdByName(String name)
     {
@@ -189,7 +183,6 @@ class queries {
             return null;
         }
     }
-
 
     public ResultSet getQueryResult(String query) {
 
@@ -489,7 +482,6 @@ class queries {
     }
 
     ArrayList<Integer> visitorsList = new ArrayList<Integer>();
-
 
     public String getBusinessVisitors(String business_id) {
         try {
