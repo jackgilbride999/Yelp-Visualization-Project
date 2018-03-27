@@ -127,6 +127,8 @@ public class Drawable {
                 + Main.selectedBusiness.getCity() + ", "
                 + Main.selectedBusiness.getPostal_code()
                 , 100, 100 - Main.offsetFromTop  - (reviewRatio * offsetFromTopReview));
+        canvas.textFont(reviewFont);
+        canvas.text(selectedBusiness.getReview_count() + " reviews", 240, 470 - (reviewRatio * offsetFromTopReview));
         drawReviews(10, 510);
 
         // Start graph drawings
