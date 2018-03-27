@@ -245,6 +245,32 @@ class queries {
         return reviews;
     }
 
+    public ArrayList<Review> reviewsFilteredByStars(String business_id,double stars){//, int start, int lim) {
+        ArrayList<Review> reviewsFilteredByStars = new ArrayList<Review>();
+        try {
+            String businessQuery = "SELECT * " +
+                    "FROM yelp_review " +
+                    "WHERE MATCH(business_id) AGAINST(" + '\'' + business_id + '\'' + ")" +
+                    "AND stars = " + stars;
+                    //"WHERE stars=" + stars;
+                   // "ORDER BY stars DESC";//+
+            //"LIMIT " + start + "," + lim;
+            java.sql.Statement statement = connection.createStatement();
+            ResultSet results = statement.executeQuery(businessQuery);
+
+            while (results.next()) {
+                Review r = new Review(results.getString("id"), results.getString("user_id"), results.getString("business_id"), results.getDouble("stars"), results.getString("date"), results.getString("text"), results.getInt("useful"), results.getInt("funny"), results.getInt("cool"));
+                r.setUser_name(getUserName(r.getUserId()));
+                reviewsFilteredByStars.add(r);
+                //System.out.println(results.getString("id"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("Done!!");
+        return reviewsFilteredByStars;
+    }
+
     public void reviewsAlterMain(String business_id){//, int start, int lim) {
         Main.reviews = new ArrayList<Review>();
         try {
