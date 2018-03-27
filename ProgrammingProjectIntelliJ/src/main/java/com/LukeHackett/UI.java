@@ -78,7 +78,7 @@ public class UI {
 
     public void backButtonReview() {
         if (Main.currentReview != 0) {
-            Main.currentReview += 10;
+            Main.currentReview -= 10;
         }
     }
 
