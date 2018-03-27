@@ -13,10 +13,10 @@ public class Formatter {
             String formattedReview = "";
 
             formattedReview = formattedReview + r.getUser_name() + ":" + "  ";
-            for (int i = 0; i<r.getStars(); i++)
-            {
-                formattedReview = formattedReview + " * ";
-            }
+//            for (int i = 0; i<r.getStars(); i++)
+//            {
+//                formattedReview = formattedReview + " * ";
+//            }
             formattedReview = formattedReview + "\n";
             boolean toNextLine = false;
             int lines = 3;

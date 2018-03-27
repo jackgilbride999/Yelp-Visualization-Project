@@ -133,24 +133,10 @@ public class Drawable {
         canvas.text(selectedBusiness.getReview_count() + " reviews", 240, 470 - (reviewRatio * offsetFromTopReview));
         drawReviews(10, 510);
 
-        double stars = selectedBusiness.getStars();
-        float starX = businessInfoX;
+        float stars = (float)selectedBusiness.getStars();
+        int starX = (int)businessInfoX;
         int y = (int)businessInfoY + 18;
-        for(int i = 0; i < 5; i++){
-            if(stars <= 0){
-                //canvas.image(Main.emptyStar, starX, y + 115, 20, 20);
-            }
-            else{
-                if(stars == 0.5){
-                    canvas.image(Main.halfStar, starX, y  - (reviewRatio * offsetFromTopReview), 20, 20);
-                }
-                else{
-                    canvas.image(Main.fullStar, starX, y  - (reviewRatio * offsetFromTopReview), 20, 20);
-                }
-                stars--;
-            }
-            starX += 25;
-        }
+        drawStars(starX,stars,y);
 
         // Start graph drawings
         String name = Main.selectedBusiness.getName();
@@ -244,6 +230,7 @@ public class Drawable {
                         formatter.formatReview(r);
                     }
 
+
                     if(initialReviewYs.size() < Main.reviews.size()){
                         initialReviewYs.add((float)reviewOffset);
                         System.out.println(reviewOffset);
@@ -266,7 +253,7 @@ public class Drawable {
                         canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
                         canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
                     }
-
+                    drawStars((int)canvas.textWidth(r.getUser_name()) + 20, (float)r.getStars(), reviewOffset + 5);
                     //if(r != Main.reviews.get(Main.reviews.size()-1))
                         reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
                 }
@@ -276,6 +263,7 @@ public class Drawable {
                     reviewRatio = Main.reviewScroll.getRatio();
                     System.out.println(reviewOffset + "  " + reviewRatio);
                 }
+
 
             } catch (ConcurrentModificationException e) {
                 System.out.println("Couldn't draw this time");
@@ -390,6 +378,24 @@ public class Drawable {
         label.getStyle()
                 .setPaddingLeft(5)
                 .setPaddingTop(10);
+    }
+
+    public void drawStars(int starX, float stars, int y) {
+        for(int i = 0; i < 5; i++){
+            if(stars <= 0){
+                // canvas.image(Main.emptyStar, starX, y + 115, 20, 20);
+            }
+            else{
+                if(stars == 0.5){
+                    canvas.image(Main.halfStar, starX, y  - (reviewRatio * offsetFromTopReview), 20, 20);
+                }
+                else{
+                    canvas.image(Main.fullStar, starX, y  - (reviewRatio * offsetFromTopReview), 20, 20);
+                }
+                stars--;
+            }
+            starX += 25;
+        }
     }
 
 
