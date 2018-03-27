@@ -218,23 +218,20 @@ class queries {
     public ArrayList<Review> reviews(String business_id){//, int start, int lim) {
         ArrayList<Review> reviews = new ArrayList<Review>();
         try {
-            String businessQuery = "SELECT * " +
-                    "FROM yelp_review " +
-                    "WHERE MATCH(business_id) AGAINST(" + '\'' + business_id + '\'' + ")" ;//+
-            //"LIMIT " + start + "," + lim;
-            java.sql.Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery(businessQuery);
-
+            String query = "{CALL getReviewsBusinessID(?)}";
+            CallableStatement stmt = connection.prepareCall(query);
+            stmt.setString(1, business_id);
+            ResultSet results = stmt.executeQuery();
             while (results.next()) {
                 Review r = new Review(results.getString("id"), results.getString("user_id"), results.getString("business_id"), results.getDouble("stars"), results.getString("date"), results.getString("text"), results.getInt("useful"), results.getInt("funny"), results.getInt("cool"));
                 r.setUser_name(getUserName(r.getUserId()));
                 reviews.add(r);
                 //System.out.println(results.getString("id"));
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("Done!!");
         if(reviews.size() == 0) Main.emptyReview = true;
         else Main.emptyReview = false;
         return reviews;

@@ -7,8 +7,6 @@ to stop queueing and improve overall feel of the program - LH
  */
 
 import processing.core.PApplet;
-
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 
 public class GraphCrawler extends Thread{

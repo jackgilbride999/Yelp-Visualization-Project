@@ -170,81 +170,70 @@ public class Drawable {
     }
 
     public void drawReviews(int xStart, int yStart) {
-        if(Main.selectedFilter == 0){
+        if (Main.selectedFilter == 0) {
             Main.reviewsToShow = Main.reviews;
         }
         if (Main.reviewsToShow.size() > 0) {
-            try {
-                for (Review r : Main.reviewsToShow) {
-                    if (r.getUser_name().equals("")) {
-                        r.setUser_name(Main.qControl.getUserName(r.getUserId()));
-                        r.setBusinessName(Main.selectedBusiness.getName());
-                    }
+            for (Review r : Main.reviewsToShow) {
+                if (r.getUser_name().equals("")) {
+                    r.setUser_name(Main.qControl.getUserName(r.getUserId()));
+                    r.setBusinessName(Main.selectedBusiness.getName());
                 }
-            } catch (ConcurrentModificationException e) {
-                System.out.println("Couldn't get info this time");
             }
+
             int reviewOffset = yStart;
             int borderOffsetY = 20;
             int borderOffsetX = xStart;
             float lineHeight = canvas.textAscent() + canvas.textDescent();
             int reviewBoxHeight;
             String[] dateFormat;
-            List<Review> iterableList = Main.reviewsToShow.subList(Main.currentReview, (Main.reviewsToShow.size() < 10) ? Main.reviewsToShow.size() : Main.currentReview + 10);
+            List<Review> iterableList = Main.reviewsToShow.subList(Main.currentReview, (Main.reviewsToShow.size() < Main.currentReview+10) ? Main.reviewsToShow.size() : Main.currentReview + 10);
             ListIterator<Review> reviewIterator = iterableList.listIterator();
-            try {
-                while (reviewIterator.hasNext()) {
-                    Review r = reviewIterator.next();
-                    if (r.getFormattedReview() == null) {
-                        formatter.formatReview(r);
-                    }
-
-
-                    if (initialReviewYs.size() < Main.reviews.size()) {
-                        initialReviewYs.add((float) reviewOffset);
-                        System.out.println(reviewOffset);
-                    }
-
-                    canvas.textSize(15);
-                    dateFormat = r.getDate().split(" ");
-                    reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
-                    if (reviewRatio != 0) {
-                        canvas.fill(175, 255, 248);
-                        canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop - (reviewRatio * offsetFromTopReview), Main.SCREEN_X - 10, reviewBoxHeight);
-                        canvas.fill(0);
-                        canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
-                        canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
-                    } else {
-                        canvas.fill(175, 255, 248);
-                        canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, reviewBoxHeight);
-                        canvas.fill(0);
-                        canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
-                        canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
-                    }
-                    drawStars((int) canvas.textWidth(r.getUser_name()) + 20, (float) r.getStars(), reviewOffset + 5);
-                    //if(r != Main.reviews.get(Main.reviews.size()-1))
-                    reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
-                }
-
-                if (Main.reviewScroll == null) {
-                    Main.reviewScroll = new Scrollbar(canvas, 20, reviewOffset, canvas.color(150), SCROLLBAR_EVENT);
-                    reviewRatio = Main.reviewScroll.getRatio();
-                    System.out.println(reviewOffset + "  " + reviewRatio);
+            while (reviewIterator.hasNext()) {
+                Review r = reviewIterator.next();
+                if (r.getFormattedReview() == null) {
+                    formatter.formatReview(r);
                 }
 
 
-            } catch (ConcurrentModificationException e) {
-                System.out.println("Couldn't draw this time");
+                if (initialReviewYs.size() < Main.reviews.size()) {
+                    initialReviewYs.add((float) reviewOffset);
+                    System.out.println(reviewOffset);
+                }
+
+                canvas.textSize(15);
+                dateFormat = r.getDate().split(" ");
+                reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
+                if (reviewRatio != 0) {
+                    canvas.fill(175, 255, 248);
+                    canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop - (reviewRatio * offsetFromTopReview), Main.SCREEN_X - 10, reviewBoxHeight);
+                    canvas.fill(0);
+                    canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
+                    canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
+                } else {
+                    canvas.fill(175, 255, 248);
+                    canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, reviewBoxHeight);
+                    canvas.fill(0);
+                    canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
+                    canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop);
+                }
+                drawStars((int) canvas.textWidth(r.getUser_name()) + 20, (float) r.getStars(), reviewOffset + 5);
+                //if(r != Main.reviews.get(Main.reviews.size()-1))
+                reviewOffset = reviewOffset + (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY;
+            }
+
+            if (Main.reviewScroll == null) {
+                Main.reviewScroll = new Scrollbar(canvas, 20, reviewOffset, canvas.color(150), SCROLLBAR_EVENT);
+                reviewRatio = Main.reviewScroll.getRatio();
             }
         } else {
             canvas.fill(0);
             if (emptyReview) {
                 canvas.text("No reviews to show!", Main.SCREEN_X / 2 - canvas.textWidth("No reviews to show!") / 2, Main.SCREEN_Y - 200);
             } else {
-                if(reviewsToShow.size() == 0 && selectedFilter != 0){
+                if (reviewsToShow.size() == 0 && selectedFilter != 0) {
                     canvas.text("No reviews to show!", Main.SCREEN_X / 2 - canvas.textWidth("No reviews to show!") / 2, Main.SCREEN_Y - 200);
-                }
-                else {
+                } else {
                     canvas.text("loading reviews...", Main.SCREEN_X / 2 - canvas.textWidth("loading reviews...") / 2, Main.SCREEN_Y - 200);
                 }
             }
