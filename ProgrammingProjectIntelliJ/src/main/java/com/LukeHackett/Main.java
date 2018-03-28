@@ -2,14 +2,16 @@ package com.LukeHackett;
 
 import controlP5.*;
 
+import de.fhpotsdam.unfolding.UnfoldingMap;
+import de.fhpotsdam.unfolding.utils.MapUtils;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
 
-//import de.fhpotsdam.unfolding.*;
-//import de.fhpotsdam.unfolding.geo.*;
-//import de.fhpotsdam.unfolding.ui.*;
-//import de.fhpotsdam.unfolding.providers.OpenStreetMap;
+import de.fhpotsdam.unfolding.*;
+import de.fhpotsdam.unfolding.geo.*;
+import de.fhpotsdam.unfolding.ui.*;
+import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 
 import java.util.ArrayList;
 
@@ -122,7 +124,7 @@ public class Main extends PApplet {
 
     public static int backgroundX;
     public static int backgroundXTimer;
-//    public UnfoldingMap map;
+    public static UnfoldingMap map;
 
 
     public static void main(String[] args) {
@@ -130,7 +132,7 @@ public class Main extends PApplet {
     }
 
     public void settings() {
-        size(SCREEN_X, SCREEN_Y);
+        size(SCREEN_X, SCREEN_Y, P2D);
     }
 
     @Override
@@ -151,7 +153,6 @@ public class Main extends PApplet {
             spaceFromEdge += " ";
         }
 
-        //   map = null;
 
         homeScreenController = new ControlP5(this);
         searchResultController = new ControlP5(this);
@@ -201,6 +202,10 @@ public class Main extends PApplet {
         businessScreenController.setAutoDraw(false);
         reviewHeaders.setAutoDraw(false);
         //End Control P5 setup
+
+        map = new UnfoldingMap(this, SCREEN_X/2, 100, SCREEN_X/4, SCREEN_X/4, new OpenStreetMap.OpenStreetMapProvider());
+        MapUtils.createDefaultEventDispatcher(this, Main.map);
+
     }
 
     public void draw() {
@@ -278,6 +283,7 @@ public class Main extends PApplet {
             reviewScrollPressed = true;
             reviewMouseDifference = mouseY - reviewScroll.getY();
         }
+
     }
 
     public void mouseReleased() {
