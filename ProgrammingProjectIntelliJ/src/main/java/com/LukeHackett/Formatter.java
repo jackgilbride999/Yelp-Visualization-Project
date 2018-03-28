@@ -10,7 +10,14 @@ public class Formatter {
         //for (Review r : reviews) {
         String[] splitReview = r.getReview().split("");
         String formattedReview = "";
-
+        int existingLines = 0;
+        for(int i = 0; i<splitReview.length; i++)
+        {
+            if(splitReview[i].equals("\n"))
+            {
+                existingLines++;
+            }
+        }
         formattedReview = formattedReview + r.getUser_name() + ":" + "  ";
 //            for (int i = 0; i<r.getStars(); i++)
 //            {
@@ -24,6 +31,10 @@ public class Formatter {
             if ((i % Main.LINE_LENGTH == 0) && (i != 0)) {
                 toNextLine = true;
             }
+            else
+            {
+                //toNextLine = false;
+            }
             // If line length has been exceeded it will put a new line at the next whitespace
             if (toNextLine && splitReview[i].equals(" ")) {
                 splitReview[i] = "\n";
@@ -34,6 +45,9 @@ public class Formatter {
             }
             formattedReview = formattedReview + splitReview[i];
         }
+       // System.out.println("lines = " + lines + "    existingLines = " + existingLines);
+        //lines = lines + existingLines;
+
         r.setNumberOfLines(lines);
         r.setFormattedReview(formattedReview);
         //     formattedReviewList.add(formattedReview);
