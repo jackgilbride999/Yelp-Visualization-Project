@@ -247,8 +247,8 @@ public class UI {
         Main.searchBarSearch = Main.searchResultHeaders.addTextfield("searchBarSearch")
                 .setCaptionLabel("")
                 .setColorBackground(canvas.color(255, 255, 255))
-                .setPosition(15, 90)
-                .setSize(225, 30)
+                .setPosition(45, 90)
+                .setSize(195, 30)
                 .setFont(Main.searchFont)
                 .setFocus(false)
                 .setColor(canvas.color(0, 0, 0))
@@ -266,10 +266,10 @@ public class UI {
                     .setColorBackground(canvas.color(255, 255, 255))
                     .setPosition(15, y)
                     .setSize(225, ySize)
-                    .setFont(Main.searchFont)
-                    .setColorBackground(canvas.color(230,230,230))
-                    .setColorForeground(canvas.color(200,200,200))
-                    .setColorActive(canvas.color(170,170,170));
+                    .setFont(Main.reviewFont)
+                    .setColorBackground(canvas.color(245))
+                    .setColorForeground(canvas.color(230))
+                    .setColorActive(canvas.color(215));
 
             Label label = catButton.getValueLabel();
             label.align(ControlP5.LEFT, ControlP5.TOP);
