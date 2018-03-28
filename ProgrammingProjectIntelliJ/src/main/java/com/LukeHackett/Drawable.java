@@ -117,6 +117,7 @@ public class Drawable {
         Main.searchScroll.draw(0);
 
         canvas.image(sidebarShadow, 260, 75);
+        canvas.image(searchIcon,15,90);
     }
 
     public void drawBusinessScreen() {
@@ -157,11 +158,12 @@ public class Drawable {
         Main.businessScreenController.draw();
 
 
-        canvas.fill(255);
+        canvas.fill(0, 135, 122);
         canvas.noStroke();
-        canvas.rect(0, 0, Main.SCREEN_X, 75);
-        canvas.fill(0, 0, 0, 20);
-        canvas.rect(0, 75, Main.SCREEN_X, 20);
+        canvas.rect(0, 0, Main.SCREEN_X, 50);
+        //canvas.fill(0, 0, 0, 20);
+        //canvas.rect(0, 75, Main.SCREEN_X, 20);
+       // canvas.image(headerShadow,0,75);
         //canvas.tint(255);
         reviewHeaders.draw();
         if (Main.reviewScroll != null && reviewRatio > 1) Main.reviewScroll.draw(0);
@@ -204,7 +206,7 @@ public class Drawable {
                 dateFormat = r.getDate().split(" ");
                 reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
                 if (reviewRatio != 0) {
-                    canvas.fill(0, 169, 154, 80);
+                    canvas.fill(245);
                     canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop - (reviewRatio * offsetFromTopReview), Main.SCREEN_X - 10, reviewBoxHeight);
                     canvas.fill(0);
                     canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
