@@ -74,6 +74,7 @@ public class Main extends PApplet {
     public static Button graphForward;
     public static Button graphBackward;
 
+    public static PImage headerShadow;
     public static PImage sidebarShadow;
     public static PImage background;
     public static PImage restaurantImage;
@@ -166,6 +167,7 @@ public class Main extends PApplet {
         textFont(searchFont);
         text("loading...", SCREEN_X / 2 - textWidth("loading") / 2, SCREEN_Y / 2);
 
+        headerShadow = loadImage("business_screen_header_shadow.png");
         sidebarShadow = loadImage("sidebar_shadow.png");
         background = loadImage("background_scroll_2.jpg");
         backButtonImage = loadImage("backButton.png");
