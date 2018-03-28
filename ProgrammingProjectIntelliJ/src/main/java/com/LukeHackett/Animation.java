@@ -21,7 +21,6 @@ public class Animation {
         {
             String filename = imagePrefix + "_0" + (i+1) + ".gif";
             images[i] = canvas.loadImage(filename);
-            System.out.println("Loaded: " + filename);
         }
     }
 
