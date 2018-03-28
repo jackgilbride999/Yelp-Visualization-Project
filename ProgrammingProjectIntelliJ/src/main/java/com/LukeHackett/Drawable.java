@@ -116,7 +116,7 @@ public class Drawable {
         Main.searchResultHeaders.draw();
         Main.searchScroll.draw(0);
 
-     //   canvas.image(sidebarShadow,260,75);
+        canvas.image(sidebarShadow,260,75);
     }
 
     public void drawBusinessScreen() {
@@ -166,6 +166,7 @@ public class Drawable {
         //canvas.tint(255);
         reviewHeaders.draw();
         if (Main.reviewScroll != null && reviewRatio > 1) Main.reviewScroll.draw(0);
+
     }
 
     public void drawReviews(int xStart, int yStart) {

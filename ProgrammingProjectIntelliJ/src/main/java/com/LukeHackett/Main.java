@@ -149,7 +149,7 @@ public class Main extends PApplet {
         spaceFromEdge = " ";
 
         textSize(18);
-        while (textWidth(spaceFromEdge) < 192) {
+        while (textWidth(spaceFromEdge) < 193) {
             spaceFromEdge += " ";
         }
 
