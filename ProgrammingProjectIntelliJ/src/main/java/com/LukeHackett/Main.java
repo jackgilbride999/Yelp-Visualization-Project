@@ -91,6 +91,7 @@ public class Main extends PApplet {
     public static PImage emptyStar;
     public static PImage placeHolderImage;
     public static PImage noParking;
+    public static PImage searchIcon;
 
     public static ImageCrawler[] businessesSearch;
     public static Scrollbar searchScroll;
@@ -182,6 +183,7 @@ public class Main extends PApplet {
         emptyStar = loadImage("emptyStar.png");
         placeHolderImage = loadImage("businessPlaceholder.png");
         noParking = loadImage("noParking.png");
+        searchIcon = loadImage("search_icon.png");
 
         searchResultButtons = new Button[10];
         businessesSearch = new ImageCrawler[10];
