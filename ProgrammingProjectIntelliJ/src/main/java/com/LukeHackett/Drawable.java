@@ -250,7 +250,7 @@ public class Drawable {
         }
         //map test
         if (Main.reviewScrollPressed) {
-            moveMap(Main.map, SCREEN_X/2, (int) (100 - (reviewRatio * offsetFromTopReview)), SCREEN_X / 4, SCREEN_X / 4);
+            moveMap(Main.map, Main.mapX, (int) (Main.mapY - (reviewRatio * offsetFromTopReview)), SCREEN_X / 4, SCREEN_X / 4);
         }
 
         Location businessLocation = new Location(selectedBusiness.getLatitude(), selectedBusiness.getLongitude());
