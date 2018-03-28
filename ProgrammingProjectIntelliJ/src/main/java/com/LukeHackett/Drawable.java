@@ -53,8 +53,8 @@ public class Drawable {
                 if (b.getPosition()[1] < 75 && canvas.mouseY < 75) {
                     b.setValueSelf(15);
                     b.setColorBackground(canvas.color(240));
-                    b.setColorForeground(canvas.color(230));
-                    b.setColorActive(canvas.color(210));
+                    b.setColorForeground(canvas.color(240));
+                    b.setColorActive(canvas.color(240));
                 } else {
                     b.setValueSelf(10);
                     b.setColorBackground(canvas.color(240));

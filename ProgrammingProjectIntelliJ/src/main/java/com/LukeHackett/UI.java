@@ -15,6 +15,9 @@ import static com.LukeHackett.Main.SEARCH_RESULT_SCREEN;
 
 public class UI {
 
+    private static final int BUSINESS_SEARCH = 0;
+    private static final int CATEGORY_SEARCH = 1;
+    private static final int CITY_SEARCH = 0;
     private final PApplet canvas;
 
     UI(PApplet canvas) {
@@ -59,11 +62,14 @@ public class UI {
 
     public ArrayList<Business> backButton() {
         //Main.searchScroll = null;
+        println(Main.searchType);
         if(Main.graphScreen != null) Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
 
         if (Main.currentSearch != 0) {
             Main.currentSearch -= 10;
-            return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);
+            if(Main.searchType == BUSINESS_SEARCH)return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);
+            else if(Main.searchType == CATEGORY_SEARCH)return Main.qControl.categorySearch(Main.searchString, Main.currentSearch, 10);
+            else if(Main.searchType == CITY_SEARCH)return Main.qControl.citySearch(Main.searchString, Main.currentSearch, 10);
         }
         return null;
     }
@@ -71,7 +77,9 @@ public class UI {
     public ArrayList<Business> forwardButton() {
         if (Main.searchResultController.getAll().size() == 10) {
             Main.currentSearch += 10;
-            return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);
+            if(Main.searchType == BUSINESS_SEARCH)return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);
+            else if(Main.searchType == CATEGORY_SEARCH)return Main.qControl.categorySearch(Main.searchString, Main.currentSearch, 10);
+            else if(Main.searchType == CITY_SEARCH)return Main.qControl.citySearch(Main.searchString, Main.currentSearch, 10);
         }
         return null;
     }
@@ -115,31 +123,38 @@ public class UI {
 
     public ArrayList<Business> beautyButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
+        Main.searchType = CATEGORY_SEARCH;
         return qControl.categorySearch("Beauty", 0, 10);
     }
 
     public ArrayList<Business> autoButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
+        Main.searchType = CATEGORY_SEARCH;
+
         return qControl.categorySearch("Automotive", 0, 10);
     }
 
     public ArrayList<Business> shoppingButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
+        Main.searchType = CATEGORY_SEARCH;
         return qControl.categorySearch("Shopping", 0, 10);
     }
 
     public ArrayList<Business> nightlifeButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
+        Main.searchType = CATEGORY_SEARCH;
         return qControl.categorySearch("nightlife", 0, 10);
     }
 
     public ArrayList<Business> restaurantsButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
+        Main.searchType = CATEGORY_SEARCH;
         return qControl.categorySearch("Restaurant", 0, 10);
     }
 
     public ArrayList<Business> sportsButton(queries qControl) {
         Main.currentController = SEARCH_RESULT_SCREEN;
+        Main.searchType = CATEGORY_SEARCH;
         return qControl.categorySearch("sports", 0, 10);
     }
 
