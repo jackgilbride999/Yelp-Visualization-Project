@@ -43,7 +43,8 @@ public class GraphCrawler extends Thread{
         else if(chartType == Main.STARS_CHART){
             inputList = Main.qControl.getStarsList(id);
             if (inputList != null) {
-                graph = new StarBarChart(canvas, inputList, name);
+                // i added the line chart graph, however it looks pretty bad right now, just change the 'StarBarChart' to 'StarLineChart'
+                graph = new StarLineChart(canvas, inputList, name);
                 if (graph != null) {
                     graphScreen.addGraph(graph, true);
                 }
