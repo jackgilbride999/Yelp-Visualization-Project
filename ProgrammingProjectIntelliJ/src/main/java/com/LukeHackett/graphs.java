@@ -139,7 +139,7 @@ class CheckinsBarChart implements Graph {
         // Axis appearance
         canvas.textFont(Main.searchFont, 15);
 
-        barChart.showValueAxis(true);
+        barChart.showValueAxis(false);
         barChart.setValueFormat("");
         barChart.setBarLabels(new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"});
         barChart.showCategoryAxis(true);
