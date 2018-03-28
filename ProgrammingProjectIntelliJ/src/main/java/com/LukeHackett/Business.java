@@ -18,6 +18,8 @@ public class Business {
     private String categories;
     private PImage image;
     private boolean parking;
+    private boolean wifi;
+    private boolean wheelchair;
 
     public Business(String business_id, String name, String neighborhood, String address, String city, String state, String postal_code, double latitude, double longitude, double stars, int review_count, int is_open, String categories) {
         this.business_id = business_id;
@@ -34,6 +36,8 @@ public class Business {
         this.is_open = is_open;
         this.categories = categories;
         this.parking = false;
+        this.wifi = false;
+        this.wheelchair = false;
     }
 
     public String getBusiness_id() {
@@ -154,6 +158,13 @@ public class Business {
 
     public boolean getParking(){
         return parking;
+    }
+
+    public boolean getWifi(){
+        return wifi;
+    }
+    public boolean getWheelchair(){
+        return wheelchair;
     }
 
     @Override
