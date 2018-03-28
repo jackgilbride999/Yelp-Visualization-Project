@@ -1,6 +1,10 @@
 package com.LukeHackett;
 
+import controlP5.ControlEvent;
 import processing.core.PImage;
+
+import javax.management.Query;
+import java.util.LinkedHashMap;
 
 public class Business {
     private String business_id;
@@ -20,6 +24,7 @@ public class Business {
     private boolean parking;
     private boolean wifi;
     private boolean wheelchair;
+    private LinkedHashMap<String, String> attributes;
 
     public Business(String business_id, String name, String neighborhood, String address, String city, String state, String postal_code, double latitude, double longitude, double stars, int review_count, int is_open, String categories) {
         this.business_id = business_id;
@@ -35,9 +40,16 @@ public class Business {
         this.review_count = review_count;
         this.is_open = is_open;
         this.categories = categories;
-        this.parking = false;
-        this.wifi = false;
-        this.wheelchair = false;
+        this.attributes = getAttributes(this.business_id);
+
+        this.parking = ((attributes.containsKey("BusinessParking_garage") && attributes.containsValue("True") )||
+                (attributes.containsKey("BusinessParking_street") && attributes.containsValue("True") )||
+                (attributes.containsKey("BusinessParking_validated") && attributes.containsValue("True") )||
+                (attributes.containsKey("BusinessParking_lot") && attributes.containsValue("True") ));
+        this.wifi = attributes.containsKey("WiFi") && attributes.containsValue("True");
+        this.wheelchair = attributes.containsKey("WheelchairAccessible") && attributes.containsValue("True");
+        System.out.println(attributes);
+
     }
 
     public String getBusiness_id() {
@@ -58,6 +70,10 @@ public class Business {
 
     public String getNeighborhood() {
         return neighborhood;
+    }
+
+    public LinkedHashMap<String, String> getAttributes(String business_id) {
+        return (Main.qControl.getBusinessAttributes(business_id));
     }
 
     public void setNeighborhood(String neighborhood) {
