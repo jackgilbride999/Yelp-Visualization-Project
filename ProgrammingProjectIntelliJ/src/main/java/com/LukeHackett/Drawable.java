@@ -183,7 +183,7 @@ public class Drawable {
             int reviewOffset = yStart;
             int borderOffsetY = 20;
             int borderOffsetX = xStart;
-            float lineHeight = canvas.textAscent() + canvas.textDescent();
+            float lineHeight = canvas.textAscent() + canvas.textDescent() + 3;
             int reviewBoxHeight;
             String[] dateFormat;
             List<Review> iterableList = Main.reviewsToShow.subList(Main.currentReview, (Main.reviewsToShow.size() < Main.currentReview+10) ? Main.reviewsToShow.size() : Main.currentReview + 10);
