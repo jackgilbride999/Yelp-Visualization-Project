@@ -1,7 +1,6 @@
 package com.LukeHackett;
 
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 
 public class Formatter {
     void formatReview(Review r) {

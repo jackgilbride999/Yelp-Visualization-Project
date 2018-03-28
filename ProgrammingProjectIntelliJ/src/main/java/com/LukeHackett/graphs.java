@@ -51,6 +51,75 @@ interface Graph {
 
 
 class StarLineChart implements Graph {
+    /*
+     |
+  n  |              *
+  u  |
+  m  |   *
+     |
+  r  |         *         *
+     |
+     ------------------------------
+                month
+     */
+    private XYChart starChart;
+    private float[] starArray;
+    private String name;
+    private float max;
+    private PApplet canvas;
+
+    public StarLineChart(PApplet canvas, HashMap<Integer, Float> inputList, String name) {
+        this.canvas = canvas;
+        starChart = new XYChart(canvas);
+
+        starArray = new float[12];
+        for(int i = 0; i < 12; i++){
+            if(inputList.containsKey(i+1)){
+                starArray[i] = inputList.get(i+1);
+            }
+            else{
+                starArray[i] = 0;
+            }
+        }
+
+        float[] coords = {1,2,3,4,5,6,7,8,9,10,11,12};
+        starChart.setData(coords,starArray);
+        this.name = name;
+        starChart.showXAxis(true);
+        starChart.showYAxis(true);
+        starChart.setLineColour(0);
+        starChart.calcDataSpacing();
+
+        starChart.setPointColour(0);
+        starChart.setMinX(1);
+        starChart.setPointSize(5);
+        starChart.setLineWidth(2);
+
+        starChart.setLineColour(255);
+        starChart.setAxisLabelColour(255);
+        starChart.setAxisColour(255);
+        starChart.setAxisValuesColour(255);
+        starChart.setPointColour(0);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void draw(float xPos, float yPos, float xSize, float ySize) {
+        canvas.fill(0);
+        starChart.draw(xPos, yPos + 35, xSize, ySize);
+        canvas.textSize(15);
+        canvas.text(name, xPos, yPos + 15);
+        canvas.textSize(15);
+        canvas.text("Change in rating over time.", xPos, yPos + 30);
+    }
+}
+    /*
     private XYChart starChart;
     private float[] starArray2;
     private String name2;
@@ -109,8 +178,7 @@ class StarLineChart implements Graph {
         canvas.text("Change in rating over time.", xPos, yPos + 30);
         //canvas.textSize(12);
     }
-
-}
+*/
 
 class StarBarChart implements Graph {
     private BarChart barChart2;

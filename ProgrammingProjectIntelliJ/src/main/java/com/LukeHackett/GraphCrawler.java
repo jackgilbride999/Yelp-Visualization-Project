@@ -7,9 +7,12 @@ to stop queueing and improve overall feel of the program - LH
  */
 
 import processing.core.PApplet;
-import java.util.ArrayList;
 
-public class GraphCrawler extends Thread{
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+
+public class GraphCrawler extends Thread {
     PApplet canvas;
     String name;
     String id;
@@ -19,7 +22,7 @@ public class GraphCrawler extends Thread{
     ArrayList<Float> inputList;
     Graph graph;
 
-    GraphCrawler(PApplet canvas, String name, String id, int chartType, GraphScreen graphScreen){
+    GraphCrawler(PApplet canvas, String name, String id, int chartType, GraphScreen graphScreen) {
         this.canvas = canvas;
         this.name = name;
         this.id = id;
@@ -28,8 +31,8 @@ public class GraphCrawler extends Thread{
         start();
     }
 
-    public void run(){
-        if(chartType == Main.CHECKIN_CHART){
+    public void run() {
+        if (chartType == Main.CHECKIN_CHART) {
             inputList = Main.qControl.getBusinessCheckins(id);
             if (inputList == null) {
                 System.out.println("Checkins not available for " + name);
@@ -40,6 +43,7 @@ public class GraphCrawler extends Thread{
                 }
             }
         }
+        /*
         else if(chartType == Main.STARS_CHART){
             inputList = Main.qControl.getStarsList(id);
             if (inputList != null) {
@@ -50,6 +54,33 @@ public class GraphCrawler extends Thread{
                 }
             } else {
                 System.out.println("Ratings not available for " + name);
+            }
+        }
+        */
+        else if (chartType == Main.STARS_CHART) {
+            HashSet<StarDate> inputSet = Main.qControl.getStarsList(id);
+            HashMap<Integer, Float> monthMap = new HashMap<Integer, Float>();
+            for (int i = 1; i <= 12; i++) {
+                int starAdd = 0;
+                int numRatings = 0;
+                for (StarDate s : inputSet) {
+                    if (s.getDate() == i) {
+                        starAdd += s.getStar();
+                        numRatings++;
+                    }
+                }
+                if (numRatings != 0) {
+                    monthMap.put(i, (float) starAdd / numRatings);
+                }
+            }
+
+            if (monthMap == null) {
+                System.out.println("I can't star!!!");
+            } else {
+                graph = new StarLineChart(canvas, monthMap, name);
+                if (graph != null) {
+                    graphScreen.addGraph(graph, false);
+                }
             }
         }
     }

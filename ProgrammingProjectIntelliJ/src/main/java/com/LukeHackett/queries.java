@@ -3,6 +3,8 @@ package com.LukeHackett;
 import processing.core.PApplet;
 
 import java.sql.*;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 
@@ -89,21 +91,23 @@ class queries {
         }
     }
 
-    public ArrayList<Float> getStarsList(String businessId)
+    public HashSet<StarDate> getStarsList(String businessId)
     {
-        ArrayList<Float> starsList= new ArrayList<Float>();
-
-
-
+        HashSet<StarDate> starsList= new HashSet<StarDate>();
 
         try {
-            String query ="SELECT stars FROM yelp_review WHERE MATCH(business_id) AGAINST " + "(" + '\'' + businessId + '\'' + ") ORDER BY date";
+            String query ="SELECT stars, date FROM yelp_review WHERE MATCH(business_id) AGAINST " + "(" + '\'' + businessId + '\'' + ") ORDER BY date";
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(query);
 
             while (results.next()) {
-                starsList.add(Float.parseFloat(results.getString("stars")));
+                starsList.add(new StarDate(results.getFloat("stars"), Integer.valueOf(results.getString("date").split("-")[1])));
             }
+
+            for(StarDate s : starsList){
+                println(s.getDate());
+            }
+
             if(starsList == null) {
                 return null;
             }
@@ -235,36 +239,6 @@ class queries {
         else Main.emptyReview = false;
         return reviews;
     }
-
-    /*
-    public ArrayList<Review> reviewsFilteredByStars(String business_id,double stars){//, int start, int lim) {
-        ArrayList<Review> reviewsFilteredByStars = new ArrayList<Review>();
-        try {
-            String businessQuery = "SELECT * " +
-                    "FROM yelp_review " +
-                    "WHERE MATCH(business_id) AGAINST(" + '\'' + business_id + '\'' + ")" +
-                    "AND stars = " + stars;
-                    //"WHERE stars=" + stars;
-                   // "ORDER BY stars DESC";//+
-            //"LIMIT " + start + "," + lim;
-            java.sql.Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery(businessQuery);
-
-            while (results.next()) {
-                Review r = new Review(results.getString("id"), results.getString("user_id"), results.getString("business_id"), results.getDouble("stars"), results.getString("date"), results.getString("text"), results.getInt("useful"), results.getInt("funny"), results.getInt("cool"));
-                r.setUser_name(getUserName(r.getUserId()));
-                reviewsFilteredByStars.add(r);
-                //System.out.println(results.getString("id"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("Done!!");
-        if(reviewsFilteredByStars.size() == 0) Main.emptyReview = true;
-        else Main.emptyReview = false;
-        return reviewsFilteredByStars;
-    }
-*/
 
     public void reviewsAlterMain(String business_id){//, int start, int lim) {
         Main.reviews = new ArrayList<Review>();

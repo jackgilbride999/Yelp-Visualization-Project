@@ -242,9 +242,9 @@ public class Drawable {
             }
         }
         //map test
-                    if(Main.searchScrollPressed){
-                        moveMap(Main.map, 100, (int)(Main.offsetFromTop - (reviewRatio * offsetFromTopReview)), SCREEN_X/4, SCREEN_X/4);
-                    }
+        if (Main.reviewScrollPressed) {
+            moveMap(Main.map, SCREEN_X/2, (int) (100 - (reviewRatio * offsetFromTopReview)), SCREEN_X / 4, SCREEN_X / 4);
+        }
 
         Location businessLocation = new Location(selectedBusiness.getLatitude(), selectedBusiness.getLongitude());
         if (Main.map != null) {
@@ -261,8 +261,8 @@ public class Drawable {
         // Haven't gotten map working yet ^^
     }
 
-    public void moveMap(UnfoldingMap map, int x, int y, int width, int height){
-        map = new UnfoldingMap(canvas, x, y, width, height,  new OpenStreetMap.OpenStreetMapProvider());
+    public void moveMap(UnfoldingMap map, int x, int y, int width, int height) {
+        Main.map = new UnfoldingMap(canvas, x, y, width, height, new OpenStreetMap.OpenStreetMapProvider());
     }
 
     public void drawFailedCheckIns() {

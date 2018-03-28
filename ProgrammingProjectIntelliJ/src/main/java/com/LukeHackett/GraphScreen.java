@@ -75,9 +75,10 @@ public class GraphScreen {
                 graphs.put(g, true);
                 activated = true;
                 activeIndex = tempIndex;
+            } else {
+                graphs.put(g, false);
+                tempIndex++;
             }
-            graphs.put(g, false);
-            tempIndex++;
         }
         if (!activated) System.out.println("Could not find graph to activate");
     }
@@ -113,12 +114,17 @@ public class GraphScreen {
         if (graphs.isEmpty()) {
             canvas.textSize(15);
             canvas.fill(255);
-            canvas.text("loading...", (xPos + xSize/2) - canvas.textWidth("loading...")/2, yPos + ySize/2);
+            canvas.text("loading...", (xPos + xSize / 2) - canvas.textWidth("loading...") / 2, yPos + ySize / 2);
         } else {
             Set<Graph> graphSet = graphs.keySet();
             for (Graph g : graphSet) {
-                if (graphs.get(g)) {
+                if (graphs.size() > 1) {
+                    if (graphs.get(g)) {
+                        g.draw(xPos, yPos, xSize, ySize);
+                    }
+                } else {
                     g.draw(xPos, yPos, xSize, ySize);
+                    setActive(g.getName());
                 }
             }
         }
