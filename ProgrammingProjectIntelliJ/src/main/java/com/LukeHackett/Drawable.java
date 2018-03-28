@@ -158,7 +158,7 @@ public class Drawable {
         Main.businessScreenController.draw();
 
 
-        canvas.fill(255);
+        canvas.fill(0,169,154);
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 75);
         canvas.fill(0, 0, 0, 20);
@@ -205,7 +205,7 @@ public class Drawable {
                 dateFormat = r.getDate().split(" ");
                 reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
                 if (reviewRatio != 0) {
-                    canvas.fill(0, 169, 154, 80);
+                    canvas.fill(245);
                     canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop - (reviewRatio * offsetFromTopReview), Main.SCREEN_X - 10, reviewBoxHeight);
                     canvas.fill(0);
                     canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
