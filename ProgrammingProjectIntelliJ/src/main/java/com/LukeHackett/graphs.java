@@ -49,6 +49,69 @@ interface Graph {
     void draw(float xPos, float yPos, float xSize, float ySize);
 }
 
+
+class StarLineChart implements Graph {
+    private XYChart starChart;
+    private float[] starArray2;
+    private String name2;
+    private float max2;
+    private PApplet canvas;
+
+    public StarLineChart(PApplet canvas, ArrayList<Float> inputList, String name) {
+
+        this.canvas = canvas;
+        starChart = new XYChart(canvas);
+        starArray2 = new float[inputList.size()];
+        max2 = 0;
+        for (int i = 0; i < inputList.size(); i++) {
+
+            starArray2[i] = inputList.get(i);
+            if (max2 < starArray2[i])
+                max2 = starArray2[i];
+        }
+        float[] coords = new float[inputList.size()];
+        int counter =0;
+        for(int i =0; i < inputList.size();i++) {
+            coords[i] = counter;
+            counter++;
+
+        }
+
+        starChart.setData(coords,starArray2);
+        this.name2 = name;
+        starChart.showXAxis(true);
+        starChart.showYAxis(true);
+        starChart.setMinY(0);
+        starChart.setLineColour(0);
+        starChart.calcDataSpacing();
+
+        starChart.setPointColour(0);
+        starChart.setPointSize(5);
+        starChart.setLineWidth(2);
+
+    }
+
+    public String getName() {
+        return name2;
+    }
+
+    public void setName(String name) {
+        this.name2 = name;
+    }
+
+    public void draw(float xPos, float yPos, float xSize, float ySize) {
+        // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
+        canvas.fill(0);
+        starChart.draw(xPos, yPos + 35, xSize, ySize);
+        canvas.textSize(15);
+        canvas.text(name2, xPos, yPos + 15);
+        canvas.textSize(15);
+        canvas.text("Change in rating over time.", xPos, yPos + 30);
+        //canvas.textSize(12);
+    }
+
+}
+
 class StarBarChart implements Graph {
     private BarChart barChart2;
     private float[] starArray;
@@ -67,6 +130,7 @@ class StarBarChart implements Graph {
             if (max < starArray[i])
                 max = starArray[i];
         }
+
         this.name = name;
         // Draws the chart in the sketch
         barChart2.setData(starArray);
@@ -79,7 +143,7 @@ class StarBarChart implements Graph {
         barChart2.showValueAxis(true);
         barChart2.setValueFormat("");
         barChart2.setBarLabels(new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec",});
-        barChart2.showCategoryAxis(true);
+        barChart2.showCategoryAxis(false);
         barChart2.setAxisValuesColour(canvas.color(255,255,255));
 
         // Bar colours and appearance
@@ -87,7 +151,7 @@ class StarBarChart implements Graph {
         barChart2.setBarGap(5);
 
         // Bar layout
-        barChart2.transposeAxes(true);
+        barChart2.transposeAxes(false);
     }
 
     public String getName() {
@@ -139,8 +203,8 @@ class CheckinsBarChart implements Graph {
 
         barChart.showValueAxis(false);
         barChart.setValueFormat("");
-        barChart.setBarLabels(new String[]{"Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"});
-        barChart.showCategoryAxis(true);
+        barChart.setBarLabels(new String[]{});
+        barChart.showCategoryAxis(false);
         barChart.setAxisValuesColour(canvas.color(255,255,255));
 
         // Bar colours and appearance
