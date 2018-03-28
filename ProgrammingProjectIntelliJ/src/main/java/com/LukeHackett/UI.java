@@ -164,10 +164,10 @@ public class UI {
                 String spacesToOuterLower = " ";
                 String address = (!b.getAddress().equals("")) ? b.getAddress() : "N/a";
                 float nameWidth = canvas.textWidth(b.getName());
-                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(address) < 520) {
+                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(address) < 500) {
                     spacesToOuter += " ";
                 }
-                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(b.getCity()) + 125 < 645) {
+                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(b.getCity()) + 125 < 615) {
                     spacesToOuterLower += " ";
                 }
 
