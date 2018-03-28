@@ -128,7 +128,7 @@ public class Drawable {
     }
 
     public void drawBusinessScreen() {
-        float businessInfoX = 100;
+        float businessInfoX = 240;
         float businessInfoY = 100;
         previousReviewMouseY = canvas.mouseY;
         if (Main.reviewScroll != null) {
@@ -162,6 +162,7 @@ public class Drawable {
         Main.businessScreenController.get("graphBackward").setPosition(Main.businessScreenController.get("graphBackward").getPosition()[0], initialReviewYs.get(2) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("Filter").setPosition(Main.businessScreenController.get("Filter").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
 
+        canvas.image(Main.selectedBusiness.getImage() != null ? Main.selectedBusiness.getImage() : Main.placeHolderImage, 20, 70, 200, 200);
         Main.businessScreenController.draw();
 
 
