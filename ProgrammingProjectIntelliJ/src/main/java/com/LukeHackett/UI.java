@@ -92,6 +92,8 @@ public class UI {
         Main.starsList = null;
         Main.visitorsList = null;
         Main.reviewScroll = null;
+        Drawable.reviewRatio = 0;
+        Drawable.previousReviewMouseY = 0;
         Main.reviews = new ArrayList<Review>();
         Main.reviewsToShow = new ArrayList<Review>();
         Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
@@ -245,8 +247,8 @@ public class UI {
         Main.searchBarSearch = Main.searchResultHeaders.addTextfield("searchBarSearch")
                 .setCaptionLabel("")
                 .setColorBackground(canvas.color(255, 255, 255))
-                .setPosition(45, 90)
-                .setSize(195, 30)
+                .setPosition(15, 90)
+                .setSize(225, 30)
                 .setFont(Main.searchFont)
                 .setFocus(false)
                 .setColor(canvas.color(0, 0, 0))
@@ -255,6 +257,30 @@ public class UI {
                 .setColorActive(canvas.color(0, 0, 0));
 
         Main.searchHeaderButtons = new ArrayList<Button>();
+        int y = 130;
+        int ySize = 28;
+        for(int i = 0; i < Main.categories.size(); i++){
+            Button catButton = Main.searchResultHeaders.addButton(categories.get(i))
+                    .setValueSelf(20)
+                    .setCaptionLabel(categories.get(i))
+                    .setColorBackground(canvas.color(255, 255, 255))
+                    .setPosition(15, y)
+                    .setSize(225, ySize)
+                    .setFont(Main.searchFont)
+                    .setColorBackground(canvas.color(230,230,230))
+                    .setColorForeground(canvas.color(200,200,200))
+                    .setColorActive(canvas.color(170,170,170));
+
+            Label label = catButton.getValueLabel();
+            label.align(ControlP5.LEFT, ControlP5.TOP);
+            label = catButton.getCaptionLabel();
+            label.align(ControlP5.LEFT, ControlP5.TOP);
+            label.toUpperCase(false);
+            label.setColor(100);
+
+            y += ySize+5;
+            Main.searchHeaderButtons.add(catButton);
+        }
     }
 
     public void setupBusinessScreen() {

@@ -13,6 +13,10 @@ import de.fhpotsdam.unfolding.geo.*;
 import de.fhpotsdam.unfolding.ui.*;
 import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main extends PApplet {
@@ -39,6 +43,7 @@ public class Main extends PApplet {
 
     public static String searchString;
     public static String spaceFromEdge;
+    public static ArrayList<String> categories;
 
     public static boolean connected = false;
 
@@ -74,7 +79,6 @@ public class Main extends PApplet {
     public static Button graphForward;
     public static Button graphBackward;
 
-    public static PImage headerShadow;
     public static PImage sidebarShadow;
     public static PImage background;
     public static PImage restaurantImage;
@@ -92,7 +96,6 @@ public class Main extends PApplet {
     public static PImage emptyStar;
     public static PImage placeHolderImage;
     public static PImage noParking;
-    public static PImage searchIcon;
 
     public static ImageCrawler[] businessesSearch;
     public static Scrollbar searchScroll;
@@ -156,6 +159,22 @@ public class Main extends PApplet {
             spaceFromEdge += " ";
         }
 
+        //Load categories
+        try {
+            FileReader catReader = new FileReader("top20Categories.txt");
+            BufferedReader reader = new BufferedReader(catReader);
+            categories = new ArrayList<String>();
+            String nextLine;
+            while((nextLine = reader.readLine()) != null){
+                categories.add(nextLine);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        println("Categories: " + categories.size());
+        //End Load
 
         homeScreenController = new ControlP5(this);
         searchResultController = new ControlP5(this);
@@ -167,7 +186,6 @@ public class Main extends PApplet {
         textFont(searchFont);
         text("loading...", SCREEN_X / 2 - textWidth("loading") / 2, SCREEN_Y / 2);
 
-        headerShadow = loadImage("business_screen_header_shadow.png");
         sidebarShadow = loadImage("sidebar_shadow.png");
         background = loadImage("background_scroll_2.jpg");
         backButtonImage = loadImage("backButton.png");
@@ -185,7 +203,6 @@ public class Main extends PApplet {
         emptyStar = loadImage("emptyStar.png");
         placeHolderImage = loadImage("businessPlaceholder.png");
         noParking = loadImage("noParking.png");
-        searchIcon = loadImage("search_icon.png");
 
         searchResultButtons = new Button[10];
         businessesSearch = new ImageCrawler[10];
@@ -529,6 +546,11 @@ public class Main extends PApplet {
                 if (index == -1) index = graphScreen.getGraphs().size() - 1;
                 graphScreen.setActive(index);
             }
+        } else if(event.getValue() == 20){
+            currentController = SEARCH_RESULT_SCREEN;
+            searchString = event.getName();
+            ArrayList<Business> businesses = qControl.categorySearch(searchString, 0, 10);
+            buttonBusinessList(businesses);
         }
     }
 
