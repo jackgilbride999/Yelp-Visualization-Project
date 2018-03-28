@@ -8,9 +8,6 @@ import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
 
-import de.fhpotsdam.unfolding.*;
-import de.fhpotsdam.unfolding.geo.*;
-import de.fhpotsdam.unfolding.ui.*;
 import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 
 import java.io.BufferedReader;
@@ -313,10 +310,12 @@ public class Main extends PApplet {
     public void mouseDragged() {
         if (searchScrollPressed) {
             searchScroll.setY(mouseY - searchMouseDifference);
-            if (searchScroll.getY() < 0)
+            if (searchScroll.getY() < 0) {
                 searchScroll.setY(0);
-            else if (searchScroll.getY() + searchScroll.getHeight() > SCREEN_Y)
+            }
+            else if (searchScroll.getY() + searchScroll.getHeight() > SCREEN_Y) {
                 searchScroll.setY(SCREEN_Y - searchScroll.getHeight());
+            }
         } else if (reviewScrollPressed) {
             reviewScroll.setY(mouseY - reviewMouseDifference);
             if (reviewScroll.getY() < 0)

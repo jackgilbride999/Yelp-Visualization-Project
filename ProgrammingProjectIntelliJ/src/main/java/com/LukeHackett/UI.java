@@ -79,12 +79,14 @@ public class UI {
     public void backButtonReview() {
         if (Main.currentReview != 0) {
             Main.currentReview -= 10;
+            reviewScroll = null;
         }
     }
 
     public void forwardButtonReview(){
         if((Main.currentReview+10) < Main.reviews.size()){
             Main.currentReview += 10;
+            reviewScroll = null;
         }
     }
 
