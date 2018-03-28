@@ -37,6 +37,7 @@ public class Main extends PApplet {
     public static int selectedFilter = 0;
     public static int yOffset;
     public static int offsetFromTop = 0;
+    public static int searchType;
 
     public static String searchString;
     public static String spaceFromEdge;
@@ -341,6 +342,7 @@ public class Main extends PApplet {
     public void searchBar(String text) {
         currentController = SEARCH_RESULT_SCREEN;
         searchString = text;
+        searchType = selected;
         if (selected == 0) {
             ArrayList<Business> businessesC = qControl.categorySearch(text, 0, 10);
             buttonBusinessList(businessesC);
@@ -380,6 +382,7 @@ public class Main extends PApplet {
         ArrayList<Business> businessesN = qControl.businessSearch(text, 0, 10);
         buttonBusinessList(businessesN);
         if (businessesN.size() != 0) {
+            searchType = 0;
             for (Business b : businessesN) {
                 System.out.println(b);
             }
@@ -387,6 +390,7 @@ public class Main extends PApplet {
             ArrayList<Business> businessesC = qControl.categorySearch(text, 0, 10);
             buttonBusinessList(businessesC);
             if (businessesC.size() != 0) {
+                searchType = 1;
                 for (Business b : businessesC) {
                     System.out.println(b.toString());
                 }
@@ -394,6 +398,7 @@ public class Main extends PApplet {
                 ArrayList<Business> businessesL = qControl.citySearch(text, 0, 10);
                 buttonBusinessList(businessesL);
                 if (businessesL.size() != 0) {
+                    searchType = 2;
                     for (Business b : businessesL) {
                         System.out.println(b);
                     }
@@ -563,6 +568,7 @@ public class Main extends PApplet {
         } else if(event.getValue() == 20){
             currentController = SEARCH_RESULT_SCREEN;
             searchString = event.getName();
+            searchType = 1;
             ArrayList<Business> businesses = qControl.categorySearch(searchString, 0, 10);
             buttonBusinessList(businesses);
         }
