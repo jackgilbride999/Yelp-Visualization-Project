@@ -111,7 +111,7 @@ class StarLineChart implements Graph {
     }
 
     public void draw(float xPos, float yPos, float xSize, float ySize) {
-        canvas.fill(0);
+        canvas.fill(255);
         starChart.draw(xPos, yPos + 35, xSize, ySize);
         canvas.textSize(15);
         canvas.text(name, xPos, yPos + 15);

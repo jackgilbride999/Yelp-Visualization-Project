@@ -127,6 +127,10 @@ public class GraphScreen {
                     setActive(g.getName());
                 }
             }
+
+            String indicateWhich = activeIndex+1 + "/" + graphSet.size();
+            canvas.textFont(Main.bigFont);
+            canvas.text(indicateWhich, xPos + xSize/2 - canvas.textWidth("1/1")/2, yPos + ySize + 80);
         }
     }
 }

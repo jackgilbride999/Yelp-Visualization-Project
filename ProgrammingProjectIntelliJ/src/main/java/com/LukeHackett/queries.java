@@ -104,10 +104,6 @@ class queries {
                 starsList.add(new StarDate(results.getFloat("stars"), Integer.valueOf(results.getString("date").split("-")[1])));
             }
 
-            for(StarDate s : starsList){
-                println(s.getDate());
-            }
-
             if(starsList == null) {
                 return null;
             }
