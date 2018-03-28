@@ -162,9 +162,12 @@ public class Drawable {
                     */
         // Haven't gotten map working yet ^^
 
-        canvas.fill(0, 169, 154);
+        canvas.fill(255);
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 75);
+        canvas.fill(0,0,0,20);
+        canvas.rect(0,75,Main.SCREEN_X,20);
+        //canvas.tint(255);
         reviewHeaders.draw();
         if (Main.reviewScroll != null && reviewRatio > 1) Main.reviewScroll.draw(0);
     }
@@ -205,13 +208,13 @@ public class Drawable {
                 dateFormat = r.getDate().split(" ");
                 reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
                 if (reviewRatio != 0) {
-                    canvas.fill(175, 255, 248);
+                    canvas.fill(0, 169, 154, 80);
                     canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop - (reviewRatio * offsetFromTopReview), Main.SCREEN_X - 10, reviewBoxHeight);
                     canvas.fill(0);
                     canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
                     canvas.text(r.getFormattedReview(), borderOffsetX, reviewOffset + borderOffsetY - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
                 } else {
-                    canvas.fill(175, 255, 248);
+                    canvas.fill(0, 169, 154, 80);
                     canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop, Main.SCREEN_X - 10, reviewBoxHeight);
                     canvas.fill(0);
                     canvas.text(dateFormat[0], Main.SCREEN_X - canvas.textWidth(dateFormat[0]) - 20, reviewOffset + borderOffsetY - Main.offsetFromTop);
