@@ -206,7 +206,6 @@ public class Drawable {
 
                 if (initialReviewYs.size() < Main.reviews.size()) {
                     initialReviewYs.add((float) reviewOffset);
-                    System.out.println(reviewOffset);
                 }
 
                 canvas.textSize(15);
