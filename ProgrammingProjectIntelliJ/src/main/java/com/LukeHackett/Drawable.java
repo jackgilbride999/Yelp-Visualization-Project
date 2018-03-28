@@ -158,11 +158,12 @@ public class Drawable {
         Main.businessScreenController.draw();
 
 
-        canvas.fill(0,169,154);
+        canvas.fill(0, 135, 122);
         canvas.noStroke();
-        canvas.rect(0, 0, Main.SCREEN_X, 75);
-        canvas.fill(0, 0, 0, 20);
-        canvas.rect(0, 75, Main.SCREEN_X, 20);
+        canvas.rect(0, 0, Main.SCREEN_X, 50);
+        //canvas.fill(0, 0, 0, 20);
+        //canvas.rect(0, 75, Main.SCREEN_X, 20);
+       // canvas.image(headerShadow,0,75);
         //canvas.tint(255);
         reviewHeaders.draw();
         if (Main.reviewScroll != null && reviewRatio > 1) Main.reviewScroll.draw(0);
