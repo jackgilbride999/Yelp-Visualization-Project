@@ -107,6 +107,8 @@ public class Drawable {
 
         Main.searchResultHeaders.draw();
         Main.searchScroll.draw(0);
+
+        canvas.image(sidebarShadow,260,75);
     }
 
     public void drawBusinessScreen() {
