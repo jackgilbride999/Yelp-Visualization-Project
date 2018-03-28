@@ -144,7 +144,9 @@ public class Main extends PApplet {
         searchFont = createFont("OpenSans-Regular", 22);
         reviewFont = createFont("OpenSans-Regular", 18);
         spaceFromEdge = " ";
-        while (textWidth(spaceFromEdge) < 120) {
+
+        textSize(18);
+        while (textWidth(spaceFromEdge) < 180) {
             spaceFromEdge += " ";
         }
 

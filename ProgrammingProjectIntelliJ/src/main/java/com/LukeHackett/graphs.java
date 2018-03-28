@@ -75,7 +75,6 @@ class StarBarChart implements Graph {
         barChart2.setMaxValue(max + 2);
 
         // Axis appearance
-        canvas.textFont(Main.searchFont, 15);
 
         barChart2.showValueAxis(true);
         barChart2.setValueFormat("");
@@ -137,7 +136,6 @@ class CheckinsBarChart implements Graph {
         barChart.setMaxValue(max + 2);
 
         // Axis appearance
-        canvas.textFont(Main.searchFont, 15);
 
         barChart.showValueAxis(false);
         barChart.setValueFormat("");
