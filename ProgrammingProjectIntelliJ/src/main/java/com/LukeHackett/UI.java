@@ -159,15 +159,15 @@ public class UI {
                     if(j < catSplit.length-1 && j != 2) categories.append(", ");
                 }
 
-                canvas.textSize(12);
+                canvas.textSize(22);
                 String spacesToOuter = " ";
                 String spacesToOuterLower = " ";
                 String address = (!b.getAddress().equals("")) ? b.getAddress() : "N/a";
                 float nameWidth = canvas.textWidth(b.getName());
-                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(address) < 500) {
+                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(address) < 955) {
                     spacesToOuter += " ";
                 }
-                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(b.getCity()) + 125 < 615) {
+                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(b.getCity())+125 < 1075) {
                     spacesToOuterLower += " ";
                 }
 
@@ -241,6 +241,20 @@ public class UI {
                 .setPosition(10, 10);
         homeButtonImage.resize(homeButton.getWidth(), homeButton.getHeight());
         homeButton.setImage(homeButtonImage);
+
+        Main.searchBarSearch = Main.searchResultHeaders.addTextfield("searchBarSearch")
+                .setCaptionLabel("")
+                .setColorBackground(canvas.color(255, 255, 255))
+                .setPosition(15, 90)
+                .setSize(225, 30)
+                .setFont(Main.searchFont)
+                .setFocus(false)
+                .setColor(canvas.color(0, 0, 0))
+                .setColorCursor(canvas.color(0, 0, 0))
+                .setColor(canvas.color(0, 0, 0))
+                .setColorActive(canvas.color(0, 0, 0));
+
+        Main.searchHeaderButtons = new ArrayList<Button>();
     }
 
     public void setupBusinessScreen() {

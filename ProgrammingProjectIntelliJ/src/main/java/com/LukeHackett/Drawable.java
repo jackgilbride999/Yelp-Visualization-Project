@@ -71,19 +71,19 @@ public class Drawable {
         for (ImageCrawler image : Main.businessesSearch) {
             if (image != null) {
                 //Draw images
-                canvas.image(image.getBusiness().getImage(), x+15+250, y + 90+15 - (searchRatio * offsetFromTopSearch), 150, 150);
+                canvas.image(image.getBusiness().getImage(), x + 15 + 250, y + 90 + 15 - (searchRatio * offsetFromTopSearch), 150, 150);
 
                 //Draw stars piggybacking here
                 double stars = image.getBusiness().getStars();
                 float starX = 210;
                 for (int i = 0; i < 5; i++) {
                     if (stars <= 0) {
-                        canvas.image(Main.emptyStar, starX+250, y + 115 + 18 - (searchRatio * offsetFromTopSearch), 20, 20);
+                        canvas.image(Main.emptyStar, starX + 250, y + 115 + 18 - (searchRatio * offsetFromTopSearch), 20, 20);
                     } else {
                         if (stars == 0.5) {
-                            canvas.image(Main.halfStar, starX+250, y + 115 + 18 - (searchRatio * offsetFromTopSearch), 20, 20);
+                            canvas.image(Main.halfStar, starX + 250, y + 115 + 18 - (searchRatio * offsetFromTopSearch), 20, 20);
                         } else {
-                            canvas.image(Main.fullStar, starX+250, y + 115 + 18- (searchRatio * offsetFromTopSearch), 20, 20);
+                            canvas.image(Main.fullStar, starX + 250, y + 115 + 18 - (searchRatio * offsetFromTopSearch), 20, 20);
                         }
                         stars--;
                     }
@@ -116,7 +116,7 @@ public class Drawable {
         Main.searchResultHeaders.draw();
         Main.searchScroll.draw(0);
 
-        canvas.image(sidebarShadow,260,75);
+        canvas.image(sidebarShadow, 260, 75);
     }
 
     public void drawBusinessScreen() {
@@ -157,12 +157,11 @@ public class Drawable {
         Main.businessScreenController.draw();
 
 
-
         canvas.fill(255);
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 75);
-        canvas.fill(0,0,0,20);
-        canvas.rect(0,75,Main.SCREEN_X,20);
+        canvas.fill(0, 0, 0, 20);
+        canvas.rect(0, 75, Main.SCREEN_X, 20);
         //canvas.tint(255);
         reviewHeaders.draw();
         if (Main.reviewScroll != null && reviewRatio > 1) Main.reviewScroll.draw(0);
@@ -173,7 +172,7 @@ public class Drawable {
         if (Main.selectedFilter == 0) {
             Main.reviewsToShow = Main.reviews;
         }
-        if (Main.reviewsToShow.size() > 0) {
+        if (Main.reviewsToShow.size() != 0) {
             for (Review r : Main.reviewsToShow) {
                 if (r.getUser_name().equals("")) {
                     r.setUser_name(Main.qControl.getUserName(r.getUserId()));
@@ -187,7 +186,7 @@ public class Drawable {
             float lineHeight = canvas.textAscent() + canvas.textDescent() + 3;
             int reviewBoxHeight;
             String[] dateFormat;
-            List<Review> iterableList = Main.reviewsToShow.subList(Main.currentReview, (Main.reviewsToShow.size() < Main.currentReview+10) ? Main.reviewsToShow.size() : Main.currentReview + 10);
+            List<Review> iterableList = Main.reviewsToShow.subList(Main.currentReview, (Main.reviewsToShow.size() < Main.currentReview + 10) ? Main.reviewsToShow.size() : Main.currentReview + 10);
             ListIterator<Review> reviewIterator = iterableList.listIterator();
             while (reviewIterator.hasNext()) {
                 Review r = reviewIterator.next();
@@ -236,7 +235,7 @@ public class Drawable {
                     canvas.text("No reviews to show!", Main.SCREEN_X / 2 - canvas.textWidth("No reviews to show!") / 2, Main.SCREEN_Y - 200);
                 } else {
                     //canvas.text("loading reviews...", Main.SCREEN_X / 2 - canvas.textWidth("loading reviews...") / 2, Main.SCREEN_Y - 200);
-                    loadingAnimation.displayAnimation(SCREEN_X/2-32, SCREEN_Y-200);
+                    loadingAnimation.displayAnimation(SCREEN_X / 2 - 32, SCREEN_Y - 200);
                 }
             }
         }
@@ -245,17 +244,17 @@ public class Drawable {
                         moveMap(Main.map, 100, (int)(Main.offsetFromTop - (reviewRatio * offsetFromTopReview)), SCREEN_X/4, SCREEN_X/4);
                     }
 
-                    Location businessLocation = new Location(selectedBusiness.getLatitude(), selectedBusiness.getLongitude());
-                    if(Main.map!=null) {
-                        Main.map.zoomAndPanTo(businessLocation, 15); // about 15 for street level, 13 for city level etc
-                        float maxPanningDistance = 10;
-                        Main.map.setPanningRestriction(businessLocation, maxPanningDistance);
-                        PImage marker = canvas.loadImage("marker.png");
-                        marker.resize(marker.width/3, marker.height/3);
-                        ImageMarker businessMarker = new ImageMarker(businessLocation, marker);
-                        Main.map.addMarker(businessMarker);
-                        Main.map.draw();
-                    }
+        Location businessLocation = new Location(selectedBusiness.getLatitude(), selectedBusiness.getLongitude());
+        if (Main.map != null) {
+            Main.map.zoomAndPanTo(businessLocation, 15); // about 15 for street level, 13 for city level etc
+            float maxPanningDistance = 10;
+            Main.map.setPanningRestriction(businessLocation, maxPanningDistance);
+            PImage marker = canvas.loadImage("marker.png");
+            marker.resize(marker.width / 3, marker.height / 3);
+            ImageMarker businessMarker = new ImageMarker(businessLocation, marker);
+            Main.map.addMarker(businessMarker);
+            Main.map.draw();
+        }
 
         // Haven't gotten map working yet ^^
     }
