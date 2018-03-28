@@ -44,14 +44,14 @@ public class Drawable {
 
                 if (b.getPosition()[1] < 75 && canvas.mouseY < 75) {
                     b.setValueSelf(15);
-                    b.setColorBackground(canvas.color(0, 169, 154));
-                    b.setColorForeground(canvas.color(0, 169, 154));
-                    b.setColorActive(canvas.color(0, 169, 154));
+                    b.setColorBackground(canvas.color(240));
+                    b.setColorForeground(canvas.color(230));
+                    b.setColorActive(canvas.color(210));
                 } else {
                     b.setValueSelf(10);
-                    b.setColorBackground(canvas.color(0, 169, 154));
-                    b.setColorForeground(canvas.color(0, 135, 122));
-                    b.setColorActive(canvas.color(0, 100, 100));
+                    b.setColorBackground(canvas.color(240));
+                    b.setColorForeground(canvas.color(230));
+                    b.setColorActive(canvas.color(215));
                 }
             }
         }
@@ -63,19 +63,19 @@ public class Drawable {
         for (ImageCrawler image : Main.businessesSearch) {
             if (image != null) {
                 //Draw images
-                canvas.image(image.getBusiness().getImage(), x, y + 90 - (searchRatio * offsetFromTopSearch), 180, 180);
+                canvas.image(image.getBusiness().getImage(), x+15+250, y + 90+15 - (searchRatio * offsetFromTopSearch), 150, 150);
 
                 //Draw stars piggybacking here
                 double stars = image.getBusiness().getStars();
                 float starX = 210;
                 for (int i = 0; i < 5; i++) {
                     if (stars <= 0) {
-                        canvas.image(Main.emptyStar, starX, y + 115 - (searchRatio * offsetFromTopSearch), 20, 20);
+                        canvas.image(Main.emptyStar, starX+250, y + 115 + 18 - (searchRatio * offsetFromTopSearch), 20, 20);
                     } else {
                         if (stars == 0.5) {
-                            canvas.image(Main.halfStar, starX, y + 115 - (searchRatio * offsetFromTopSearch), 20, 20);
+                            canvas.image(Main.halfStar, starX+250, y + 115 + 18 - (searchRatio * offsetFromTopSearch), 20, 20);
                         } else {
-                            canvas.image(Main.fullStar, starX, y + 115 - (searchRatio * offsetFromTopSearch), 20, 20);
+                            canvas.image(Main.fullStar, starX+250, y + 115 + 18- (searchRatio * offsetFromTopSearch), 20, 20);
                         }
                         stars--;
                     }
@@ -120,7 +120,7 @@ public class Drawable {
         canvas.fill(0, 169, 154);
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 500 - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
-        canvas.fill(255);
+        canvas.fill(255f);
         canvas.textSize(25);
         canvas.text(Main.selectedBusiness.getName().substring(1, Main.selectedBusiness.getName().length() - 1) + '\n' + '\n'
                         + Main.selectedBusiness.getAddress() + '\n'

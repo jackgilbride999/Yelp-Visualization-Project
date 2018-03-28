@@ -164,10 +164,10 @@ public class UI {
                 String spacesToOuterLower = " ";
                 String address = (!b.getAddress().equals("")) ? b.getAddress() : "N/a";
                 float nameWidth = canvas.textWidth(b.getName());
-                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(address) < 660) {
+                while (canvas.textWidth(spacesToOuter) + canvas.textWidth(Main.spaceFromEdge) + nameWidth + canvas.textWidth(address) < 520) {
                     spacesToOuter += " ";
                 }
-                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(b.getCity()) + 125 < 785) {
+                while (canvas.textWidth(spacesToOuterLower) + canvas.textWidth(Main.spaceFromEdge) + canvas.textWidth(b.getCity()) + 125 < 645) {
                     spacesToOuterLower += " ";
                 }
 
@@ -189,23 +189,26 @@ public class UI {
                 */
                 businessButton = Main.searchResultController.addButton(b.getBusiness_id())
                         .setValueSelf(10)
-                        .setLabel(Main.spaceFromEdge + b.getName()
+                        .setLabel('\n' + Main.spaceFromEdge + b.getName()
                                 + spacesToOuter + address
                                 + '\n' + spaceFromEdge + spacesToOuterLower + b.getCity()
-                                + '\n' + '\n'  + '\n' + '\n' + '\n' + '\n'
+                                + '\n' + '\n'  + '\n' + '\n' + '\n'
                                 + Main.spaceFromEdge + categories)
-                        .setPosition((float)10, (float) yOffset + 80)
-                        .setSize(SCREEN_X-20, 200)
+                        .setPosition((float)260, (float) yOffset + 80)
+                        .setSize(SCREEN_X-270, 200)
                         .setFont(Main.searchFont)
-                        .setColorBackground(canvas.color(0, 169, 154))
-                        .setColorForeground(canvas.color(0, 135, 122))
-                        .setColorActive(canvas.color(0, 100, 100));
+                        .setColorBackground(canvas.color(230,230,230))
+                        .setColorForeground(canvas.color(200,200,200))
+                        .setColorActive(canvas.color(170,170,170));
+
+
 
                 Label label = businessButton.getValueLabel();
                 label.align(ControlP5.LEFT, ControlP5.TOP);
                 label = businessButton.getCaptionLabel();
                 label.align(ControlP5.LEFT, ControlP5.TOP);
                 label.toUpperCase(false);
+                label.setColor(100);
 
                 Main.getDraw().initialBusinessYs.add(businessButton.getPosition()[1]);
                 Main.searchResultButtons[i] = businessButton;
