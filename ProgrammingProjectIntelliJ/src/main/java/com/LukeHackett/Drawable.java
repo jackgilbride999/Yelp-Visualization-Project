@@ -230,11 +230,13 @@ public class Drawable {
             canvas.fill(0);
             if (emptyReview) {
                 canvas.text("No reviews to show!", Main.SCREEN_X / 2 - canvas.textWidth("No reviews to show!") / 2, Main.SCREEN_Y - 200);
+
             } else {
                 if (reviewsToShow.size() == 0 && selectedFilter != 0) {
                     canvas.text("No reviews to show!", Main.SCREEN_X / 2 - canvas.textWidth("No reviews to show!") / 2, Main.SCREEN_Y - 200);
                 } else {
-                    canvas.text("loading reviews...", Main.SCREEN_X / 2 - canvas.textWidth("loading reviews...") / 2, Main.SCREEN_Y - 200);
+                    //canvas.text("loading reviews...", Main.SCREEN_X / 2 - canvas.textWidth("loading reviews...") / 2, Main.SCREEN_Y - 200);
+                    loadingAnimation.displayAnimation(SCREEN_X/2-32, SCREEN_Y-200);
                 }
             }
         }

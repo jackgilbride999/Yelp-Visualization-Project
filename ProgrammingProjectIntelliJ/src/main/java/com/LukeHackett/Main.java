@@ -117,6 +117,8 @@ public class Main extends PApplet {
     public static boolean moveBackground;
     public static boolean returnBackgroundToStart;
 
+    public static Animation loadingAnimation;
+
     public static int backgroundX;
     public static int backgroundXTimer;
 //    public UnfoldingMap map;
@@ -132,6 +134,7 @@ public class Main extends PApplet {
 
     @Override
     public void setup() {
+        loadingAnimation = new Animation("frames", 8, this);
         backgroundX = 0;
         moveBackground = false;
         returnBackgroundToStart = false;
@@ -526,4 +529,5 @@ public class Main extends PApplet {
     public static Drawable getDraw() {
         return draws;
     }
+
 }
