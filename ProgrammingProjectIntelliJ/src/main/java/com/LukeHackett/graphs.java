@@ -154,7 +154,7 @@ class StarBarChart implements Graph {
         barChart2.setAxisValuesColour(canvas.color(255,255,255));
 
         // Bar colours and appearance
-        barChart2.setBarColour(canvas.color(200));//175, 255, 248));
+        barChart2.setBarColour(canvas.color(255));//175, 255, 248));
         barChart2.setBarGap(5);
 
         // Bar layout
@@ -211,12 +211,12 @@ class CheckinsBarChart implements Graph {
         barChart.showValueAxis(false);
         barChart.setValueFormat("");
         barChart.setBarLabels(new String[]{});
-        barChart.showCategoryAxis(false);
+        barChart.showCategoryAxis(true);
         barChart.setAxisValuesColour(canvas.color(255,255,255));
 
         // Bar colours and appearance
-        barChart.setBarColour(canvas.color(200));//175, 255, 248));
-        barChart.setBarGap(10);
+        barChart.setBarColour(canvas.color(255));//175, 255, 248));
+        barChart.setBarGap(2);
 
         // Bar layout
         barChart.transposeAxes(false);
@@ -286,7 +286,7 @@ class BusinessHoursChart {
         }
     }
     void draw() {
-        canvas.fill(0);
+        canvas.fill(255);
         drawAxes();
         drawXLabels();
         drawYLabels();
