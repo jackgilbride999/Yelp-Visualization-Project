@@ -136,6 +136,8 @@ public class Main extends PApplet {
     public static int backgroundX;
     public static int backgroundXTimer;
     public static UnfoldingMap map;
+    public static int mapX;
+    public static int mapY;
 
 
     public static void main(String[] args) {
@@ -148,6 +150,8 @@ public class Main extends PApplet {
 
     @Override
     public void setup() {
+        mapX =SCREEN_X/2 + 260;
+        mapY = 75;
         loadingAnimation = new Animation("frames", 8, this);
         backgroundX = 0;
         moveBackground = false;
@@ -224,7 +228,7 @@ public class Main extends PApplet {
         //starsList = null;
 
         //Graph screen setup
-        graphScreen = new GraphScreen(this, SCREEN_X - 300, 100, 250, 250);
+        graphScreen = new GraphScreen(this, 20, 290, 400, 100);
 
         //Control P5 setup
         setupHomeScreen();
@@ -238,7 +242,7 @@ public class Main extends PApplet {
         reviewHeaders.setAutoDraw(false);
         //End Control P5 setup
 
-        map = new UnfoldingMap(this, SCREEN_X/2, 100, SCREEN_X/4, SCREEN_X/4, new OpenStreetMap.OpenStreetMapProvider());
+        map = new UnfoldingMap(this, mapX, mapY, SCREEN_X/4, SCREEN_X/4, new OpenStreetMap.OpenStreetMapProvider());
         MapUtils.createDefaultEventDispatcher(this, Main.map);
 
     }
