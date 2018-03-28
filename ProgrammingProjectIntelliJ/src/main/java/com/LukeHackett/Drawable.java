@@ -7,6 +7,14 @@ import processing.core.PApplet;
 
 import java.util.*;
 
+import de.fhpotsdam.unfolding.*;
+import de.fhpotsdam.unfolding.geo.*;
+import de.fhpotsdam.unfolding.ui.*;
+import de.fhpotsdam.unfolding.providers.OpenStreetMap;
+import de.fhpotsdam.unfolding.utils.MapUtils;
+import processing.core.PImage;
+
+
 import static com.LukeHackett.Main.*;
 import static oracle.jrockit.jfr.events.Bits.floatValue;
 
@@ -148,21 +156,7 @@ public class Drawable {
 
         Main.businessScreenController.draw();
 
-        //map test
-                    /*
-                    map = new UnfoldingMap(this, SCREEN_X/4, 0, SCREEN_X/4, SCREEN_X/4, new OpenStreetMap.OpenStreetMapProvider());
-                    Location businessLocation = new Location(selectedBusiness.getLatitude(), selectedBusiness.getLongitude());
-                    if(map!=null) {
-                        settings();
-                        map.zoomAndPanTo(businessLocation, 15); // about 15 for street level, 13 for city level etc
-                        float maxPanningDistance = 10;
-                        map.setPanningRestriction(businessLocation, maxPanningDistance);
-                        ImageMarker businessMarker = new ImageMarker(businessLocation, loadImage("pink.png"));
-                        map.addMarker(businessMarker);
-                        map.draw();
-                    }
-                    */
-        // Haven't gotten map working yet ^^
+
 
         canvas.fill(255);
         canvas.noStroke();
@@ -245,6 +239,22 @@ public class Drawable {
                 }
             }
         }
+        //map test
+
+
+                    Location businessLocation = new Location(selectedBusiness.getLatitude(), selectedBusiness.getLongitude());
+                    if(Main.map!=null) {
+                        Main.map.zoomAndPanTo(businessLocation, 15); // about 15 for street level, 13 for city level etc
+                        float maxPanningDistance = 10;
+                        Main.map.setPanningRestriction(businessLocation, maxPanningDistance);
+                        PImage marker = canvas.loadImage("marker.png");
+                        marker.resize(marker.width/3, marker.height/3);
+                        ImageMarker businessMarker = new ImageMarker(businessLocation, marker);
+                        Main.map.addMarker(businessMarker);
+                        Main.map.draw();
+                    }
+
+        // Haven't gotten map working yet ^^
     }
 
     public void drawFailedCheckIns() {
