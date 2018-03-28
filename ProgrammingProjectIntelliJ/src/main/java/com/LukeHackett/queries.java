@@ -97,7 +97,7 @@ class queries {
 
 
         try {
-            String query ="SELECT stars FROM yelp_review WHERE MATCH(business_id) AGAINST " + "(" + '\'' + businessId + '\'' + ") LIMIT 12";
+            String query ="SELECT stars FROM yelp_review WHERE MATCH(business_id) AGAINST " + "(" + '\'' + businessId + '\'' + ") ORDER BY date";
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(query);
 
