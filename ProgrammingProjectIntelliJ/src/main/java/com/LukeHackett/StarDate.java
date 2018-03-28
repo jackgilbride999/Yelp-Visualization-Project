@@ -16,7 +16,4 @@ public class StarDate {
     public int getDate() {
         return date;
     }
-
-
-
 }
