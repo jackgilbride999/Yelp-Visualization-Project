@@ -70,6 +70,7 @@ public class Main extends PApplet {
     public static Button restaurantsButton;
     public static Button shoppingButton;
     public static Button[] searchResultButtons;
+    public static ArrayList<Button> searchHeaderButtons;
     public static Button graphForward;
     public static Button graphBackward;
 
@@ -219,7 +220,7 @@ public class Main extends PApplet {
                     fill(0, 169, 154);
                     noStroke();
                     //rect(0, 0, SCREEN_X, 600);
-                    image(background,backgroundX,0);
+                    image(background, backgroundX, 0);
                     changePicture();
                     image(testLogo, SCREEN_X / 2 - 240, 100);
                     homeScreenController.draw();
@@ -239,37 +240,32 @@ public class Main extends PApplet {
             connected = true;
         }
     }
+
     public void changePicture() {
         int pic1 = 0;
         int pic2 = -SCREEN_X;
-        int pic3 = -SCREEN_X*2;
-        int pic4 = -SCREEN_X*3;
+        int pic3 = -SCREEN_X * 2;
+        int pic4 = -SCREEN_X * 3;
         backgroundXTimer++;
-       // System.out.println(backgroundXTimer + "     " + backgroundX);
-        if(backgroundXTimer % 300 == 0)
-        {
+        // System.out.println(backgroundXTimer + "     " + backgroundX);
+        if (backgroundXTimer % 300 == 0) {
             moveBackground = true;
         }
-        if(moveBackground)
-        {
+        if (moveBackground) {
             backgroundX = backgroundX - 4;
-            if(backgroundX == pic2 || backgroundX == pic3 || backgroundX == pic4 || backgroundX == pic1)
-            {
+            if (backgroundX == pic2 || backgroundX == pic3 || backgroundX == pic4 || backgroundX == pic1) {
                 backgroundXTimer = 1;
-                if(backgroundX == pic4)
-                {
+                if (backgroundX == pic4) {
                     returnBackgroundToStart = true;
                 }
-                if(backgroundX == pic1 && returnBackgroundToStart)
-                {
+                if (backgroundX == pic1 && returnBackgroundToStart) {
                     returnBackgroundToStart = false;
                 }
                 moveBackground = false;
 
             }
         }
-        if(returnBackgroundToStart && moveBackground)
-        {
+        if (returnBackgroundToStart && moveBackground) {
             backgroundX = backgroundX + 16;
         }
     }
@@ -298,8 +294,7 @@ public class Main extends PApplet {
                 searchScroll.setY(0);
             else if (searchScroll.getY() + searchScroll.getHeight() > SCREEN_Y)
                 searchScroll.setY(SCREEN_Y - searchScroll.getHeight());
-        }
-        else if (reviewScrollPressed) {
+        } else if (reviewScrollPressed) {
             reviewScroll.setY(mouseY - reviewMouseDifference);
             if (reviewScroll.getY() < 0)
                 reviewScroll.setY(0);
@@ -344,6 +339,36 @@ public class Main extends PApplet {
         }
     }
 
+    public void searchBarSearch(String text) {
+        currentController = SEARCH_RESULT_SCREEN;
+        searchString = text;
+        ArrayList<Business> businessesN = qControl.businessSearch(text, 0, 10);
+        buttonBusinessList(businessesN);
+        if (businessesN.size() != 0) {
+            for (Business b : businessesN) {
+                System.out.println(b);
+            }
+        } else {
+            ArrayList<Business> businessesC = qControl.categorySearch(text, 0, 10);
+            buttonBusinessList(businessesC);
+            if (businessesC.size() != 0) {
+                for (Business b : businessesC) {
+                    System.out.println(b.toString());
+                }
+            } else {
+                ArrayList<Business> businessesL = qControl.citySearch(text, 0, 10);
+                buttonBusinessList(businessesL);
+                if (businessesL.size() != 0) {
+                    for (Business b : businessesL) {
+                        System.out.println(b);
+                    }
+                } else {
+                    System.out.println("No results");
+                }
+            }
+        }
+    }
+
     public void Options(int n) {
         selected = n;
     }
@@ -352,14 +377,14 @@ public class Main extends PApplet {
         selectedFilter = n;
         reviewScroll = null;
 
-        switch(selectedFilter) {
+        switch (selectedFilter) {
             case 0:
                 reviewsToShow = reviews;
                 break;
             case 1:
                 reviewsToShow = new ArrayList<Review>();
-                for(Review r : reviews){
-                    if(r.getStars() == 5){
+                for (Review r : reviews) {
+                    if (r.getStars() == 5) {
                         reviewsToShow.add(r);
                     }
                 }
@@ -367,8 +392,8 @@ public class Main extends PApplet {
             case 2:
                 reviewsToShow = new ArrayList<Review>();
                 println("hereeeee");
-                for(Review r : reviews){
-                    if(r.getStars() == 4){
+                for (Review r : reviews) {
+                    if (r.getStars() == 4) {
                         reviewsToShow.add(r);
                         println(r);
                     }
@@ -376,24 +401,24 @@ public class Main extends PApplet {
                 break;
             case 3:
                 reviewsToShow = new ArrayList<Review>();
-                for(Review r : reviews){
-                    if(r.getStars() == 3){
+                for (Review r : reviews) {
+                    if (r.getStars() == 3) {
                         reviewsToShow.add(r);
                     }
                 }
                 break;
             case 4:
                 reviewsToShow = new ArrayList<Review>();
-                for(Review r : reviews){
-                    if(r.getStars() == 2){
+                for (Review r : reviews) {
+                    if (r.getStars() == 2) {
                         reviewsToShow.add(r);
                     }
                 }
                 break;
             case 5:
                 reviewsToShow = new ArrayList<Review>();
-                for(Review r : reviews){
-                    if(r.getStars() == 1){
+                for (Review r : reviews) {
+                    if (r.getStars() == 1) {
                         reviewsToShow.add(r);
                     }
                 }
@@ -403,19 +428,16 @@ public class Main extends PApplet {
     }
 
     public void keyPressed() {
-        if(key == '+')
-        {
+        if (key == '+') {
             offsetFromTop = offsetFromTop + 20;
-        }
-        else if(key == '-')
-        {
+        } else if (key == '-') {
             offsetFromTop = offsetFromTop - 20;
         }
     }
 
     //public void selectedFilter(int n){
 
-   // }
+    // }
 
     public void backButton() {
         ArrayList<Business> businessList = UI.backButton();
@@ -429,11 +451,11 @@ public class Main extends PApplet {
         if (businessList != null) buttonBusinessList(businessList);
     }
 
-    public void backButtonReview(){
+    public void backButtonReview() {
         UI.backButtonReview();
     }
 
-    public void forwardButtonReview(){
+    public void forwardButtonReview() {
         UI.forwardButtonReview();
     }
 
@@ -493,16 +515,14 @@ public class Main extends PApplet {
             new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), STARS_CHART, graphScreen);
 
             currentController = BUSINESS_SCREEN;
-        }
-        else if(event.getValue() == 15){
-            if(event.getName().equals("graphForward")){
-                int index = graphScreen.getActiveIndex()+1;
-                if(index == graphScreen.getGraphs().size()) index = 0;
+        } else if (event.getValue() == 15) {
+            if (event.getName().equals("graphForward")) {
+                int index = graphScreen.getActiveIndex() + 1;
+                if (index == graphScreen.getGraphs().size()) index = 0;
                 graphScreen.setActive(index);
-            }
-            else{
-                int index = graphScreen.getActiveIndex()-1;
-                if(index == -1) index = graphScreen.getGraphs().size()-1;
+            } else {
+                int index = graphScreen.getActiveIndex() - 1;
+                if (index == -1) index = graphScreen.getGraphs().size() - 1;
                 graphScreen.setActive(index);
             }
         }
@@ -512,7 +532,7 @@ public class Main extends PApplet {
         draws.drawBusinesses();
     }
 
-    public void drawBusinessScreen(){
+    public void drawBusinessScreen() {
         draws.drawBusinessScreen();
     }
 
