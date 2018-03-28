@@ -62,6 +62,7 @@ public class Drawable {
                     b.setColorActive(canvas.color(215));
                 }
             }
+
         }
 
         Main.searchResultController.draw();
@@ -91,6 +92,11 @@ public class Drawable {
                 }
 
                 boolean parking = image.getBusiness().getParking();
+                boolean wifi = image.getBusiness().getWifi();
+                boolean wheelchair = image.getBusiness().getWheelchair();
+                canvas.image((parking ? Main.parking : Main.noParking),x + 15 + 1045, y + 90 + 130 - (searchRatio * offsetFromTopSearch), 40, 40);
+                canvas.image((wifi ? Main.wifi : Main.noWifi),x + 15 + 1095, y + 90 + 130 - (searchRatio * offsetFromTopSearch),40, 40);
+                canvas.image((wheelchair ? Main.wheelchair : Main.noWheelchair),x + 15 + 1145, y + 90 + 130 - (searchRatio * offsetFromTopSearch),40, 40);
                 /*
                 ATTRIBUTE BUTTONS IN PROGRESS - LH
 
@@ -118,6 +124,7 @@ public class Drawable {
 
         canvas.image(sidebarShadow, 260, 75);
         canvas.image(searchIcon,15,90);
+
     }
 
     public void drawBusinessScreen() {
