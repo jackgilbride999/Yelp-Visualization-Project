@@ -83,18 +83,7 @@ public class GraphCrawler extends Thread {
                 }
             }
         } else if (chartType == Main.HOURS_CHART) {
-            /*
-            String[] inputArray = Main.qControl.getBusinessHours(id);
-            if (inputArray == null) {
-                System.out.println("Checkins not available for " + name);
-            } else {
-                graph = new BusinessHoursChart(canvas, inputArray, name, 10, 10);
-                if (graph != null) {
-                    graphScreen.addGraph(graph, false);
-                }
-            }
-            */
-            //HEREEE
+
             System.out.println("hereeeeeeeee");
         }
     }

@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Main extends PApplet {
 
@@ -38,6 +39,7 @@ public class Main extends PApplet {
     public static int selectedFilter = 0;
     public static int yOffset;
     public static int offsetFromTop = 0;
+    public static int zoom = 10;
     public static int searchType;
 
     public static String searchString;
@@ -77,6 +79,8 @@ public class Main extends PApplet {
     public static ArrayList<Button> searchHeaderButtons;
     public static Button graphForward;
     public static Button graphBackward;
+    public static Button zoomInButton;
+    public static Button zoomOutButton;
 
     public static PImage sidebarShadow;
     public static PImage background;
@@ -136,9 +140,6 @@ public class Main extends PApplet {
 
     public static int backgroundX;
     public static int backgroundXTimer;
-    public static UnfoldingMap map;
-    public static int mapX;
-    public static int mapY;
 
 
     public static void main(String[] args) {
@@ -151,8 +152,6 @@ public class Main extends PApplet {
 
     @Override
     public void setup() {
-        mapX =SCREEN_X/2 + 260;
-        mapY = 75;
         loadingAnimation = new Animation("frames", 8, this);
         backgroundX = 0;
         moveBackground = false;
@@ -242,10 +241,6 @@ public class Main extends PApplet {
         businessScreenController.setAutoDraw(false);
         reviewHeaders.setAutoDraw(false);
         //End Control P5 setup
-
-        map = new UnfoldingMap(this, mapX, mapY, SCREEN_X/4, SCREEN_X/4, new OpenStreetMap.OpenStreetMapProvider());
-        MapUtils.createDefaultEventDispatcher(this, Main.map);
-
     }
 
     public void draw() {
@@ -508,6 +503,14 @@ public class Main extends PApplet {
         currentController = UI.homeButton();
     }
 
+    public void zoomIn(){
+        new MapCrawler(this, selectedBusiness, ++zoom);
+    }
+
+    public void zoomOut(){
+        new MapCrawler(this, selectedBusiness, --zoom);
+    }
+
     public void beautyButton() {
         ArrayList<Business> businessList = UI.beautyButton(qControl);
         buttonBusinessList(businessList);
@@ -556,6 +559,7 @@ public class Main extends PApplet {
             selectedBusiness.setName(qControl.getBusinessName(selectedBusiness.getBusiness_id()));
             reviewCrawler = new ReviewCrawler(selectedBusiness, qControl);
 
+            new MapCrawler(this, selectedBusiness, zoom);
             new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), CHECKIN_CHART, graphScreen);
             new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), STARS_CHART, graphScreen);
             //new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), HOURS_CHART, graphScreen);

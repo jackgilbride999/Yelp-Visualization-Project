@@ -27,6 +27,8 @@ public class GraphScreen {
 
         this.loadingGraphsAnimation = new Animation("frames",8,this.canvas);
         graphs = new LinkedHashMap<Graph, Boolean>();
+
+        activeIndex = 0;
     }
 
     public float getxPos() {
@@ -145,10 +147,6 @@ public class GraphScreen {
                     break;
                 }
             }
-
-            String indicateWhich = activeIndex+1 + "/" + graphSet.size();
-            canvas.textFont(Main.bigFont);
-            canvas.text(indicateWhich, xPos + xSize + 20+  canvas.textWidth("1/1")/2, yPos + ySize/2 + 11);
         }
     }
 }
