@@ -162,7 +162,7 @@ public class Drawable {
         Main.businessScreenController.get("graphBackward").setPosition(Main.businessScreenController.get("graphBackward").getPosition()[0], initialReviewYs.get(2) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("Filter").setPosition(Main.businessScreenController.get("Filter").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
 
-        canvas.image(Main.selectedBusiness.getImage() != null ? Main.selectedBusiness.getImage() : Main.placeHolderImage, 20, 70, 200, 200);
+        canvas.image(Main.selectedBusiness.getImage() != null ? Main.selectedBusiness.getImage() : Main.placeHolderImage, 20, 70 - (reviewRatio * offsetFromTopReview), 200, 200);
         Main.businessScreenController.draw();
 
 
@@ -210,6 +210,7 @@ public class Drawable {
                 }
 
                 canvas.textSize(15);
+                canvas.textFont(reviewFont);
                 dateFormat = r.getDate().split(" ");
                 reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
                 if (reviewRatio != 0) {

@@ -120,15 +120,20 @@ public class GraphScreen {
             //canvas.text("loading...", (xPos + xSize / 2) - canvas.textWidth("loading...") / 2, yPos + ySize / 2);
         } else {
             Set<Graph> graphSet = graphs.keySet();
+            int tempIndex = 0;
             for (Graph g : graphSet) {
                 if (graphs.size() > 1) {
-                    if (graphs.get(g)) {
+                    if (graphs.get(g)  && tempIndex == activeIndex) {
                         g.draw(xPos, yPos, xSize, ySize);
+                    }
+                    else if(graphs.get(g)){
+                        graphs.put(g, false);
                     }
                 } else {
                     g.draw(xPos, yPos, xSize, ySize);
                     setActive(g.getName());
                 }
+                tempIndex++;
             }
 
             String indicateWhich = activeIndex+1 + "/" + graphSet.size();
