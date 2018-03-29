@@ -562,7 +562,7 @@ public class Main extends PApplet {
             new MapCrawler(this, selectedBusiness, zoom);
             new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), CHECKIN_CHART, graphScreen);
             new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), STARS_CHART, graphScreen);
-            //new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), HOURS_CHART, graphScreen);
+            new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), HOURS_CHART, graphScreen);
 
             currentController = BUSINESS_SCREEN;
         } else if (event.getValue() == 15) {
