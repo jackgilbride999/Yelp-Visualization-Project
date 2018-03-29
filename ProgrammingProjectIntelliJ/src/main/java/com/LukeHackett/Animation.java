@@ -19,7 +19,7 @@ public class Animation {
 
         for(int i = 0; i < images.length; i++)
         {
-            String filename = imagePrefix + "_0" + (i+1) + ".gif";
+            String filename = imagePrefix + "_0" + (i+1) + ".png";
             images[i] = canvas.loadImage(filename);
         }
     }
