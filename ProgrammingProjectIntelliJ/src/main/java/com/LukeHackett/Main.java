@@ -98,6 +98,8 @@ public class Main extends PApplet {
     public static PImage halfStar;
     public static PImage emptyStar;
     public static PImage placeHolderImage;
+    public static PImage zoomIn;
+    public static PImage zoomOut;
     public static PImage searchIcon;
     public static PImage parking;
     public static PImage noParking;
@@ -219,6 +221,8 @@ public class Main extends PApplet {
         wheelchair = loadImage("wheelchair_available.png");
         noWheelchair = loadImage("wheelchair_unavailable.png");
         searchIcon = loadImage("searchbar_icon.png");
+        zoomIn = loadImage("zoom_in.png");
+        zoomOut = loadImage("zoom_out.png");
 
 
         searchResultButtons = new Button[10];

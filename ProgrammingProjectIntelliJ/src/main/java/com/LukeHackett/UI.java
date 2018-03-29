@@ -356,15 +356,15 @@ public class UI {
                 .setPaddingTop(10);
 
         Main.zoomInButton = Main.businessScreenController.addButton("zoomIn")
-                .setSize(50, 50)
+                .setSize(31, 30)
                 .setCaptionLabel("")
-                .setImage(forwardButtonImage)
+                .setImage(zoomIn)
                 .setPosition(Main.SCREEN_X - 200, 400);
 
         Main.zoomOutButton = Main.businessScreenController.addButton("zoomOut")
-                .setSize(50, 50)
+                .setSize(31, 30)
                 .setCaptionLabel("")
-                .setImage(backButtonImage)
+                .setImage(zoomOut)
                 .setPosition(Main.SCREEN_X - 300, 400);
 
         Drawable.initialReviewYs.add(Main.backButtonBusiness.getPosition()[1]);
