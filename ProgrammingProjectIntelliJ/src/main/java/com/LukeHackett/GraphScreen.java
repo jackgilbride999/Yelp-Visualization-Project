@@ -121,19 +121,29 @@ public class GraphScreen {
         } else {
             Set<Graph> graphSet = graphs.keySet();
             int tempIndex = 0;
+            boolean drawn = false;
             for (Graph g : graphSet) {
                 if (graphs.size() > 1) {
                     if (graphs.get(g)  && tempIndex == activeIndex) {
                         g.draw(xPos, yPos, xSize, ySize);
+                        drawn = true;
                     }
                     else if(graphs.get(g)){
                         graphs.put(g, false);
                     }
                 } else {
                     g.draw(xPos, yPos, xSize, ySize);
+                    drawn = true;
                     setActive(g.getName());
                 }
                 tempIndex++;
+            }
+            if(!drawn){
+                for(Graph g : graphSet){
+                    setActive(g.getName());
+                    g.draw(xPos, yPos, xSize, ySize);
+                    break;
+                }
             }
 
             String indicateWhich = activeIndex+1 + "/" + graphSet.size();
