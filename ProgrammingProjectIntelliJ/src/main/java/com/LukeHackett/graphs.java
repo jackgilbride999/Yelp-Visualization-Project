@@ -98,6 +98,7 @@ class StarLineChart implements Graph {
         starChart.setAxisLabelColour(255);
         starChart.setAxisColour(255);
         starChart.setAxisValuesColour(255);
+        starChart.showYAxis(true);
         starChart.setPointColour(0);
     }
 

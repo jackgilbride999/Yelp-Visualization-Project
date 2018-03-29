@@ -116,6 +116,7 @@ public class UI {
                 return HOME_SCREEN;
             case BUSINESS_SCREEN:
                 //Main.currentController = SEARCH_RESULT_SCREEN;
+                Main.reviewFilterOptions.setValue(0);
                 return SEARCH_RESULT_SCREEN;
         }
         return 0;
