@@ -164,10 +164,10 @@ public class Drawable {
         Main.businessScreenController.get("zoomIn").setPosition(Main.businessScreenController.get("zoomIn").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("zoomOut").setPosition(Main.businessScreenController.get("zoomOut").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
 
-        canvas.image(Main.selectedBusiness.getImage() != null ? Main.selectedBusiness.getImage() : Main.placeHolderImage, 20, 70 - (reviewRatio * offsetFromTopReview), 200, 200);
+        canvas.image((Main.selectedBusiness.getImage() != null) ? Main.selectedBusiness.getImage(): placeHolderImage, 20, 70 - (reviewRatio * offsetFromTopReview), 200, 200);
         Main.businessScreenController.draw();
         if(Main.selectedBusiness.getMapImage() != null) canvas.image(Main.selectedBusiness.getMapImage(), SCREEN_X/2 + 260, 75  - (reviewRatio * offsetFromTopReview), SCREEN_X/4, SCREEN_X/4);
-        
+
         canvas.fill(0, 135, 122);
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 50);
