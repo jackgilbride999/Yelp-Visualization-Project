@@ -2,6 +2,7 @@ package com.LukeHackett;
 
 import controlP5.*;
 
+import controlP5.Button;
 import de.fhpotsdam.unfolding.UnfoldingMap;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import processing.core.PApplet;
@@ -10,6 +11,7 @@ import processing.core.PImage;
 
 import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -563,6 +565,7 @@ public class Main extends PApplet {
             selectedBusiness.setName(qControl.getBusinessName(selectedBusiness.getBusiness_id()));
             reviewCrawler = new ReviewCrawler(selectedBusiness, qControl);
 
+            new ImageCrawler(this, selectedBusiness);
             new MapCrawler(this, selectedBusiness, zoom);
             new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), CHECKIN_CHART, graphScreen);
             new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), STARS_CHART, graphScreen);
