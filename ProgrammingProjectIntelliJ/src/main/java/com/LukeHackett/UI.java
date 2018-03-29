@@ -107,6 +107,7 @@ public class UI {
         Main.reviews = new ArrayList<Review>();
         Main.reviewsToShow = new ArrayList<Review>();
         Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
+        Main.zoom = 10;
         switch (Main.currentController) {
             case SEARCH_RESULT_SCREEN:
                 //if (Main.currentSearch != 0) {
@@ -315,14 +316,14 @@ public class UI {
                 .setSize(50, 50)
                 .setCaptionLabel("")
                 .setImage(forwardButtonImage)
-                .setPosition(Main.SCREEN_X - 100, 400);
+                .setPosition(425, 290);
 
         Main.graphBackward = Main.businessScreenController.addButton("graphBackward")
                 .setValueSelf(15)
                 .setSize(50, 50)
                 .setCaptionLabel("")
                 .setImage(backButtonImage)
-                .setPosition(Main.SCREEN_X - 300, 400);
+                .setPosition(425, 375);
 
         Main.reviewFilterOptions = Main.businessScreenController.addScrollableList("Filter")
                 .addItem("All", 0)
@@ -353,6 +354,18 @@ public class UI {
         label.getStyle()
                 .setPaddingLeft(5)
                 .setPaddingTop(10);
+
+        Main.zoomInButton = Main.businessScreenController.addButton("zoomIn")
+                .setSize(50, 50)
+                .setCaptionLabel("")
+                .setImage(forwardButtonImage)
+                .setPosition(Main.SCREEN_X - 200, 400);
+
+        Main.zoomOutButton = Main.businessScreenController.addButton("zoomOut")
+                .setSize(50, 50)
+                .setCaptionLabel("")
+                .setImage(backButtonImage)
+                .setPosition(Main.SCREEN_X - 300, 400);
 
         Drawable.initialReviewYs.add(Main.backButtonBusiness.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.graphForward.getPosition()[1]);

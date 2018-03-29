@@ -94,9 +94,9 @@ public class Drawable {
                 boolean parking = image.getBusiness().getParking();
                 boolean wifi = image.getBusiness().getWifi();
                 boolean wheelchair = image.getBusiness().getWheelchair();
-                canvas.image((parking ? Main.parking : Main.noParking),x + 15 + 1045, y + 90 + 130 - (searchRatio * offsetFromTopSearch), 40, 40);
-                canvas.image((wifi ? Main.wifi : Main.noWifi),x + 15 + 1095, y + 90 + 130 - (searchRatio * offsetFromTopSearch),40, 40);
-                canvas.image((wheelchair ? Main.wheelchair : Main.noWheelchair),x + 15 + 1145, y + 90 + 130 - (searchRatio * offsetFromTopSearch),40, 40);
+                canvas.image((parking ? Main.parking : Main.noParking), x + 15 + 1045, y + 90 + 130 - (searchRatio * offsetFromTopSearch), 40, 40);
+                canvas.image((wifi ? Main.wifi : Main.noWifi), x + 15 + 1095, y + 90 + 130 - (searchRatio * offsetFromTopSearch), 40, 40);
+                canvas.image((wheelchair ? Main.wheelchair : Main.noWheelchair), x + 15 + 1145, y + 90 + 130 - (searchRatio * offsetFromTopSearch), 40, 40);
                 /*
                 ATTRIBUTE BUTTONS IN PROGRESS - LH
 
@@ -123,7 +123,7 @@ public class Drawable {
         Main.searchScroll.draw(0);
 
         canvas.image(sidebarShadow, 260, 75);
-        canvas.image(searchIcon,15,90);
+        canvas.image(searchIcon, 15, 90);
 
     }
 
@@ -161,18 +161,16 @@ public class Drawable {
         Main.businessScreenController.get("graphForward").setPosition(Main.businessScreenController.get("graphForward").getPosition()[0], initialReviewYs.get(1) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("graphBackward").setPosition(Main.businessScreenController.get("graphBackward").getPosition()[0], initialReviewYs.get(2) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("Filter").setPosition(Main.businessScreenController.get("Filter").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
+        Main.businessScreenController.get("zoomIn").setPosition(Main.businessScreenController.get("zoomIn").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
+        Main.businessScreenController.get("zoomOut").setPosition(Main.businessScreenController.get("zoomOut").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
 
         canvas.image(Main.selectedBusiness.getImage() != null ? Main.selectedBusiness.getImage() : Main.placeHolderImage, 20, 70 - (reviewRatio * offsetFromTopReview), 200, 200);
         Main.businessScreenController.draw();
-
-
+        if(Main.selectedBusiness.getMapImage() != null) canvas.image(Main.selectedBusiness.getMapImage(), SCREEN_X/2 + 260, 75  - (reviewRatio * offsetFromTopReview), SCREEN_X/4, SCREEN_X/4);
+        
         canvas.fill(0, 135, 122);
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 50);
-        //canvas.fill(0, 0, 0, 20);
-        //canvas.rect(0, 75, Main.SCREEN_X, 20);
-       // canvas.image(headerShadow,0,75);
-        //canvas.tint(255);
         reviewHeaders.draw();
         if (Main.reviewScroll != null && reviewRatio > 1) Main.reviewScroll.draw(0);
 
@@ -249,28 +247,7 @@ public class Drawable {
                 }
             }
         }
-        //map test
-        if (Main.reviewScrollPressed) {
-            moveMap(Main.map, Main.mapX, (int) (Main.mapY - (reviewRatio * offsetFromTopReview)), SCREEN_X / 4, SCREEN_X / 4);
-        }
 
-        Location businessLocation = new Location(selectedBusiness.getLatitude(), selectedBusiness.getLongitude());
-        if (Main.map != null) {
-            Main.map.zoomAndPanTo(businessLocation, 15); // about 15 for street level, 13 for city level etc
-            float maxPanningDistance = 10;
-            Main.map.setPanningRestriction(businessLocation, maxPanningDistance);
-            PImage marker = canvas.loadImage("marker.png");
-            marker.resize(marker.width / 3, marker.height / 3);
-            ImageMarker businessMarker = new ImageMarker(businessLocation, marker);
-            Main.map.addMarker(businessMarker);
-            Main.map.draw();
-        }
-
-        // Haven't gotten map working yet ^^
-    }
-
-    public void moveMap(UnfoldingMap map, int x, int y, int width, int height) {
-        Main.map = new UnfoldingMap(canvas, x, y, width, height, new OpenStreetMap.OpenStreetMapProvider());
     }
 
     public void drawFailedCheckIns() {

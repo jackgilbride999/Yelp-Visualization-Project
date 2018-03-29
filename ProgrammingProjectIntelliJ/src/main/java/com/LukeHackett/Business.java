@@ -21,6 +21,7 @@ public class Business {
     private int is_open;
     private String categories;
     private PImage image;
+    private PImage mapImage;
     private boolean parking;
     private boolean wifi;
     private boolean wheelchair;
@@ -166,7 +167,15 @@ public class Business {
     public void setImage(PImage image) {
         this.image = image;
     }
-    
+
+    public PImage getMapImage() {
+        return mapImage;
+    }
+
+    public void setMapImage(PImage mapImage) {
+        this.mapImage = mapImage;
+    }
+
     public void setParking(boolean parking){
         this.parking = parking;
     }
@@ -178,6 +187,7 @@ public class Business {
     public boolean getWifi(){
         return wifi;
     }
+
     public boolean getWheelchair(){
         return wheelchair;
     }
