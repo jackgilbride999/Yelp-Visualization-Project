@@ -29,6 +29,7 @@ public class Main extends PApplet {
     public static final int LINE_LENGTH = 170;
     public static final int CHECKIN_CHART = 1;
     public static final int STARS_CHART = 2;
+    public static final int HOURS_CHART = 3;
 
     public static int currentController;
     public static int currentSearch = 0;
@@ -557,6 +558,7 @@ public class Main extends PApplet {
 
             new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), CHECKIN_CHART, graphScreen);
             new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), STARS_CHART, graphScreen);
+            //new GraphCrawler(this, selectedBusiness.getName(), selectedBusiness.getBusiness_id(), HOURS_CHART, graphScreen);
 
             currentController = BUSINESS_SCREEN;
         } else if (event.getValue() == 15) {
