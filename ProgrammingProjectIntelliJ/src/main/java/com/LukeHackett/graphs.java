@@ -283,6 +283,8 @@ class BusinessHoursChart implements Graph{
                 }
             }
         }
+        if(!this.hasBusinessHours())
+            throw new NullPointerException();
     }
     public void draw(float graphX, float graphY, float width, float height) {
         this.boxWidth=(int)(width-2)/HALF_HOURS_PER_DAY;
