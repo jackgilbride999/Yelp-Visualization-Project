@@ -22,14 +22,14 @@ class queries {
             String connectionUrlAWS = "jdbc:mysql://yelpdatabase.cioogriagt5l.eu-west-1.rds.amazonaws.com/yelp?"
                     + "user=root&password=programming4&"
                     + "autoReconnect=true&useSSL=false";
-            String connectionUrlCUSTOM = "jdbc:mysql://37.228.204.207/yelp?"
+            String connectionUrlCUSTOM = "jdbc:mysql://37.228.204.28/yelp?"
                     + "user=root&password=programming4&"
                     + "autoReconnect=true&useSSL=false";
             String connectionUrlLOCAL = "jdbc:mysql://localhost/yelp?"
                     + "user=root&password=Carrot!4!5&"
                     + "autoReconnect=true&useSSL=false";
 
-            connection = DriverManager.getConnection(connectionUrlLOCAL);
+            connection = DriverManager.getConnection(connectionUrlCUSTOM);
             System.out.println("Connected.");
 
         } catch (Exception e) {
