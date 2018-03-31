@@ -24,8 +24,7 @@ public class ImageCrawler extends Thread {
     }
 
     PImage findPhoto(Business b) {
-        String urlPhoto = imageSearch("86b3dc772e3b470e8b100d151a0e0da2", b);
-
+        String urlPhoto = imageSearch("86b3dc772e3b470e8b100d151a0e0da2", "3f01e0d67a13451c80d265d8e5b3d55d", b);
         return canvas.loadImage(urlPhoto);
     }
 
@@ -33,44 +32,36 @@ public class ImageCrawler extends Thread {
         return business;
     }
 
-    public static String imageSearch(String subscriptionKey, Business b)
+    public static String imageSearch(String subscriptionKey, String subscriptionKeyAlt, Business b)
     {
-        ImageSearchAPIImpl client = Experiment.getClient(subscriptionKey);
+        String subKeyToUse = subscriptionKey;
+        while(true) {
+            ImageSearchAPIImpl client = Experiment.getClient(subKeyToUse);
+            try {
+                ImagesInner imageResults = client.searchs().list(b.getName() + " yelp");
+                System.out.println("\r\nSearch images for query " + b.getName());
 
-        try
-        {
-            ImagesInner imageResults = client.searchs().list(b.getName() + " yelp");
-            System.out.println("\r\nSearch images for query " + b.getName());
+                if (imageResults == null) {
+                    System.out.println("No image result data.");
+                } else {
+                    // Image results
+                    if (imageResults.value().size() > 0) {
+                        ImageObject firstImageResult = imageResults.value().get(0);
 
-            if (imageResults == null)
-            {
-                System.out.println("No image result data.");
-            }
-            else
-            {
-                // Image results
-                if (imageResults.value().size() > 0)
-                {
-                    ImageObject firstImageResult = imageResults.value().get(0);
+                        System.out.println(String.format("Image result count: %d", imageResults.value().size()));
+                        System.out.println(String.format("First image insights token: %s", firstImageResult.imageInsightsToken()));
+                        System.out.println(String.format("First image thumbnail url: %s", firstImageResult.thumbnailUrl()));
+                        System.out.println(String.format("First image content url: %s", firstImageResult.contentUrl()));
 
-                    System.out.println(String.format("Image result count: %d", imageResults.value().size()));
-                    System.out.println(String.format("First image insights token: %s", firstImageResult.imageInsightsToken()));
-                    System.out.println(String.format("First image thumbnail url: %s", firstImageResult.thumbnailUrl()));
-                    System.out.println(String.format("First image content url: %s", firstImageResult.contentUrl()));
-
-                    return firstImageResult.contentUrl();
+                        return firstImageResult.contentUrl();
+                    } else {
+                        System.out.println("Couldn't find image results!");
+                    }
                 }
-                else
-                {
-                    System.out.println("Couldn't find image results!");
-                }
+            } catch (Exception e) {
+                if(subKeyToUse.equals(subscriptionKeyAlt)) return "businessPlaceholder.png";
+                else subKeyToUse = subscriptionKeyAlt;
             }
         }
-
-        catch (Exception e)
-        {
-            System.out.println("HRMMMM");
-        }
-        return "businessPlaceholder.png";
     }
 }
