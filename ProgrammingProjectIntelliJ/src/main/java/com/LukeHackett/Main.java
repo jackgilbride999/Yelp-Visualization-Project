@@ -3,21 +3,14 @@ package com.LukeHackett;
 import controlP5.*;
 
 import controlP5.Button;
-import de.fhpotsdam.unfolding.UnfoldingMap;
-import de.fhpotsdam.unfolding.utils.MapUtils;
 import processing.core.PApplet;
 import processing.core.PFont;
 import processing.core.PImage;
-
-import de.fhpotsdam.unfolding.providers.OpenStreetMap;
-
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Main extends PApplet {
 
