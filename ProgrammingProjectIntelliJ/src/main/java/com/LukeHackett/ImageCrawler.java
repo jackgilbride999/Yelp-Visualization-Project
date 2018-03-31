@@ -19,7 +19,7 @@ public class ImageCrawler extends Thread {
 
     public void run() {
         //if(business.getImage() != Main.placeHolderImage) {
-            business.setImage(findPhoto(business));
+        business.setImage(findPhoto(business));
         //}
     }
 
@@ -32,10 +32,10 @@ public class ImageCrawler extends Thread {
         return business;
     }
 
-    public static String imageSearch(String subscriptionKey, String subscriptionKeyAlt, Business b)
-    {
+    public static String imageSearch(String subscriptionKey, String subscriptionKeyAlt, Business b) {
         String subKeyToUse = subscriptionKey;
-        while(true) {
+        boolean done = false;
+        while (!done) {
             ImageSearchAPIImpl client = Experiment.getClient(subKeyToUse);
             try {
                 ImagesInner imageResults = client.searchs().list(b.getName() + " yelp");
@@ -59,9 +59,16 @@ public class ImageCrawler extends Thread {
                     }
                 }
             } catch (Exception e) {
-                if(subKeyToUse.equals(subscriptionKeyAlt)) return "businessPlaceholder.png";
-                else subKeyToUse = subscriptionKeyAlt;
+                if (subKeyToUse.equals(subscriptionKeyAlt)) {
+                    done = true;
+                } else {
+                    subKeyToUse = subscriptionKeyAlt;
+                }
+            }
+            if (subKeyToUse.equals(subscriptionKeyAlt)) {
+                done = true;
             }
         }
+        return "businessPlaceholder.png";
     }
 }
