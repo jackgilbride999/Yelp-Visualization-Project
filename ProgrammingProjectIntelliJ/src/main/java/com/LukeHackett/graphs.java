@@ -290,6 +290,7 @@ class BusinessHoursChart implements Graph{
             throw new NullPointerException();
     }
     public void draw(float graphX, float graphY, float width, float height) {
+        graphX+=15;
         this.boxWidth=(int)(width-2)/HALF_HOURS_PER_DAY;
         this.boxHeight=(int)(height-2)/DAYS_PER_WEEK;
         canvas.fill(255);
@@ -305,7 +306,7 @@ class BusinessHoursChart implements Graph{
                     canvas.fill(255, 0, 0);
                 }
                 canvas.stroke(0);
-                canvas.rect(graphX+hourCount* boxWidth, graphY+dayCount* boxHeight + boxHeight, boxWidth, boxHeight);
+                canvas.rect(graphX+hourCount* boxWidth, graphY+dayCount* boxHeight + 2*boxHeight, boxWidth, boxHeight);
             }
         }
     }
@@ -314,23 +315,23 @@ class BusinessHoursChart implements Graph{
         canvas.line(graphX, graphY+ boxHeight, graphX+HALF_HOURS_PER_DAY* boxWidth, graphY+ boxHeight);
         canvas.line(graphX, graphY+ boxHeight, graphX, graphY + DAYS_PER_WEEK* boxHeight + boxHeight);
         String title = "Opening Hours:";
-        canvas.text(title, graphX+(HALF_HOURS_PER_DAY* boxWidth)/2-canvas.textWidth(title)/2, graphY);
+        canvas.text(title, graphX+(HALF_HOURS_PER_DAY* boxWidth)/2-canvas.textWidth(title)/2, graphY+boxHeight);
     }
 
     void drawYLabels(float graphX, float graphY) {
-        canvas.text("Mon", graphX-canvas.textWidth("Mon")-2, graphY+2* boxHeight);
-        canvas.text("Tue", graphX-canvas.textWidth("Tue")-2, graphY+3* boxHeight);
-        canvas.text("Wed", graphX-canvas.textWidth("Wed")-2, graphY+4* boxHeight);
-        canvas.text("Thu", graphX-canvas.textWidth("Thu")-2, graphY+5* boxHeight);
-        canvas.text("Fri", graphX-canvas.textWidth("Fri")-2, graphY+6* boxHeight);
-        canvas.text("Sat", graphX-canvas.textWidth("Sat")-2, graphY+7* boxHeight);
-        canvas.text("Sun", graphX-canvas.textWidth("Sun")-2, graphY+8* boxHeight);
+        canvas.text("Mo", graphX-canvas.textWidth("Mo"), graphY+3* boxHeight);
+        canvas.text("Tu", graphX-canvas.textWidth("Tu"), graphY+4* boxHeight);
+        canvas.text("We", graphX-canvas.textWidth("We"), graphY+5* boxHeight);
+        canvas.text("Th", graphX-canvas.textWidth("Th"), graphY+6* boxHeight);
+        canvas.text("Fr", graphX-canvas.textWidth("Fr"), graphY+7* boxHeight);
+        canvas.text("Sa", graphX-canvas.textWidth("Sa"), graphY+8* boxHeight);
+        canvas.text("Su", graphX-canvas.textWidth("Su"), graphY+9* boxHeight);
     }
 
     void drawXLabels(float graphX, float graphY) {
-        for (int hour = 0; hour<24; hour++) {
+        for (int hour = 0; hour<24; hour+=2) {
             String time = "" + hour + ":00";
-            canvas.text(time, graphX+ boxWidth +2* boxWidth *hour-canvas.textWidth(time)/2, graphY+ boxHeight -2);
+            canvas.text(time, graphX+ boxWidth +2* boxWidth *hour-canvas.textWidth(time)/2, graphY+ 2*boxHeight -2);
         }
     }
 
