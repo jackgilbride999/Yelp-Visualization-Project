@@ -199,7 +199,7 @@ public class Drawable {
             while (reviewIterator.hasNext()) {
                 Review r = reviewIterator.next();
                 if (r.getFormattedReview() == null) {
-                    formatter.formatReview(r);
+                    formatter.formatReview(canvas, r);
                 }
 
 

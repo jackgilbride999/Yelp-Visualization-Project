@@ -365,7 +365,7 @@ public class UI {
                 .setSize(31, 30)
                 .setCaptionLabel("")
                 .setImage(zoomOut)
-                .setPosition(Main.SCREEN_X - 200, 430);
+                .setPosition(Main.SCREEN_X - 240, 430);
 
         Drawable.initialReviewYs.add(Main.backButtonBusiness.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.graphForward.getPosition()[1]);

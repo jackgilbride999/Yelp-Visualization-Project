@@ -22,7 +22,7 @@ public class Main extends PApplet {
     public static final int SEARCH_RESULT_SCREEN = 1;
     public static final int BUSINESS_SCREEN = 2;
     public static final int BORDER_OFFSET_Y = 10;
-    public static final int LINE_LENGTH = 170;
+    public static final int LINE_LENGTH = 130;
     public static final int CHECKIN_CHART = 1;
     public static final int STARS_CHART = 2;
     public static final int HOURS_CHART = 3;

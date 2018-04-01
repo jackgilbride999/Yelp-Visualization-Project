@@ -43,20 +43,6 @@ public class GraphCrawler extends Thread {
                 }
             }
         }
-        /*
-        else if(chartType == Main.STARS_CHART){
-            inputList = Main.qControl.getStarsList(id);
-            if (inputList != null) {
-                // i added the line chart graph, however it looks pretty bad right now, just change the 'StarBarChart' to 'StarLineChart'
-                graph = new StarBarChart(canvas, inputList, name);
-                if (graph != null) {
-                    graphScreen.addGraph(graph, true);
-                }
-            } else {
-                System.out.println("Ratings not available for " + name);
-            }
-        }
-        */
         else if (chartType == Main.STARS_CHART) {
             HashSet<StarDate> inputSet = Main.qControl.getStarsList(id);
             HashMap<Integer, Float> monthMap = new HashMap<Integer, Float>();
@@ -94,18 +80,8 @@ public class GraphCrawler extends Thread {
                     graphScreen.addGraph(graph, false);
             }
             catch (Exception nullPointerException){
-                System.out.println("Checkins not available for " + name);
+                System.out.println("Hours not available for " + name);
             }
-       //     if (inputArray == null) {
-        //        System.out.println("Checkins not available for " + name);
-        //    } else {
-        //        graph = new BusinessHoursChart(canvas, inputArray, name);
-        //        if (graph != null) {
-         //           graphScreen.addGraph(graph, false);
-         //       }
-         //   }
-            //HEREEE
-            System.out.println("hereeeeeeeee");
         }
     }
 

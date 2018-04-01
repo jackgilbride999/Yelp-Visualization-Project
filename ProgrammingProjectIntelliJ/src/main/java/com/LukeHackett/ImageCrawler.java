@@ -45,7 +45,7 @@ public class ImageCrawler extends Thread {
 
     public Business getBusiness() {
         return business;
-    } 
+    }
 
     public ImageSearchAPIImpl getClient(final String subscriptionKey) {
         return new ImageSearchAPIImpl("https://api.cognitive.microsoft.com/bing/v7.0/",
