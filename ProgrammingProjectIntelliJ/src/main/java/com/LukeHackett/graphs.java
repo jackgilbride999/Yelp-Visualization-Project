@@ -260,18 +260,21 @@ class BusinessHoursChart implements Graph{
                 try {
                     String hoursOpen = hoursArray[i];
                     if (!hoursOpen.equals("None")) {
-                        String[] hours = hoursOpen.split("-"); // opening time will be at index  0,  closing time at index  1
-                        String openingTime = hours[0];
+                        String[] hours = hoursOpen.split("-");                             // opening time will be at index  0,  closing time at index  1
+                        String openingTime = hours[0];                                     // if the business opens at 7:XX, the first square filled will be 7:00-7:30
                         int indexToOpenAt = 2*Integer.parseInt(openingTime.split(":")[0]); //eg if the business opens at 7:00, will start indexing at index 14 as we are working with half hours
-                        if (Integer.parseInt(openingTime.split(":")[1])>=30) { // but if it opens at 7:30 we will start indexing at index 15
+                        if (Integer.parseInt(openingTime.split(":")[1])>15) {              // but if it opens at 7:30 we will start indexing at index 15 (will round up from 7:16 onwards)
                             indexToOpenAt++;
                         }
-                        String closingTime = hours[1];
+                        if (Integer.parseInt(openingTime.split(":")[1])>45){
+                            indexToOpenAt++;                                                 // if the business opens at 7:46, graph will round to 8:00
+                        }
+                        String closingTime = hours[1];                                     // if the business closes at 7:XX, the last square filled will be 7:00-7:30
                         int indexToCloseAt = 2*Integer.parseInt(closingTime.split(":")[0]);
-                        if (Integer.parseInt(closingTime.split(":")[1])<30) {
+                        if (Integer.parseInt(closingTime.split(":")[1])<=15) {             // if the business closes at 7:00 or 7:10, the last rect filled will be the 6:30-7:00 square
                             indexToCloseAt--;
                         }
-                        else if(Integer.parseInt(closingTime.split(":")[1])>45){
+                        else if(Integer.parseInt(closingTime.split(":")[1])>45){           // if the business closes at 7:46, the last filled rect will be the 7:30-8:00 square
                             indexToCloseAt++;
                         }
                         for (int count = indexToOpenAt; count<=indexToCloseAt; count++) {
@@ -346,4 +349,4 @@ class BusinessHoursChart implements Graph{
     public void setName(String name) {
         this.name = name;
     }
-    }
+}
