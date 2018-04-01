@@ -137,7 +137,7 @@ class queries {
         ArrayList<Float> businessCheckins = new ArrayList<Float>();
         for (int i=0; i<7;i++)
             businessCheckins.add(0.0f);
-        String query = "SELECT weekday,SUM(checkins) AS checkins FROM yelp_checkin WHERE business_id = '"+businessId+"' GROUP BY weekday ORDER BY weekday";
+        String query = "SELECT weekday,SUM(checkins) AS checkins FROM yelp_checkin WHERE MATCH business_id AGAINST ('"+businessId+"') GROUP BY weekday ORDER BY weekday";
         // set the query string as your needed query
         ResultSet results = getQueryResult(query);
 
@@ -236,28 +236,6 @@ class queries {
         return reviews;
     }
 
-    public void reviewsAlterMain(String business_id){//, int start, int lim) {
-        Main.reviews = new ArrayList<Review>();
-        try {
-            String businessQuery = "SELECT * " +
-                    "FROM yelp_review " +
-                    "WHERE MATCH(business_id) AGAINST(" + '\'' + business_id + '\'' + ")" ;//+
-                    //"LIMIT " + start + "," + lim;
-            java.sql.Statement statement = connection.createStatement();
-            ResultSet results = statement.executeQuery(businessQuery);
-
-            while (results.next()) {
-                Review r = new Review(results.getString("id"), results.getString("user_id"), results.getString("business_id"), results.getDouble("stars"), results.getString("date"), results.getString("text"), results.getInt("useful"), results.getInt("funny"), results.getInt("cool"));
-                r.setUser_name(getUserName(r.getUserId()));
-                Main.reviews.add(r);
-                //System.out.println(results.getString("id"));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        System.out.println("Done getting reviews!");
-    }
-
     public String getBusinessName(String business_id) {
         try {
             String businessNameQuery = "SELECT name " +
@@ -318,8 +296,7 @@ class queries {
             String businessQuery = "SELECT * " +
                     "FROM yelp_business " +
                     "WHERE MATCH(name) " +
-                    "AGAINST (" + '"' + business_name + '"' + ")" +
-                    "LIMIT " + 1;
+                    "AGAINST (" + '"' + business_name + '"' + ")";
             java.sql.Statement statement = connection.createStatement();
             ResultSet results = statement.executeQuery(businessQuery);
 
