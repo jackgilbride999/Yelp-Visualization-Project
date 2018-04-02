@@ -294,29 +294,27 @@ class BusinessHoursChart implements Graph{
         this.boxWidth=(int)(width-2)/HALF_HOURS_PER_DAY;
         this.boxHeight=(int)(height-2)/DAYS_PER_WEEK;
         canvas.fill(255);
-        drawAxes(graphX, graphY);
         drawXLabels(graphX, graphY);
         drawYLabels(graphX, graphY);
         for (int dayCount = 0; dayCount<openingHours.length; dayCount++) {
             for (int hourCount = 0; hourCount<openingHours[dayCount].length; hourCount++) {
                 boolean isOpen = openingHours[dayCount][hourCount];
+                canvas.noStroke();
                 if (isOpen) { // draw full boxes if the business is open during the specific half-hour
                     canvas.fill(65, 244, 169);
                 } else {
                     canvas.fill(255, 0, 0);
                 }
-                canvas.stroke(0);
                 canvas.rect(graphX+hourCount* boxWidth, graphY+dayCount* boxHeight + 2*boxHeight, boxWidth, boxHeight);
+                if(hourCount%2==1){
+                    canvas.stroke(0);
+                    canvas.noFill();
+                    canvas.rect(graphX+hourCount* boxWidth-boxWidth, graphY+dayCount* boxHeight + 2*boxHeight, 2*boxWidth, boxHeight);
+                }
             }
         }
     }
 
-    void drawAxes(float graphX, float graphY) {
-        canvas.line(graphX, graphY+ boxHeight, graphX+HALF_HOURS_PER_DAY* boxWidth, graphY+ boxHeight);
-        canvas.line(graphX, graphY+ boxHeight, graphX, graphY + DAYS_PER_WEEK* boxHeight + boxHeight);
-        String title = "Opening Hours:";
-        canvas.text(title, graphX+(HALF_HOURS_PER_DAY* boxWidth)/2-canvas.textWidth(title)/2, graphY+boxHeight);
-    }
 
     void drawYLabels(float graphX, float graphY) {
         canvas.text("Mo", graphX-canvas.textWidth("Mo"), graphY+3* boxHeight);
@@ -329,8 +327,13 @@ class BusinessHoursChart implements Graph{
     }
 
     void drawXLabels(float graphX, float graphY) {
-        for (int hour = 0; hour<24; hour+=2) {
-            String time = "" + hour + ":00";
+        canvas.text(name, graphX+(HALF_HOURS_PER_DAY* boxWidth)/2-canvas.textWidth(name)/2, graphY+boxHeight);
+        for (int hour = 0; hour<24; hour++) {
+            String time;
+            if(hour==0 || hour==12)
+                time = "12";
+            else
+                time = "" + hour%12;
             canvas.text(time, graphX+ boxWidth +2* boxWidth *hour-canvas.textWidth(time)/2, graphY+ 2*boxHeight -2);
         }
     }

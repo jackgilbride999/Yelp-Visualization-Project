@@ -199,7 +199,7 @@ public class Drawable {
             while (reviewIterator.hasNext()) {
                 Review r = reviewIterator.next();
                 if (r.getFormattedReview() == null) {
-                    formatter.formatReview(canvas, r);
+                    formatter.formatReview(r);
                 }
 
 
@@ -208,7 +208,7 @@ public class Drawable {
                 }
 
                 canvas.textSize(15);
-                canvas.textFont(reviewFont);
+                canvas.textFont(Main.reviewFont);
                 dateFormat = r.getDate().split(" ");
                 reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
                 if (reviewRatio != 0) {

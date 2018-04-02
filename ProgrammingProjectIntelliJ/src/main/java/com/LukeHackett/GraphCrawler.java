@@ -76,9 +76,11 @@ public class GraphCrawler extends Thread {
                 graph = new BusinessHoursChart(canvas, inputArray, name);
                 if(graph==null)
                     throw new NullPointerException();
-                else
+                else {
+                    graph.setName("" + Main.qControl.getBusinessName(id) + " Opening Hours (A.M., P.M.):");
                     graphScreen.addGraph(graph, false);
-            }
+                }
+                }
             catch (Exception nullPointerException){
                 System.out.println("Hours not available for " + name);
             }
