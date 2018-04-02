@@ -113,9 +113,9 @@ class StarLineChart implements Graph {
         canvas.fill(255);
         starChart.draw(xPos, yPos + 35, xSize, ySize);
         canvas.textSize(15);
-        canvas.text(name, xPos, yPos + 15);
+        canvas.text(name, xPos+xSize/2-canvas.textWidth(name)/2, yPos + 15);
         canvas.textSize(15);
-        canvas.text("Change in rating over time.", xPos, yPos + 30);
+        canvas.text("Change in Rating Over Time:", xPos+xSize/2-canvas.textWidth("Change in Rating Over Time:")/2, yPos + 30);
     }
 }
 
@@ -235,9 +235,9 @@ class CheckinsBarChart implements Graph {
         canvas.fill(255);
         barChart.draw(xPos, yPos + 35, xSize, ySize);
         canvas.textSize(15);
-        canvas.text(name, xPos, yPos + 15);
+        canvas.text(name, xPos+xSize/2-canvas.textWidth(name)/2, yPos + 15);
         canvas.textSize(15);
-        canvas.text("check-in statistics.", xPos, yPos + 30);
+        canvas.text("Check-in Statistics:", xPos+xSize/2-canvas.textWidth("Check-in Statistics:")/2, yPos + 30);
         //canvas.textSize(12);
     }
 }
