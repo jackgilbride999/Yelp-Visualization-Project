@@ -2,7 +2,7 @@ package com.LukeHackett;
 
 import processing.core.*;
 
-class Widget {
+abstract class Widget {
     PApplet canvas;
     float x, y, width, height;
     String label;
@@ -25,13 +25,7 @@ class Widget {
         borderColor = (0);
     }
 
-    void draw(int subFromY) {
-        canvas.noStroke();
-        canvas.fill(widgetColor);
-        canvas.rect(x, y - subFromY, width, height);
-        canvas.fill(labelColor);
-        canvas.text(label, x + 10, y + height - 10 - subFromY);
-    }
+    abstract void draw();
 
     int getEvent(int mX, int mY) {
         if (mX > x && mX < x + width && mY > y && mY < y + height) {
@@ -69,7 +63,7 @@ class Scrollbar extends Widget {
     }
 
     public void setHeight(float height) {
-        this.height = height;
+        this.height = (int)height;
     }
 
     public float getY() {
@@ -77,14 +71,18 @@ class Scrollbar extends Widget {
     }
 
     public void setY(float y) {
-        this.y = y;
+        this.y = (int)y;
     }
 
     public float getHeight() {
         return height;
     }
 
-    public void draw(int subFromY) { // method overriding draw so the scrollbar doesn't "drag itself"
-        super.draw(0);
+    public void draw() {
+        canvas.noStroke();
+        canvas.fill(widgetColor);
+        canvas.rect(x, y, width, height);
+        canvas.fill(labelColor);
+        canvas.text(label, x + 10, y + height - 10);
     }
 }

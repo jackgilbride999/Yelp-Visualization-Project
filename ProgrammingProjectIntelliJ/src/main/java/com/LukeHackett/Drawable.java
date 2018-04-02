@@ -16,6 +16,7 @@ import processing.core.PImage;
 
 
 import static com.LukeHackett.Main.*;
+import static com.LukeHackett.Main.sidebarShadow;
 import static oracle.jrockit.jfr.events.Bits.floatValue;
 
 public class Drawable {
@@ -120,10 +121,10 @@ public class Drawable {
         canvas.textSize(12);
 
         Main.searchResultHeaders.draw();
-        Main.searchScroll.draw(0);
+        Main.searchScroll.draw();
 
-        canvas.image(sidebarShadow, 260, 75);
-        canvas.image(searchIcon, 15, 90);
+        canvas.image(Main.sidebarShadow, 260, 75);
+        canvas.image(Main.searchIcon, 15, 90);
 
     }
 
@@ -145,11 +146,11 @@ public class Drawable {
                         + Main.selectedBusiness.getCity() + ", "
                         + Main.selectedBusiness.getPostal_code()
                 , businessInfoX, businessInfoY - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
-        canvas.textFont(reviewFont);
-        canvas.text(selectedBusiness.getReview_count() + " reviews", 240, 470 - (reviewRatio * offsetFromTopReview));
+        canvas.textFont(Main.reviewFont);
+        canvas.text(Main.selectedBusiness.getReview_count() + " reviews", 240, 470 - (reviewRatio * offsetFromTopReview));
         drawReviews(10, 510);
 
-        float stars = (float) selectedBusiness.getStars();
+        float stars = (float) Main.selectedBusiness.getStars();
         int starX = (int) businessInfoX;
         int y = (int) businessInfoY + 18;
         drawStars(starX, stars, y);
@@ -172,7 +173,7 @@ public class Drawable {
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 50);
         reviewHeaders.draw();
-        if (Main.reviewScroll != null && reviewRatio > 1) Main.reviewScroll.draw(0);
+        if (Main.reviewScroll != null && reviewRatio > 1) Main.reviewScroll.draw();
 
     }
 
