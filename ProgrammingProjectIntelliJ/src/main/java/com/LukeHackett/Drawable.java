@@ -162,11 +162,15 @@ public class Drawable {
         Main.businessScreenController.get("graphForward").setPosition(Main.businessScreenController.get("graphForward").getPosition()[0], initialReviewYs.get(1) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("graphBackward").setPosition(Main.businessScreenController.get("graphBackward").getPosition()[0], initialReviewYs.get(2) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("Filter").setPosition(Main.businessScreenController.get("Filter").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
-        Main.businessScreenController.get("zoomIn").setPosition(Main.businessScreenController.get("zoomIn").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
-        Main.businessScreenController.get("zoomOut").setPosition(Main.businessScreenController.get("zoomOut").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
+        Main.businessScreenController.get("zoomIn").setPosition(Main.businessScreenController.get("zoomIn").getPosition()[0], initialReviewYs.get(5) - (reviewRatio * offsetFromTopReview));
+        Main.businessScreenController.get("zoomOut").setPosition(Main.businessScreenController.get("zoomOut").getPosition()[0], initialReviewYs.get(6) - (reviewRatio * offsetFromTopReview));
 
         canvas.image((Main.selectedBusiness.getImage() != null) ? Main.selectedBusiness.getImage(): placeHolderImage, 20, 70 - (reviewRatio * offsetFromTopReview), 200, 200);
+        canvas.fill(255);
+        canvas.noStroke();
+        canvas.rect(SCREEN_X/2 + 260 - 5, 75  - (reviewRatio * offsetFromTopReview) - 5, SCREEN_X/4 + 10, SCREEN_X/4 + 10);
         Main.businessScreenController.draw();
+
         if(Main.selectedBusiness.getMapImage() != null) canvas.image(Main.selectedBusiness.getMapImage(), SCREEN_X/2 + 260, 75  - (reviewRatio * offsetFromTopReview), SCREEN_X/4, SCREEN_X/4);
 
         canvas.fill(0, 135, 122);

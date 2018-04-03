@@ -359,19 +359,21 @@ public class UI {
                 .setSize(31, 30)
                 .setCaptionLabel("")
                 .setImage(zoomIn)
-                .setPosition(Main.SCREEN_X - 200, 400);
+                .setPosition(Main.SCREEN_X - 50, 331);
 
         Main.zoomOutButton = Main.businessScreenController.addButton("zoomOut")
                 .setSize(31, 30)
                 .setCaptionLabel("")
                 .setImage(zoomOut)
-                .setPosition(Main.SCREEN_X - 240, 430);
+                .setPosition(Main.SCREEN_X - 50, 361);
 
         Drawable.initialReviewYs.add(Main.backButtonBusiness.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.graphForward.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.graphBackward.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.graphScreen.getyPos());
         Drawable.initialReviewYs.add(Main.reviewFilterOptions.getPosition()[1]);
+        Drawable.initialReviewYs.add(Main.zoomInButton.getPosition()[1]);
+        Drawable.initialReviewYs.add(Main.zoomOutButton.getPosition()[1]);
     }
 
     public void setupReviewHeader(){
