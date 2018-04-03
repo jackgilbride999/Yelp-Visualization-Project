@@ -122,9 +122,13 @@ public class Main extends PApplet {
     public static queries qControl;
     public static GraphScreen graphScreen;
 
+    public static String fontName;
     public static PFont searchFont;
     public static PFont reviewFont;
     public static PFont bigFont;
+    public static PFont businessInfoFont;
+    public static PFont graphFont;
+    public static PFont graphFontSmall;
     public static float searchMouseDifference;
     public static boolean searchScrollPressed;
     public static float reviewMouseDifference;
@@ -156,9 +160,13 @@ public class Main extends PApplet {
         qControl = null;
         UI = new UI(this);
         draws = new Drawable(this);
-        searchFont = createFont("OpenSans-Regular", 22);
-        reviewFont = createFont("OpenSans-Regular", 18);
-        bigFont = createFont("OpenSans-Regular", 30);
+        fontName = "OpenSans-Regular";
+        businessInfoFont = createFont(fontName, 25);
+        graphFont = createFont(fontName, 15);
+        searchFont = createFont(fontName, 22);
+        reviewFont = createFont(fontName, 18);
+        bigFont = createFont(fontName, 30);
+        graphFontSmall = createFont(fontName, 10);
         spaceFromEdge = " ";
 
         textSize(18);
@@ -281,7 +289,7 @@ public class Main extends PApplet {
         int pic4 = -SCREEN_X * 3;
         backgroundXTimer++;
         // System.out.println(backgroundXTimer + "     " + backgroundX);
-        if (backgroundXTimer % 300 == 0) {
+        if (backgroundXTimer % 150 == 0) {
             moveBackground = true;
         }
         if (moveBackground) {
