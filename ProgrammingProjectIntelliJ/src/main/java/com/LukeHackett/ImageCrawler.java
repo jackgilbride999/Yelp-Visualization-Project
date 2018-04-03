@@ -1,15 +1,12 @@
 package com.LukeHackett;
 
-import com.microsoft.rest.credentials.ServiceClientCredentials;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import processing.core.PApplet;
 import processing.core.PImage;
-import com.microsoft.azure.cognitiveservices.imagesearch.ImageObject;
-import com.microsoft.azure.cognitiveservices.imagesearch.implementation.ImageSearchAPIImpl;
-import com.microsoft.azure.cognitiveservices.imagesearch.implementation.ImagesInner;
+
 import processing.data.XML;
 
 import java.io.IOException;
@@ -32,7 +29,7 @@ public class ImageCrawler extends Thread {
     }
 
     PImage findPhoto(Business b) {
-        String urlPhotoBing = imageSearch("86b3dc772e3b470e8b100d151a0e0da2", "3f01e0d67a13451c80d265d8e5b3d55d", b);
+        String urlPhotoBing = null;//imageSearch("86b3dc772e3b470e8b100d151a0e0da2", "3f01e0d67a13451c80d265d8e5b3d55d", b);
         if (urlPhotoBing != null) {
             System.out.println("Binged it!");
             return canvas.loadImage(urlPhotoBing);
@@ -46,7 +43,7 @@ public class ImageCrawler extends Thread {
     public Business getBusiness() {
         return business;
     }
-
+/*
     public ImageSearchAPIImpl getClient(final String subscriptionKey) {
         return new ImageSearchAPIImpl("https://api.cognitive.microsoft.com/bing/v7.0/",
                 new ServiceClientCredentials() {
@@ -95,7 +92,7 @@ public class ImageCrawler extends Thread {
         }
         return null;
     }
-
+*/
     public String googleImageAttempt(Business b) {
         String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/xml?"
                 + "location=" + b.getLatitude() + ',' + b.getLongitude()

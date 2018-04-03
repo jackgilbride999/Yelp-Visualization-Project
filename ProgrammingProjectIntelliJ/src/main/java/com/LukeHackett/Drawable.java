@@ -116,8 +116,8 @@ public class Drawable {
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 75);
         canvas.fill(255);
-        canvas.textSize(32);
-        canvas.text("Search results for " + Main.searchString, Main.SCREEN_X / 2 - canvas.textWidth("Search results for " + Main.searchString) / 2, 40);
+        canvas.textFont(searchFont);
+        canvas.text("Search results for " + Main.searchString, Main.SCREEN_X / 2 - canvas.textWidth("Search results for " + Main.searchString) / 2, 45);
         canvas.textSize(12);
 
         Main.searchResultHeaders.draw();
@@ -140,7 +140,7 @@ public class Drawable {
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 500 - Main.offsetFromTop - (reviewRatio * offsetFromTopReview));
         canvas.fill(255f);
-        canvas.textSize(25);
+        canvas.textFont(businessInfoFont);
         canvas.text(Main.selectedBusiness.getName().substring(1, Main.selectedBusiness.getName().length() - 1) + '\n' + '\n'
                         + Main.selectedBusiness.getAddress() + '\n'
                         + Main.selectedBusiness.getCity() + ", "

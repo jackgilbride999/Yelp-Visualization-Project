@@ -111,12 +111,12 @@ public class GraphScreen {
     }
 
     public void draw() {
-        canvas.textSize(12);
+        canvas.textFont(Main.graphFontSmall);
         canvas.fill(255, 20);
         canvas.rect(xPos, yPos, xSize, ySize + 35);
 
         if (graphs.isEmpty()) {
-            canvas.textSize(15);
+            canvas.textFont(Main.graphFont);
             canvas.fill(255);
             loadingGraphsAnimation.displayAnimation((int)(this.xPos + xSize/2 -32), (int)(this.yPos + (ySize/2 - 15)));
             //canvas.text("loading...", (xPos + xSize / 2) - canvas.textWidth("loading...") / 2, yPos + ySize / 2);

@@ -112,9 +112,9 @@ class StarLineChart implements Graph {
     public void draw(float xPos, float yPos, float xSize, float ySize) {
         canvas.fill(255);
         starChart.draw(xPos, yPos + 35, xSize, ySize);
-        canvas.textSize(15);
+        canvas.textFont(Main.graphFont);
         canvas.text(name, xPos+xSize/2-canvas.textWidth(name)/2, yPos + 15);
-        canvas.textSize(15);
+        canvas.textFont(Main.graphFont);
         canvas.text("Change in Rating Over Time:", xPos+xSize/2-canvas.textWidth("Change in Rating Over Time:")/2, yPos + 30);
     }
 }
@@ -173,9 +173,9 @@ class StarBarChart implements Graph {
         // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
         canvas.fill(255);
         barChart2.draw(xPos, yPos + 35, xSize, ySize);
-        canvas.textSize(15);
+        canvas.textFont(Main.graphFont);
         canvas.text(name, xPos, yPos + 15);
-        canvas.textSize(15);
+        canvas.textFont(Main.graphFont);
         canvas.text("Change in rating over time.", xPos, yPos + 30);
         //canvas.textSize(12);
     }
@@ -234,9 +234,9 @@ class CheckinsBarChart implements Graph {
         // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
         canvas.fill(255);
         barChart.draw(xPos, yPos + 35, xSize, ySize);
-        canvas.textSize(15);
+        canvas.textFont(Main.graphFont);
         canvas.text(name, xPos+xSize/2-canvas.textWidth(name)/2, yPos + 15);
-        canvas.textSize(15);
+        canvas.textFont(Main.graphFont);
         canvas.text("Check-in Statistics:", xPos+xSize/2-canvas.textWidth("Check-in Statistics:")/2, yPos + 30);
         //canvas.textSize(12);
     }
@@ -301,9 +301,9 @@ class BusinessHoursChart implements Graph{
                 boolean isOpen = openingHours[dayCount][hourCount];
                 canvas.noStroke();
                 if (isOpen) { // draw full boxes if the business is open during the specific half-hour
-                    canvas.fill(65, 244, 169);
+                    canvas.fill(255);
                 } else {
-                    canvas.fill(255, 0, 0);
+                    canvas.fill(0, 140, 130);
                 }
                 canvas.rect(graphX+hourCount* boxWidth, graphY+dayCount* boxHeight + 2*boxHeight, boxWidth, boxHeight);
                 if(hourCount%2==1){
@@ -317,6 +317,7 @@ class BusinessHoursChart implements Graph{
 
 
     void drawYLabels(float graphX, float graphY) {
+        canvas.textFont(Main.graphFontSmall);
         canvas.text("Mo", graphX-canvas.textWidth("Mo"), graphY+3* boxHeight);
         canvas.text("Tu", graphX-canvas.textWidth("Tu"), graphY+4* boxHeight);
         canvas.text("We", graphX-canvas.textWidth("We"), graphY+5* boxHeight);
@@ -327,6 +328,7 @@ class BusinessHoursChart implements Graph{
     }
 
     void drawXLabels(float graphX, float graphY) {
+        canvas.textFont(Main.graphFontSmall);
         canvas.text(name, graphX+(HALF_HOURS_PER_DAY* boxWidth)/2-canvas.textWidth(name)/2, graphY+boxHeight);
         for (int hour = 0; hour<24; hour++) {
             String time;
