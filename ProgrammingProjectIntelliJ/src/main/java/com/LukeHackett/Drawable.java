@@ -192,7 +192,7 @@ public class Drawable {
             int reviewOffset = yStart;
             int borderOffsetY = 20;
             int borderOffsetX = xStart;
-            float lineHeight = canvas.textAscent() + canvas.textDescent() + 3;
+            float lineHeight = canvas.textAscent() + canvas.textDescent() + 5;
             int reviewBoxHeight;
             String[] dateFormat;
             List<Review> iterableList = Main.reviewsToShow.subList(Main.currentReview, (Main.reviewsToShow.size() < Main.currentReview + 10) ? Main.reviewsToShow.size() : Main.currentReview + 10);
@@ -208,8 +208,7 @@ public class Drawable {
                     initialReviewYs.add((float) reviewOffset);
                 }
 
-                canvas.textSize(15);
-                canvas.textFont(Main.reviewFont);
+                canvas.textFont(Main.graphFont);
                 dateFormat = r.getDate().split(" ");
                 reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
                 if (reviewRatio != 0) {
