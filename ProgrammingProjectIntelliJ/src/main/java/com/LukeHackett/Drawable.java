@@ -176,7 +176,9 @@ public class Drawable {
         Main.businessScreenController.get("zoomOut").setPosition(Main.businessScreenController.get("zoomOut").getPosition()[0], initialReviewYs.get(6) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("openingTimesButton").setPosition(Main.businessScreenController.get("openingTimesButton").getPosition()[0], initialReviewYs.get(7) - (reviewRatio * offsetFromTopReview));
 
-        canvas.image((Main.selectedBusiness.getImage() != null) ? Main.selectedBusiness.getImage() : placeHolderImage, 20, 70 - (reviewRatio * offsetFromTopReview), 200, 200);
+        canvas.fill(255);
+        canvas.rect(20, 70 - (reviewRatio * offsetFromTopReview), 200, 200);
+        canvas.image((Main.selectedBusiness.getImage() != null) ? Main.selectedBusiness.getImage() : placeHolderImage, 20 + 5, 70 + 5 - (reviewRatio * offsetFromTopReview), 190, 190);
         canvas.fill(255);
         canvas.noStroke();
         canvas.rect(SCREEN_X/2 + 260 - 5, 75  - (reviewRatio * offsetFromTopReview) - 5, SCREEN_X/4 + 10, SCREEN_X/4 + 10);
