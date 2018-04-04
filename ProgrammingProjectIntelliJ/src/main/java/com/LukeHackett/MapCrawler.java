@@ -16,9 +16,13 @@ public class MapCrawler extends Thread{
     }
 
     public void run(){
+        String apiKey1 = "AIzaSyCAqZ2BvCbICVrtv-mZpyz914GxnBiyGWY";
+        String apiKey2 = "AIzaSyAdNw5lE_KJe9uhRRb2fKi2U8Ex63HfYL8";
+        String apiKey3 = "AIzaSyAI1gmMQChQjNW5A2ye5h0tIx_c1kQLNc0";
+
         String apiRequest = "https://maps.googleapis.com/maps/api/staticmap?center=" + selectedBusiness.getAddress().replaceAll(" ", "%20") + "," + selectedBusiness.getCity().replaceAll(" ", "%20") +
                 "&zoom=" + zoom + "&size=" + Main.SCREEN_X/4 + "x" + Main.SCREEN_X/4 + "&maptype=roadmap&markers=color:red%7C" + selectedBusiness.getLatitude() + "," + selectedBusiness.getLongitude() +
-                "&key=AIzaSyCAqZ2BvCbICVrtv-mZpyz914GxnBiyGWY";
+                "&key=" + apiKey1;
 
         PImage mapImage = canvas.loadImage(apiRequest, "jpg");
 
