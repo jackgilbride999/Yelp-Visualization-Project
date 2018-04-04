@@ -62,6 +62,10 @@ public class UI {
         println(Main.searchType);
         if(Main.graphScreen != null) Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
 
+        Main.starLoaded = false;
+        Main.checkinLoaded = false;
+        Main.hoursLoaded = false;
+
         if (Main.currentSearch != 0) {
             Main.currentSearch -= 10;
             if(Main.searchType == BUSINESS_SEARCH)return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);

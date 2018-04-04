@@ -40,10 +40,10 @@ public class GraphCrawler extends Thread {
                 graph = new CheckinsBarChart(canvas, inputList, name);
                 if (graph != null) {
                     graphScreen.addGraph(graph, false);
+                    Main.checkinLoaded = true;
                 }
             }
-        }
-        else if (chartType == Main.STARS_CHART) {
+        } else if (chartType == Main.STARS_CHART) {
             HashSet<StarDate> inputSet = Main.qControl.getStarsList(id);
             HashMap<Integer, Float> monthMap = new HashMap<Integer, Float>();
             for (int i = 1; i <= 12; i++) {
@@ -66,22 +66,23 @@ public class GraphCrawler extends Thread {
                 graph = new StarLineChart(canvas, monthMap, name);
                 if (graph != null) {
                     graphScreen.addGraph(graph, false);
+                    Main.starLoaded = true;
                 }
             }
         } else if (chartType == Main.HOURS_CHART) {
             String[] inputArray = Main.qControl.getBusinessHours(id);
-            try{
-                if(inputArray==null)
+            try {
+                if (inputArray == null)
                     throw new NullPointerException();
                 graph = new BusinessHoursChart(canvas, inputArray, name);
-                if(graph==null)
+                if (graph == null)
                     throw new NullPointerException();
                 else {
                     graph.setName("" + Main.qControl.getBusinessName(id) + " Opening Hours (A.M., P.M.):");
                     graphScreen.addGraph(graph, false);
+                    Main.hoursLoaded = true;
                 }
-                }
-            catch (Exception nullPointerException){
+            } catch (Exception nullPointerException) {
                 System.out.println("Hours not available for " + name);
             }
         }

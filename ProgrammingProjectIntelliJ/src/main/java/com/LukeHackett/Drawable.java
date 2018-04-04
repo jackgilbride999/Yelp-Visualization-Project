@@ -281,13 +281,6 @@ public class Drawable {
         canvas.text("No ratings available", 1030, 300);
     }
 
-    public boolean starChartInvalid(StarBarChart chart) {
-        if (chart == null) {
-            return true;
-        }
-        return false;
-    }
-
     public boolean checkinChartInvalid(CheckinsBarChart chart) {
         if (chart == null) {
             return true;

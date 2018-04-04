@@ -103,6 +103,51 @@ public class GraphScreen {
         }
     }
 
+    public void setActiveSelect(String type){
+        if(type.equals("stars")){
+            int tempIndex = 0;
+            Set<Graph> graphSet = graphs.keySet();
+            for (Graph g : graphSet) {
+                if(g.type() == Main.STARS_CHART){
+                    graphs.put(g, true);
+                    activeIndex = tempIndex;
+                }
+                else{
+                    graphs.put(g, false);
+                }
+                tempIndex++;
+            }
+        }
+        else if(type.equals("checkIn")){
+            int tempIndex = 0;
+            Set<Graph> graphSet = graphs.keySet();
+            for (Graph g : graphSet) {
+                if(g.type() == Main.CHECKIN_CHART){
+                    graphs.put(g, true);
+                    activeIndex = tempIndex;
+                }
+                else{
+                    graphs.put(g, false);
+                }
+                tempIndex++;
+            }
+        }
+        else{
+            int tempIndex = 0;
+            Set<Graph> graphSet = graphs.keySet();
+            for (Graph g : graphSet) {
+                if(g.type() == Main.HOURS_CHART){
+                    graphs.put(g, true);
+                    activeIndex = tempIndex;
+                }
+                else{
+                    graphs.put(g, false);
+                }
+                tempIndex++;
+            }
+        }
+    }
+
     public int getActiveIndex() {
         return activeIndex;
     }
