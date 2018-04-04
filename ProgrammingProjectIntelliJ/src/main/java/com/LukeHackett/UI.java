@@ -256,13 +256,13 @@ public class UI {
     public void searchHeader(){
         Main.backButton = Main.searchResultHeaders.addButton("backButton")
                 .setSize(50, 50)
-                .setPosition(SCREEN_X - 120, 10);
+                .setPosition(SCREEN_X - 180, 20);
         backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
         backButton.setImage(backButtonImage);
 
         Main.forwardButton = Main.searchResultHeaders.addButton("forwardButton")
                 .setSize(50, 50)
-                .setPosition(SCREEN_X - 60, 10);
+                .setPosition(SCREEN_X - 60, 20);
         forwardButtonImage.resize(forwardButton.getWidth(), forwardButton.getHeight());
         forwardButton.setImage(forwardButtonImage);
 
@@ -322,17 +322,21 @@ public class UI {
 
         Main.graphForward = Main.businessScreenController.addButton("graphForward")
                 .setValueSelf(15)
-                .setSize(50, 50)
                 .setCaptionLabel("")
-                .setImage(forwardButtonImage)
-                .setPosition(425, 290);
+                .setImage(starPressed)
+                .setPosition(420, 290);
+
+        Main.openingTimesButton = Main.businessScreenController.addButton("openingTimesButton")
+                .setValueSelf(15)
+                .setCaptionLabel("")
+                .setImage(timesPressed)
+                .setPosition(420, 330);
 
         Main.graphBackward = Main.businessScreenController.addButton("graphBackward")
                 .setValueSelf(15)
-                .setSize(50, 50)
                 .setCaptionLabel("")
-                .setImage(backButtonImage)
-                .setPosition(425, 375);
+                .setImage(checkInPressed)
+                .setPosition(420, 375);
 
         Main.reviewFilterOptions = Main.businessScreenController.addScrollableList("Filter")
                 .addItem("All", 0)
@@ -383,25 +387,26 @@ public class UI {
         Drawable.initialReviewYs.add(Main.reviewFilterOptions.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.zoomInButton.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.zoomOutButton.getPosition()[1]);
+        Drawable.initialReviewYs.add(Main.openingTimesButton.getPosition()[1]);
     }
 
     public void setupReviewHeader(){
         reviewBackButton = reviewHeaders.addButton("backButtonReview")
                 .setSize(50, 50)
-                .setPosition(SCREEN_X - 120, 10);
-        backButtonImage.resize(backButton.getWidth(), backButton.getHeight());
+                .setPosition(SCREEN_X - 180, 7);
+        backButtonImage.resize(backButton.getWidth() - 10, backButton.getHeight() - 10);
         reviewBackButton.setImage(backButtonImage);
 
         reviewForwardButton = reviewHeaders.addButton("forwardButtonReview")
                 .setSize(50, 50)
-                .setPosition(SCREEN_X - 60, 10);
-        forwardButtonImage.resize(forwardButton.getWidth(), forwardButton.getHeight());
+                .setPosition(SCREEN_X - 60, 7);
+        forwardButtonImage.resize(forwardButton.getWidth()- 10, forwardButton.getHeight() - 10);
         reviewForwardButton.setImage(forwardButtonImage);
 
-        reviewHomeButton = reviewHeaders.addButton("homeButton")
-                .setSize(60, 60)
-                .setPosition(10, 10);
-        homeButtonImage.resize(homeButton.getWidth(), homeButton.getHeight());
-        reviewHomeButton.setImage(homeButtonImage);
+        reviewReturnButton = reviewHeaders.addButton("homeButton")
+                .setSize(40, 40)
+                .setPosition(10, 7);
+        returnButton.resize(reviewReturnButton.getWidth(), reviewReturnButton.getHeight());
+        reviewReturnButton.setImage(returnButton);
     }
 }
