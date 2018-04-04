@@ -208,10 +208,6 @@ public class Main extends PApplet {
         businessScreenController = new ControlP5(this);
         reviewHeaders = new ControlP5(this);
 
-        background(0, 169, 154);
-        textFont(searchFont);
-        text("loading...", SCREEN_X / 2 - textWidth("loading") / 2, SCREEN_Y / 2);
-
         sidebarShadow = loadImage("sidebar_shadow.png");
         background = loadImage("background_scroll_2.jpg");
         backButtonImage = loadImage("backButton.png");
