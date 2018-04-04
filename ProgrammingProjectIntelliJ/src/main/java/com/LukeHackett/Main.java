@@ -230,7 +230,7 @@ public class Main extends PApplet {
         emptyStar = loadImage("emptyStar.png");
         placeHolderImage = loadImage("businessPlaceholder.png");
         noParking = loadImage("parking_unavailable.png");
-        parking = loadImage("parking_unavailable.png");
+        parking = loadImage("parking_available.png");
         wifi = loadImage("wifi_available.png");
         noWifi = loadImage("wifi_unavailable.png");
         wheelchair = loadImage("wheelchair_available.png");

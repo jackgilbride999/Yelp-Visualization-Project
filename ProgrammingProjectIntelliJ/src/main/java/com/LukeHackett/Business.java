@@ -43,12 +43,13 @@ public class Business {
         this.categories = categories;
         this.attributes = getAttributes(this.business_id);
 
-        this.parking = ((attributes.containsKey("BusinessParking_garage") && attributes.containsValue("True") )||
-                (attributes.containsKey("BusinessParking_street") && attributes.containsValue("True") )||
-                (attributes.containsKey("BusinessParking_validated") && attributes.containsValue("True") )||
-                (attributes.containsKey("BusinessParking_lot") && attributes.containsValue("True") ));
+        this.parking = ((attributes.containsKey("BusinessParking_garage") && attributes.containsValue("True"))||
+                (attributes.containsKey("BusinessParking_street") && attributes.containsValue("True"))||
+                (attributes.containsKey("BusinessParking_validated") && attributes.containsValue("True"))||
+                (attributes.containsKey("BusinessParking_lot") && attributes.containsValue("True")));
         this.wifi = attributes.containsKey("WiFi") && attributes.containsValue("True");
         this.wheelchair = attributes.containsKey("WheelchairAccessible") && attributes.containsValue("True");
+        System.out.println(attributes);
 
     }
 
