@@ -2,6 +2,7 @@ package com.LukeHackett;
 
 import processing.core.PApplet;
 
+import java.util.ConcurrentModificationException;
 import java.util.LinkedHashMap;
 import java.util.Set;
 
@@ -110,7 +111,7 @@ public class GraphScreen {
         this.activeIndex = activeIndex;
     }
 
-    public void draw() {
+    public void draw(){
         canvas.textFont(Main.graphFontSmall);
         canvas.fill(255, 20);
         canvas.rect(xPos, yPos, xSize, ySize + 35);
@@ -124,21 +125,24 @@ public class GraphScreen {
             Set<Graph> graphSet = graphs.keySet();
             int tempIndex = 0;
             boolean drawn = false;
-            for (Graph g : graphSet) {
-                if (graphs.size() > 1) {
-                    if (graphs.get(g)  && tempIndex == activeIndex) {
+            try {
+                for (Graph g : graphSet) {
+                    if (graphs.size() > 1) {
+                        if (graphs.get(g) && tempIndex == activeIndex) {
+                            g.draw(xPos, yPos, xSize, ySize);
+                            drawn = true;
+                        } else if (graphs.get(g)) {
+                            graphs.put(g, false);
+                        }
+                    } else {
                         g.draw(xPos, yPos, xSize, ySize);
                         drawn = true;
+                        setActive(g.getName());
                     }
-                    else if(graphs.get(g)){
-                        graphs.put(g, false);
-                    }
-                } else {
-                    g.draw(xPos, yPos, xSize, ySize);
-                    drawn = true;
-                    setActive(g.getName());
+                    tempIndex++;
                 }
-                tempIndex++;
+            } catch (ConcurrentModificationException e){
+                e.printStackTrace();
             }
             if(!drawn){
                 for(Graph g : graphSet){

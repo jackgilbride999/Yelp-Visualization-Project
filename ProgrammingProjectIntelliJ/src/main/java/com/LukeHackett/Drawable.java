@@ -3,8 +3,10 @@ package com.LukeHackett;
 import controlP5.Button;
 import controlP5.ControlElement;
 import controlP5.Label;
+import controlP5.Textarea;
 import processing.core.PApplet;
 
+import java.io.IOException;
 import java.util.*;
 
 import de.fhpotsdam.unfolding.*;
@@ -14,6 +16,8 @@ import de.fhpotsdam.unfolding.providers.OpenStreetMap;
 import de.fhpotsdam.unfolding.utils.MapUtils;
 import processing.core.PImage;
 
+
+import javax.xml.soap.Text;
 
 import static com.LukeHackett.Main.*;
 import static com.LukeHackett.Main.sidebarShadow;
@@ -73,8 +77,11 @@ public class Drawable {
         for (ImageCrawler image : Main.businessesSearch) {
             if (image != null) {
                 //Draw images
-                canvas.image(image.getBusiness().getImage(), x + 15 + 250, y + 90 + 15 - (searchRatio * offsetFromTopSearch), 150, 150);
-
+                try {
+                    canvas.image(image.getBusiness().getImage(), x + 15 + 250, y + 90 + 15 - (searchRatio * offsetFromTopSearch), 150, 150);
+                } catch (NullPointerException e){
+                    canvas.image(Main.placeHolderImage, x + 15 + 250, y + 90 + 15 - (searchRatio * offsetFromTopSearch), 150, 150);
+                }
                 //Draw stars piggybacking here
                 double stars = image.getBusiness().getStars();
                 float starX = 210;
@@ -112,6 +119,7 @@ public class Drawable {
                 y = y + 200 + Main.BORDER_OFFSET_Y;
             }
         }
+
         canvas.fill(0, 169, 154);
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 75);
@@ -165,13 +173,13 @@ public class Drawable {
         Main.businessScreenController.get("zoomIn").setPosition(Main.businessScreenController.get("zoomIn").getPosition()[0], initialReviewYs.get(5) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("zoomOut").setPosition(Main.businessScreenController.get("zoomOut").getPosition()[0], initialReviewYs.get(6) - (reviewRatio * offsetFromTopReview));
 
-        canvas.image((Main.selectedBusiness.getImage() != null) ? Main.selectedBusiness.getImage(): placeHolderImage, 20, 70 - (reviewRatio * offsetFromTopReview), 200, 200);
+        canvas.image((Main.selectedBusiness.getImage() != null) ? Main.selectedBusiness.getImage() : placeHolderImage, 20, 70 - (reviewRatio * offsetFromTopReview), 200, 200);
         canvas.fill(255);
         canvas.noStroke();
         canvas.rect(SCREEN_X/2 + 260 - 5, 75  - (reviewRatio * offsetFromTopReview) - 5, SCREEN_X/4 + 10, SCREEN_X/4 + 10);
         Main.businessScreenController.draw();
-
-        if(Main.selectedBusiness.getMapImage() != null) canvas.image(Main.selectedBusiness.getMapImage(), SCREEN_X/2 + 260, 75  - (reviewRatio * offsetFromTopReview), SCREEN_X/4, SCREEN_X/4);
+        if (Main.selectedBusiness.getMapImage() != null)
+            canvas.image(Main.selectedBusiness.getMapImage(), SCREEN_X / 2 + 260, 75 - (reviewRatio * offsetFromTopReview), SCREEN_X / 4, SCREEN_X / 4);
 
         canvas.fill(0, 135, 122);
         canvas.noStroke();
@@ -196,7 +204,9 @@ public class Drawable {
             int reviewOffset = yStart;
             int borderOffsetY = 20;
             int borderOffsetX = xStart;
-            float lineHeight = canvas.textAscent() + canvas.textDescent() + 5;
+            canvas.textSize(15);
+            canvas.textLeading(18);
+            float lineHeight = canvas.textAscent() + canvas.textDescent() + 9;
             int reviewBoxHeight;
             String[] dateFormat;
             List<Review> iterableList = Main.reviewsToShow.subList(Main.currentReview, (Main.reviewsToShow.size() < Main.currentReview + 10) ? Main.reviewsToShow.size() : Main.currentReview + 10);
@@ -207,14 +217,14 @@ public class Drawable {
                     formatter.formatReview(canvas, r);
                 }
 
-
                 if (initialReviewYs.size() < Main.reviews.size()) {
                     initialReviewYs.add((float) reviewOffset);
                 }
 
                 canvas.textFont(Main.graphFont);
+
                 dateFormat = r.getDate().split(" ");
-                reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
+                reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY-5;
                 if (reviewRatio != 0) {
                     canvas.fill(245);
                     canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop - (reviewRatio * offsetFromTopReview), Main.SCREEN_X - 10, reviewBoxHeight);
