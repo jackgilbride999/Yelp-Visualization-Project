@@ -67,8 +67,14 @@ public class ImageCrawler extends Thread {
         } else {
             String urlPhotoGoogle = googleImageAttempt(b);
             System.out.println("Googled it!");
-            return canvas.loadImage(urlPhotoGoogle, "jpg");
+            try {
+                PImage returnImage = canvas.loadImage(urlPhotoGoogle, "jpg");
+                return returnImage;
+            } catch(Exception e) {
+                System.err.println("Caughht unloaded Image");
+            }
         }
+        return Main.placeHolderImage;
     }
 
     public Business getBusiness() {
@@ -138,14 +144,18 @@ public class ImageCrawler extends Thread {
                     if ((photoReference = xmlPlace.getChild("result").getChild("photo").getChild("photo_reference").getContent()) != null)
                         urlPhoto = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=180&maxheight=180&photoreference=" + photoReference + "&key=AIzaSyAdNw5lE_KJe9uhRRb2fKi2U8Ex63HfYL8";
                 } catch (Exception e) {
-                    urlPhoto = xmlPlace.getChild("result").getChild("icon").getContent();
+                    try{
+                        urlPhoto = xmlPlace.getChild("result").getChild("icon").getContent();
+                    } catch (Exception eAAAAA){
+                        System.err.println("Caught XML");
+                    }
                 }
                 return urlPhoto;
             } else {
                 return urlPhoto;
             }
         } catch (Exception e){
-            e.printStackTrace();
+            System.out.println("Caught!!");
         }
         return null;
     }
