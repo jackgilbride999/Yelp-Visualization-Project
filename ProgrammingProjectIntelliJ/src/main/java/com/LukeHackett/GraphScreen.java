@@ -104,7 +104,7 @@ public class GraphScreen {
     }
 
     public void setActiveSelect(String type){
-        if(type.equals("stars")){
+        if(type.equals("stars") && Main.starLoaded){
             int tempIndex = 0;
             Set<Graph> graphSet = graphs.keySet();
             for (Graph g : graphSet) {
@@ -118,7 +118,7 @@ public class GraphScreen {
                 tempIndex++;
             }
         }
-        else if(type.equals("checkIn")){
+        else if(type.equals("checkIn") && Main.checkinLoaded){
             int tempIndex = 0;
             Set<Graph> graphSet = graphs.keySet();
             for (Graph g : graphSet) {
@@ -132,7 +132,7 @@ public class GraphScreen {
                 tempIndex++;
             }
         }
-        else{
+        else if(type.equals("openingTimes") && Main.hoursLoaded){
             int tempIndex = 0;
             Set<Graph> graphSet = graphs.keySet();
             for (Graph g : graphSet) {

@@ -42,6 +42,9 @@ public class GraphCrawler extends Thread {
                     graphScreen.addGraph(graph, false);
                     Main.checkinLoaded = true;
                 }
+                else{
+                    Main.checkInGraphButton.setImage(Main.checkIn);
+                }
             }
         } else if (chartType == Main.STARS_CHART) {
             HashSet<StarDate> inputSet = Main.qControl.getStarsList(id);
@@ -68,6 +71,9 @@ public class GraphCrawler extends Thread {
                     graphScreen.addGraph(graph, false);
                     Main.starLoaded = true;
                 }
+                else{
+                    Main.starsChartButton.setImage(Main.star);
+                }
             }
         } else if (chartType == Main.HOURS_CHART) {
             String[] inputArray = Main.qControl.getBusinessHours(id);
@@ -84,6 +90,7 @@ public class GraphCrawler extends Thread {
                 }
             } catch (Exception nullPointerException) {
                 System.out.println("Hours not available for " + name);
+                Main.openingTimesButton.setImage(Main.times);
             }
         }
     }
