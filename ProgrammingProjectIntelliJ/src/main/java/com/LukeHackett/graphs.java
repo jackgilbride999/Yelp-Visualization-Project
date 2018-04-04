@@ -7,45 +7,11 @@ import java.util.*;
 
 import static javafx.scene.paint.Color.color;
 
-/*
-
-CheckinsBarChart chart;
-StarBarChart chart2;import java.util.ArrayList;
-// pass in arrayList from query function a graph is drawn
-void settings() {
-size(1800,900);
-}
-void setup()
-{
-  db = new DbAccess();
-  //println(this.getClass());
-  
-  //ArrayList<BusinessNameId> list = db.getTop10BusinessIdListByCity("Las Vegas");
- // for (int i=0; i<list.size(); i++)
-   // println(list.get(i).name);
-  
-  String name ="Starbucks";
-  String id = db.getBusinessIdByName(name);
-  println(id);
-  ArrayList<Float> visitorsList = db.getBusinessCheckins(id);
-  ArrayList<Float> starsList = db.getStarsList(id);
-  
-
-  
-  chart = new CheckinsBarChart(visitorsList, name, this);
-  chart2 = new StarBarChart(starsList,name,this);
-  // sets up the bar chart
-  // just not to make a mess of the setup
-  // we can have these types of calls anywhere we need to have barcharts and graphs
-
-}
-
-*/
-
 interface Graph {
     String getName();
     void setName(String name);
     void draw(float xPos, float yPos, float xSize, float ySize);
+    int type();
 }
 
 class StarLineChart implements Graph {
@@ -65,10 +31,12 @@ class StarLineChart implements Graph {
     private String name;
     private float max;
     private PApplet canvas;
+    private int type;
 
     public StarLineChart(PApplet canvas, HashMap<Integer, Float> inputList, String name) {
         this.canvas = canvas;
         starChart = new XYChart(canvas);
+        this.type = Main.STARS_CHART;
 
         starArray = new float[12];
         for(int i = 0; i < 12; i++){
@@ -117,67 +85,9 @@ class StarLineChart implements Graph {
         canvas.textFont(Main.graphFont);
         canvas.text("Change in Rating Over Time:", xPos+xSize/2-canvas.textWidth("Change in Rating Over Time:")/2, yPos + 30);
     }
-}
 
-class StarBarChart implements Graph {
-    private BarChart barChart2;
-    private float[] starArray;
-    private String name;
-    private float max;
-    private PApplet canvas;
-
-    public StarBarChart(PApplet canvas, ArrayList<Float> inputList, String name) {
-        this.canvas = canvas;
-        barChart2 = new BarChart(canvas);
-        starArray = new float[inputList.size()];
-        max = 0;
-        for (int i = 0; i < inputList.size(); i++) {
-
-            starArray[i] = inputList.get(i);
-            if (max < starArray[i])
-                max = starArray[i];
-        }
-
-        this.name = name;
-        // Draws the chart in the sketch
-        barChart2.setData(starArray);
-        // Scaling
-        barChart2.setMinValue(0);
-        barChart2.setMaxValue(max + 2);
-
-        // Axis appearance
-
-        barChart2.showValueAxis(true);
-        barChart2.setValueFormat("");
-        barChart2.setBarLabels(new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sept", "Oct", "Nov", "Dec",});
-        barChart2.showCategoryAxis(false);
-        barChart2.setAxisValuesColour(canvas.color(255,255,255));
-
-        // Bar colours and appearance
-        barChart2.setBarColour(canvas.color(255));//175, 255, 248));
-        barChart2.setBarGap(5);
-
-        // Bar layout
-        barChart2.transposeAxes(false);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void draw(float xPos, float yPos, float xSize, float ySize) {
-        // bar chart can be called, by barChart.draw(xpos,ypos,width,height);
-        canvas.fill(255);
-        barChart2.draw(xPos, yPos + 35, xSize, ySize);
-        canvas.textFont(Main.graphFont);
-        canvas.text(name, xPos, yPos + 15);
-        canvas.textFont(Main.graphFont);
-        canvas.text("Change in rating over time.", xPos, yPos + 30);
-        //canvas.textSize(12);
+    public int type(){
+        return type;
     }
 }
 
@@ -187,9 +97,11 @@ class CheckinsBarChart implements Graph {
     private String name;
     private float max;
     private PApplet canvas;
+    private int type;
 
     public CheckinsBarChart(PApplet canvas, ArrayList<Float> inputList, String name) {
         this.canvas = canvas;
+        this.type = Main.CHECKIN_CHART;
         barChart = new BarChart(canvas);
         visitorsArray = new float[inputList.size()];
         max = 0;
@@ -240,6 +152,10 @@ class CheckinsBarChart implements Graph {
         canvas.text("Check-in Statistics:", xPos+xSize/2-canvas.textWidth("Check-in Statistics:")/2, yPos + 30);
         //canvas.textSize(12);
     }
+
+    public int type(){
+        return type;
+    }
 }
 
 class BusinessHoursChart implements Graph{
@@ -250,9 +166,11 @@ class BusinessHoursChart implements Graph{
     private int boxWidth;
     private int boxHeight;
     private String name;
+    private int type;
 
     public BusinessHoursChart(PApplet canvas, String[] hoursArray, String name) {
         this.name=name;
+        this.type = Main.HOURS_CHART;
         this.canvas=canvas;
         openingHours = new boolean[DAYS_PER_WEEK][HALF_HOURS_PER_DAY];
         if (hoursArray!=null) {
@@ -333,9 +251,9 @@ class BusinessHoursChart implements Graph{
         for (int hour = 0; hour<24; hour++) {
             String time;
             if(hour==0 || hour==12)
-                time = "12";
+               time = "12";
             else
-                time = "" + hour%12;
+                time = "" + hour;
             canvas.text(time, graphX+ boxWidth +2* boxWidth *hour-canvas.textWidth(time)/2, graphY+ 2*boxHeight -2);
         }
     }
@@ -354,5 +272,9 @@ class BusinessHoursChart implements Graph{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int type(){
+        return type;
     }
 }

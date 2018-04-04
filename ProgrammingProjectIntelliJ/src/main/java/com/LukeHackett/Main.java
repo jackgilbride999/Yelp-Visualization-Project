@@ -120,7 +120,6 @@ public class Main extends PApplet {
     public static ArrayList<Review> reviewsToShow;
 
     public static ArrayList<Float> starsList;
-    public static StarBarChart starChart;
     public static ArrayList<Float> visitorsList;
     public static CheckinsBarChart chart;
 
@@ -145,6 +144,10 @@ public class Main extends PApplet {
     public static boolean emptyReview;
     public static boolean moveBackground;
     public static boolean returnBackgroundToStart;
+
+    public static boolean starLoaded;
+    public static boolean checkinLoaded;
+    public static boolean hoursLoaded;
 
     public static Animation loadingAnimation;
 
@@ -591,17 +594,14 @@ public class Main extends PApplet {
             currentController = BUSINESS_SCREEN;
         } else if (event.getValue() == 15) {
             if (event.getName().equals("starsChartButton")) {
-                System.out.println("forward!");
-                int index = 2;
-                graphScreen.setActive(index);
+                System.out.println("stars!");
+                graphScreen.setActiveSelect("stars");
             } else if (event.getName().equals("checkInGraphButton")){
-                System.out.println("backward!");
-                int index = 1;
-                graphScreen.setActive(index);
+                System.out.println("checkIn!");
+                graphScreen.setActiveSelect("checkIn");
             } else if (event.getName().equals("openingTimesButton")){
                 System.out.println("openingTimes!");
-                int index = 0;
-                graphScreen.setActive(index);
+                graphScreen.setActiveSelect("openingTimes");
             }
         } else if(event.getValue() == 20){
             currentController = SEARCH_RESULT_SCREEN;
