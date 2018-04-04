@@ -119,14 +119,16 @@ public class Drawable {
                 y = y + 200 + Main.BORDER_OFFSET_Y;
             }
         }
-
-        canvas.fill(0, 169, 154);
+        canvas.fill(0, 150, 137);
         canvas.noStroke();
         canvas.rect(0, 0, Main.SCREEN_X, 75);
         canvas.fill(255);
         canvas.textFont(searchFont);
         canvas.text("Search results for " + Main.searchString, Main.SCREEN_X / 2 - canvas.textWidth("Search results for " + Main.searchString) / 2, 45);
-        canvas.textSize(12);
+        canvas.fill(255);
+        canvas.textFont(reviewFont);
+        canvas.text("Pages", SCREEN_X - 125, 45);
+        //canvas.textSize(12);
 
         Main.searchResultHeaders.draw();
         Main.searchScroll.draw();
@@ -172,6 +174,7 @@ public class Drawable {
         Main.businessScreenController.get("Filter").setPosition(Main.businessScreenController.get("Filter").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("zoomIn").setPosition(Main.businessScreenController.get("zoomIn").getPosition()[0], initialReviewYs.get(5) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("zoomOut").setPosition(Main.businessScreenController.get("zoomOut").getPosition()[0], initialReviewYs.get(6) - (reviewRatio * offsetFromTopReview));
+        Main.businessScreenController.get("openingTimesButton").setPosition(Main.businessScreenController.get("openingTimesButton").getPosition()[0], initialReviewYs.get(7) - (reviewRatio * offsetFromTopReview));
 
         canvas.image((Main.selectedBusiness.getImage() != null) ? Main.selectedBusiness.getImage() : placeHolderImage, 20, 70 - (reviewRatio * offsetFromTopReview), 200, 200);
         canvas.fill(255);
@@ -181,10 +184,13 @@ public class Drawable {
         if (Main.selectedBusiness.getMapImage() != null)
             canvas.image(Main.selectedBusiness.getMapImage(), SCREEN_X / 2 + 260, 75 - (reviewRatio * offsetFromTopReview), SCREEN_X / 4, SCREEN_X / 4);
 
-        canvas.fill(0, 135, 122);
+        canvas.fill(0, 150, 137);
         canvas.noStroke();
-        canvas.rect(0, 0, Main.SCREEN_X, 50);
+        canvas.rect(0, 0, Main.SCREEN_X, 55);
         reviewHeaders.draw();
+        canvas.fill(255);
+        canvas.textFont(reviewFont);
+        canvas.text("Pages", SCREEN_X - 125, 34);
         if (Main.reviewScroll != null && reviewRatio > 1) Main.reviewScroll.draw();
 
     }

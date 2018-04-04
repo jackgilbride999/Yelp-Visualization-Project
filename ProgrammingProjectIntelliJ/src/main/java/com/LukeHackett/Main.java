@@ -64,6 +64,7 @@ public class Main extends PApplet {
     public static Button reviewBackButton;
     public static Button reviewForwardButton;
     public static Button reviewHomeButton;
+    public static Button reviewReturnButton;
     public static Button backButtonBusiness;
     public static Button nightLifeButton;
     public static Button beautyButton;
@@ -73,6 +74,7 @@ public class Main extends PApplet {
     public static Button shoppingButton;
     public static Button[] searchResultButtons;
     public static ArrayList<Button> searchHeaderButtons;
+    public static Button openingTimesButton;
     public static Button graphForward;
     public static Button graphBackward;
     public static Button zoomInButton;
@@ -103,7 +105,13 @@ public class Main extends PApplet {
     public static PImage noWifi;
     public static PImage wheelchair;
     public static PImage noWheelchair;
-
+    public static PImage star;
+    public static PImage starPressed;
+    public static PImage checkIn;
+    public static PImage checkInPressed;
+    public static PImage times;
+    public static PImage timesPressed;
+    public static PImage returnButton;
     public static ImageCrawler[] businessesSearch;
     public static Scrollbar searchScroll;
     public static Scrollbar reviewScroll;
@@ -227,6 +235,13 @@ public class Main extends PApplet {
         searchIcon = loadImage("searchbar_icon.png");
         zoomIn = loadImage("zoom_in.png");
         zoomOut = loadImage("zoom_out.png");
+        star = loadImage("stars_chart.png");
+        starPressed = loadImage("stars_chart_pressed.png");
+        times = loadImage("times_open.png");
+        timesPressed = loadImage("times_open_pressed.png");
+        checkIn = loadImage("check_in_times.png");
+        checkInPressed = loadImage("check_in_times_pressed.png");
+        returnButton = loadImage("return.png");
 
 
         searchResultButtons = new Button[10];
@@ -576,12 +591,16 @@ public class Main extends PApplet {
             currentController = BUSINESS_SCREEN;
         } else if (event.getValue() == 15) {
             if (event.getName().equals("graphForward")) {
-                int index = graphScreen.getActiveIndex() + 1;
-                if (index == graphScreen.getGraphs().size()) index = 0;
+                System.out.println("forward!");
+                int index = 2;
                 graphScreen.setActive(index);
-            } else {
-                int index = graphScreen.getActiveIndex() - 1;
-                if (index == -1) index = graphScreen.getGraphs().size() - 1;
+            } else if (event.getName().equals("graphBackward")){
+                System.out.println("backward!");
+                int index = 1;
+                graphScreen.setActive(index);
+            } else if (event.getName().equals("openingTimesButton")){
+                System.out.println("openingTimes!");
+                int index = 0;
                 graphScreen.setActive(index);
             }
         } else if(event.getValue() == 20){
