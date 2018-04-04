@@ -169,8 +169,8 @@ public class Drawable {
         Main.graphScreen.draw();
 
         Main.businessScreenController.get("backButton").setPosition(Main.businessScreenController.get("backButton").getPosition()[0], initialReviewYs.get(0) - (reviewRatio * offsetFromTopReview));
-        Main.businessScreenController.get("graphForward").setPosition(Main.businessScreenController.get("graphForward").getPosition()[0], initialReviewYs.get(1) - (reviewRatio * offsetFromTopReview));
-        Main.businessScreenController.get("graphBackward").setPosition(Main.businessScreenController.get("graphBackward").getPosition()[0], initialReviewYs.get(2) - (reviewRatio * offsetFromTopReview));
+        Main.businessScreenController.get("starsChartButton").setPosition(Main.businessScreenController.get("starsChartButton").getPosition()[0], initialReviewYs.get(1) - (reviewRatio * offsetFromTopReview));
+        Main.businessScreenController.get("checkInGraphButton").setPosition(Main.businessScreenController.get("checkInGraphButton").getPosition()[0], initialReviewYs.get(2) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("Filter").setPosition(Main.businessScreenController.get("Filter").getPosition()[0], initialReviewYs.get(4) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("zoomIn").setPosition(Main.businessScreenController.get("zoomIn").getPosition()[0], initialReviewYs.get(5) - (reviewRatio * offsetFromTopReview));
         Main.businessScreenController.get("zoomOut").setPosition(Main.businessScreenController.get("zoomOut").getPosition()[0], initialReviewYs.get(6) - (reviewRatio * offsetFromTopReview));

@@ -75,8 +75,8 @@ public class Main extends PApplet {
     public static Button[] searchResultButtons;
     public static ArrayList<Button> searchHeaderButtons;
     public static Button openingTimesButton;
-    public static Button graphForward;
-    public static Button graphBackward;
+    public static Button starsChartButton;
+    public static Button checkInGraphButton;
     public static Button zoomInButton;
     public static Button zoomOutButton;
 
@@ -590,11 +590,11 @@ public class Main extends PApplet {
 
             currentController = BUSINESS_SCREEN;
         } else if (event.getValue() == 15) {
-            if (event.getName().equals("graphForward")) {
+            if (event.getName().equals("starsChartButton")) {
                 System.out.println("forward!");
                 int index = 2;
                 graphScreen.setActive(index);
-            } else if (event.getName().equals("graphBackward")){
+            } else if (event.getName().equals("checkInGraphButton")){
                 System.out.println("backward!");
                 int index = 1;
                 graphScreen.setActive(index);

@@ -320,7 +320,7 @@ public class UI {
         Main.backButtonImage.resize(Main.backButtonBusiness.getWidth(), Main.backButtonBusiness.getHeight());
         Main.backButtonBusiness.setImage(Main.backButtonImage);
 
-        Main.graphForward = Main.businessScreenController.addButton("graphForward")
+        Main.starsChartButton = Main.businessScreenController.addButton("starsChartButton")
                 .setValueSelf(15)
                 .setCaptionLabel("")
                 .setImage(starPressed)
@@ -332,11 +332,11 @@ public class UI {
                 .setImage(timesPressed)
                 .setPosition(420, 330);
 
-        Main.graphBackward = Main.businessScreenController.addButton("graphBackward")
+        Main.checkInGraphButton = Main.businessScreenController.addButton("checkInGraphButton")
                 .setValueSelf(15)
                 .setCaptionLabel("")
                 .setImage(checkInPressed)
-                .setPosition(420, 375);
+                .setPosition(420, 370);
 
         Main.reviewFilterOptions = Main.businessScreenController.addScrollableList("Filter")
                 .addItem("All", 0)
@@ -381,8 +381,8 @@ public class UI {
                 .setPosition(Main.SCREEN_X - 50, 361);
 
         Drawable.initialReviewYs.add(Main.backButtonBusiness.getPosition()[1]);
-        Drawable.initialReviewYs.add(Main.graphForward.getPosition()[1]);
-        Drawable.initialReviewYs.add(Main.graphBackward.getPosition()[1]);
+        Drawable.initialReviewYs.add(Main.starsChartButton.getPosition()[1]);
+        Drawable.initialReviewYs.add(Main.checkInGraphButton.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.graphScreen.getyPos());
         Drawable.initialReviewYs.add(Main.reviewFilterOptions.getPosition()[1]);
         Drawable.initialReviewYs.add(Main.zoomInButton.getPosition()[1]);
