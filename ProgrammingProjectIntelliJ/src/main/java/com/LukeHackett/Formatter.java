@@ -1,28 +1,24 @@
 package com.LukeHackett;
 
+import processing.core.PApplet;
+
 import java.util.ArrayList;
 
 public class Formatter {
-    void formatReview(Review r) {
+    void formatReview(PApplet canvas, Review r) {
         // Splits the review in order to format with a specific line length and then sets the review to the formatted review
-        //ArrayList<String> formattedReviewList = new ArrayList<String>();
-        //for (Review r : reviews) {
+
         String[] splitReview = r.getReview().split("");
-        String formattedReview = "";
+        StringBuilder formattedReview = new StringBuilder();
         int existingLines = 0;
-        for(int i = 0; i<splitReview.length; i++)
-        {
-            if(splitReview[i].equals("\n"))
-            {
+        for (String aSplitReview : splitReview) {
+            if (aSplitReview.equals("\n")) {
                 existingLines++;
             }
         }
-        formattedReview = formattedReview + r.getUser_name() + ":" + "  ";
-//            for (int i = 0; i<r.getStars(); i++)
-//            {
-//                formattedReview = formattedReview + " * ";
-//            }
-        formattedReview = formattedReview + "\n";
+        formattedReview.append(r.getUser_name()).append(":").append("  ");
+
+        formattedReview.append("\n");
         boolean toNextLine = false;
         int lines = 3;
         for (int i = 0; i < splitReview.length; i++) {
@@ -30,10 +26,7 @@ public class Formatter {
             if ((i % Main.LINE_LENGTH == 0) && (i != 0)) {
                 toNextLine = true;
             }
-            else
-            {
-                //toNextLine = false;
-            }
+
             // If line length has been exceeded it will put a new line at the next whitespace
             if (toNextLine && splitReview[i].equals(" ")) {
                 splitReview[i] = "\n";
@@ -42,16 +35,44 @@ public class Formatter {
             if (splitReview[i].equals("\n")) {
                 lines++;
             }
-            formattedReview = formattedReview + splitReview[i];
+            formattedReview.append(splitReview[i]);
         }
-       // System.out.println("lines = " + lines + "    existingLines = " + existingLines);
-        //lines = lines + existingLines;
 
-        r.setNumberOfLines(lines);
-        r.setFormattedReview(formattedReview);
-        //     formattedReviewList.add(formattedReview);
+        r.setNumberOfLines(lines+1);
+        r.setFormattedReview(formattedReview.toString());
 
-        // }
+        /*
+        canvas.textSize(18);
+        String[] splitReview = r.getReview().split("\n");
+        StringBuilder formattedReview = new StringBuilder();
+        int numLines = 1;
+        formattedReview.append(r.getUser_name()).append(":").append("  ").append("\n");
+
+        for(String line : splitReview){
+            String[] splitLine = line.split(" ");
+            ArrayList<StringBuilder> lines = new ArrayList<StringBuilder>();
+            StringBuilder lineBuild = new StringBuilder();
+            for(String word : splitLine){
+                if(canvas.textWidth(lineBuild.toString() + word) <= Main.LINE_LENGTH){
+                    lineBuild.append(word).append(" ");
+                }
+                else{
+                    lines.add(lineBuild);
+                    lineBuild = new StringBuilder();
+                    lineBuild.append("\n").append(word).append(" ");
+                    numLines++;
+                }
+            }
+            for(StringBuilder s : lines){
+                formattedReview.append(s).append("\n");
+            }
+            formattedReview.append(lineBuild);
+            numLines++;
+        }
+
+        r.setNumberOfLines(numLines);
+        r.setFormattedReview(formattedReview.toString());
+        */
     }
 
     int getTotalHeight(ArrayList<Review> reviews) {
