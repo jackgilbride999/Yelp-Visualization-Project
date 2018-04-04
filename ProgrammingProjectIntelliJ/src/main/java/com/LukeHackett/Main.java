@@ -154,7 +154,6 @@ public class Main extends PApplet {
     public static int backgroundX;
     public static int backgroundXTimer;
 
-
     public static void main(String[] args) {
         PApplet.main("com.LukeHackett.Main");
     }
