@@ -59,13 +59,19 @@ public class UI {
 
     public ArrayList<Business> backButton() {
         //Main.searchScroll = null;
-        println(Main.searchType);
-        if(Main.graphScreen != null) Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
+        if(Main.currentController == Main.BUSINESS_SCREEN) {
+            if (Main.graphScreen != null) Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
 
-        Main.starLoaded = false;
-        Main.checkinLoaded = false;
-        Main.hoursLoaded = false;
+            Main.starLoaded = false;
+            Main.checkinLoaded = false;
+            Main.hoursLoaded = false;
 
+            Main.starsChartButton.setImage(Main.starPressed);
+            Main.openingTimesButton.setImage(Main.timesPressed);
+            Main.checkInGraphButton.setImage(Main.checkInPressed);
+
+            Main.currentReview = 0;
+        }
         if (Main.currentSearch != 0) {
             Main.currentSearch -= 10;
             if(Main.searchType == BUSINESS_SEARCH)return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);
