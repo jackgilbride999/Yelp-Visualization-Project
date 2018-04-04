@@ -40,39 +40,6 @@ public class Formatter {
 
         r.setNumberOfLines(lines+1);
         r.setFormattedReview(formattedReview.toString());
-
-        /*
-        canvas.textSize(18);
-        String[] splitReview = r.getReview().split("\n");
-        StringBuilder formattedReview = new StringBuilder();
-        int numLines = 1;
-        formattedReview.append(r.getUser_name()).append(":").append("  ").append("\n");
-
-        for(String line : splitReview){
-            String[] splitLine = line.split(" ");
-            ArrayList<StringBuilder> lines = new ArrayList<StringBuilder>();
-            StringBuilder lineBuild = new StringBuilder();
-            for(String word : splitLine){
-                if(canvas.textWidth(lineBuild.toString() + word) <= Main.LINE_LENGTH){
-                    lineBuild.append(word).append(" ");
-                }
-                else{
-                    lines.add(lineBuild);
-                    lineBuild = new StringBuilder();
-                    lineBuild.append("\n").append(word).append(" ");
-                    numLines++;
-                }
-            }
-            for(StringBuilder s : lines){
-                formattedReview.append(s).append("\n");
-            }
-            formattedReview.append(lineBuild);
-            numLines++;
-        }
-
-        r.setNumberOfLines(numLines);
-        r.setFormattedReview(formattedReview.toString());
-        */
     }
 
     int getTotalHeight(ArrayList<Review> reviews) {

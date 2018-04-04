@@ -22,7 +22,7 @@ public class Main extends PApplet {
     public static final int SEARCH_RESULT_SCREEN = 1;
     public static final int BUSINESS_SCREEN = 2;
     public static final int BORDER_OFFSET_Y = 10;
-    public static final int LINE_LENGTH = 130;
+    public static final int LINE_LENGTH = 150;
     public static final int CHECKIN_CHART = 1;
     public static final int STARS_CHART = 2;
     public static final int HOURS_CHART = 3;
@@ -51,6 +51,7 @@ public class Main extends PApplet {
 
     public static Textfield searchBar;
     public static Textfield searchBarSearch;
+    public static ArrayList<Textarea> reviewText;
     public static ScrollableList searchOptions;
     public static ScrollableList searchOptionsSearch;
     public static ScrollableList reviewFilterOptions;
@@ -153,6 +154,7 @@ public class Main extends PApplet {
 
     @Override
     public void setup() {
+        reviewText = new ArrayList<Textarea>();
         loadingAnimation = new Animation("frames", 8, this);
         backgroundX = 0;
         moveBackground = false;
@@ -188,7 +190,6 @@ public class Main extends PApplet {
         } catch (IOException e) {
             e.printStackTrace();
         }
-//        println("Categories: " + categories.size());
         //End Load
 
         homeScreenController = new ControlP5(this);

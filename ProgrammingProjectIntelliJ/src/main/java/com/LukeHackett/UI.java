@@ -1,9 +1,6 @@
 package com.LukeHackett;
 
-import controlP5.Button;
-import controlP5.ControlP5;
-import controlP5.ControllerInterface;
-import controlP5.Label;
+import controlP5.*;
 import processing.core.PApplet;
 
 import java.util.ArrayList;
@@ -88,6 +85,10 @@ public class UI {
         if (Main.currentReview != 0) {
             Main.currentReview -= 10;
             reviewScroll = null;
+            for(Textarea t : Main.reviewText){
+                businessScreenController.remove(t.getName());
+            }
+            Main.reviewText = new ArrayList<Textarea>();
         }
     }
 
@@ -95,6 +96,10 @@ public class UI {
         if((Main.currentReview+10) < Main.reviews.size()){
             Main.currentReview += 10;
             reviewScroll = null;
+            for(Textarea t : Main.reviewText){
+                businessScreenController.remove(t.getName());
+            }
+            Main.reviewText = new ArrayList<Textarea>();
         }
     }
 
@@ -118,6 +123,10 @@ public class UI {
             case BUSINESS_SCREEN:
                 //Main.currentController = SEARCH_RESULT_SCREEN;
                 Main.reviewFilterOptions.setValue(0);
+                for(Textarea t : Main.reviewText){
+                    businessScreenController.remove(t.getName());
+                }
+                Main.reviewText = new ArrayList<Textarea>();
                 return SEARCH_RESULT_SCREEN;
         }
         return 0;
