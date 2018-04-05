@@ -49,25 +49,31 @@ public class Drawable {
         previousSearchMouseY = canvas.mouseY;
         offsetFromTopSearch = Main.searchScroll.getY();
 
-        int controllerCount = 0;
-        for (Button b : Main.searchResultButtons) {
-            if (b != null) {
-                b.setPosition(b.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (searchRatio * offsetFromTopSearch));
-                controllerCount++;
+        if(!noResults) {
+            int controllerCount = 0;
+            for (Button b : Main.searchResultButtons) {
+                if (b != null) {
+                    b.setPosition(b.getPosition()[0], floatValue(initialBusinessYs.get(controllerCount)) - (searchRatio * offsetFromTopSearch));
+                    controllerCount++;
 
-                if (b.getPosition()[1] < 75 && canvas.mouseY < 75) {
-                    b.setValueSelf(15);
-                    b.setColorBackground(canvas.color(240));
-                    b.setColorForeground(canvas.color(240));
-                    b.setColorActive(canvas.color(240));
-                } else {
-                    b.setValueSelf(10);
-                    b.setColorBackground(canvas.color(240));
-                    b.setColorForeground(canvas.color(230));
-                    b.setColorActive(canvas.color(215));
+                    if (b.getPosition()[1] < 75 && canvas.mouseY < 75) {
+                        b.setValueSelf(15);
+                        b.setColorBackground(canvas.color(240));
+                        b.setColorForeground(canvas.color(240));
+                        b.setColorActive(canvas.color(240));
+                    } else {
+                        b.setValueSelf(10);
+                        b.setColorBackground(canvas.color(240));
+                        b.setColorForeground(canvas.color(230));
+                        b.setColorActive(canvas.color(215));
+                    }
                 }
             }
-
+        }
+        else {
+            canvas.fill(0, 127);
+            canvas.textFont(Main.searchFont);
+            canvas.text("No results!", (SCREEN_X / 2) + 70, SCREEN_Y / 2 + 20);
         }
 
         Main.searchResultController.draw();
@@ -79,7 +85,7 @@ public class Drawable {
                 //Draw images
                 try {
                     canvas.image(image.getBusiness().getImage(), x + 15 + 250, y + 90 + 15 - (searchRatio * offsetFromTopSearch), 150, 150);
-                } catch (NullPointerException e){
+                } catch (NullPointerException e) {
                     canvas.image(Main.placeHolderImage, x + 15 + 250, y + 90 + 15 - (searchRatio * offsetFromTopSearch), 150, 150);
                 }
                 //Draw stars piggybacking here
@@ -181,7 +187,7 @@ public class Drawable {
         canvas.rect(20, 70 - (reviewRatio * offsetFromTopReview), 200, 200);
         canvas.image((Main.selectedBusiness.getImage() != null) ? Main.selectedBusiness.getImage() : placeHolderImage, 20 + 5, 70 + 5 - (reviewRatio * offsetFromTopReview), 190, 190);
         canvas.fill(255);
-        canvas.rect(SCREEN_X/2 + 260 - 5, 75  - (reviewRatio * offsetFromTopReview) - 5, SCREEN_X/4 + 10, SCREEN_X/4 + 10);
+        canvas.rect(SCREEN_X / 2 + 260 - 5, 75 - (reviewRatio * offsetFromTopReview) - 5, SCREEN_X / 4 + 10, SCREEN_X / 4 + 10);
         Main.businessScreenController.draw();
         if (Main.selectedBusiness.getMapImage() != null)
             canvas.image(Main.selectedBusiness.getMapImage(), SCREEN_X / 2 + 260, 75 - (reviewRatio * offsetFromTopReview), SCREEN_X / 4, SCREEN_X / 4);
@@ -232,7 +238,7 @@ public class Drawable {
                 canvas.textFont(Main.graphFont);
 
                 dateFormat = r.getDate().split(" ");
-                reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY-5;
+                reviewBoxHeight = (r.getNumberOfLines() * (int) lineHeight) + borderOffsetY - 5;
                 if (reviewRatio != 0) {
                     canvas.fill(245);
                     canvas.rect(borderOffsetX / 2, reviewOffset - Main.offsetFromTop - (reviewRatio * offsetFromTopReview), Main.SCREEN_X - 10, reviewBoxHeight);

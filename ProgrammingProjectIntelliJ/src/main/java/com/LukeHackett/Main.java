@@ -144,6 +144,7 @@ public class Main extends PApplet {
     public static boolean emptyReview;
     public static boolean moveBackground;
     public static boolean returnBackgroundToStart;
+    public static boolean noResults;
 
     public static boolean starLoaded;
     public static boolean checkinLoaded;
@@ -379,9 +380,11 @@ public class Main extends PApplet {
             if (businessesC.size() != 0) {
                 for (Business b : businessesC) {
                     System.out.println(b.toString());
+                    noResults = false;
                 }
             } else {
                 System.out.println("No results");
+                noResults = true;
             }
         } else if (selected == 1) {
             ArrayList<Business> businessesN = qControl.businessSearch(text, 0, 10);
@@ -389,9 +392,11 @@ public class Main extends PApplet {
             if (businessesN.size() != 0) {
                 for (Business b : businessesN) {
                     System.out.println(b);
+                    noResults = false;
                 }
             } else {
                 System.out.println("No results");
+                noResults = true;
             }
         } else if (selected == 2) {
             ArrayList<Business> businessesL = qControl.citySearch(text, 0, 10);
@@ -399,9 +404,11 @@ public class Main extends PApplet {
             if (businessesL.size() != 0) {
                 for (Business b : businessesL) {
                     System.out.println(b);
+                    noResults = false;
                 }
             } else {
                 System.out.println("No results");
+                noResults = true;
             }
         }
     }
@@ -415,6 +422,7 @@ public class Main extends PApplet {
             searchType = 0;
             for (Business b : businessesN) {
                 System.out.println(b);
+                noResults = false;
             }
         } else {
             ArrayList<Business> businessesC = qControl.categorySearch(text, 0, 10);
@@ -423,6 +431,7 @@ public class Main extends PApplet {
                 searchType = 1;
                 for (Business b : businessesC) {
                     System.out.println(b.toString());
+                    noResults = false;
                 }
             } else {
                 ArrayList<Business> businessesL = qControl.citySearch(text, 0, 10);
@@ -431,9 +440,11 @@ public class Main extends PApplet {
                     searchType = 2;
                     for (Business b : businessesL) {
                         System.out.println(b);
+                        noResults = false;
                     }
                 } else {
                     System.out.println("No results");
+                    noResults = true;
                 }
             }
         }
