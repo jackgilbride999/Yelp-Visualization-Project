@@ -626,6 +626,17 @@ public class Main extends PApplet {
             buttonBusinessList(businesses);
         }
     }
+    public void openingTimesButton() {
+        
+    }
+
+    public void checkInGraphButton() {
+
+    }
+
+    public void starsChartButton() {
+
+    }
 
     void drawBusinesses() {
         draws.drawBusinesses();

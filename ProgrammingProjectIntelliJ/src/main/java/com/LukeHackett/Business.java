@@ -49,7 +49,6 @@ public class Business {
                 (attributes.containsKey("BusinessParking_lot") && attributes.containsValue("True")));
         this.wifi = attributes.containsKey("WiFi") && attributes.containsValue("True");
         this.wheelchair = attributes.containsKey("WheelchairAccessible") && attributes.containsValue("True");
-        System.out.println(attributes);
 
     }
 
