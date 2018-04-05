@@ -59,19 +59,6 @@ public class UI {
 
     public ArrayList<Business> backButton() {
         //Main.searchScroll = null;
-        if(Main.currentController == Main.BUSINESS_SCREEN) {
-            if (Main.graphScreen != null) Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
-
-            Main.starLoaded = false;
-            Main.checkinLoaded = false;
-            Main.hoursLoaded = false;
-
-            Main.starsChartButton.setImage(Main.starPressed);
-            Main.openingTimesButton.setImage(Main.timesPressed);
-            Main.checkInGraphButton.setImage(Main.checkInPressed);
-
-            Main.currentReview = 0;
-        }
         if (Main.currentSearch != 0) {
             Main.currentSearch -= 10;
             if(Main.searchType == BUSINESS_SEARCH)return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);
@@ -114,6 +101,7 @@ public class UI {
     }
 
     public int homeButton() {
+
         Main.starsList = null;
         Main.visitorsList = null;
         Main.reviewScroll = null;
@@ -125,13 +113,8 @@ public class UI {
         Main.zoom = 10;
         switch (Main.currentController) {
             case SEARCH_RESULT_SCREEN:
-                //if (Main.currentSearch != 0) {
-                //    Main.currentSearch -= 10;
-                    //return Main.qControl.businessSearch(Main.searchString, Main.currentSearch, 10);
-                //}
                 return HOME_SCREEN;
             case BUSINESS_SCREEN:
-                //Main.currentController = SEARCH_RESULT_SCREEN;
                 Main.reviewFilterOptions.setValue(0);
                 for(Textarea t : Main.reviewText){
                     businessScreenController.remove(t.getName());

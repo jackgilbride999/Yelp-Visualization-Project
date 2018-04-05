@@ -278,12 +278,21 @@ public class Main extends PApplet {
                     image(background, backgroundX, 0);
                     changePicture();
                     image(testLogo, SCREEN_X / 2 - 240, 100);
+                    searchResultController.hide();
+                    businessScreenController.hide();
+                    homeScreenController.show();
                     homeScreenController.draw();
                     break;
                 case SEARCH_RESULT_SCREEN:
+                    homeScreenController.hide();
+                    businessScreenController.hide();
+                    searchResultController.show();
                     drawBusinesses();
                     break;
                 case BUSINESS_SCREEN:
+                    homeScreenController.hide();
+                    searchResultController.hide();
+                    businessScreenController.show();
                     drawBusinessScreen();
                     break;
             }
