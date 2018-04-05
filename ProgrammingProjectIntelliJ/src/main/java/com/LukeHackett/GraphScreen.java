@@ -187,9 +187,9 @@ public class GraphScreen {
                     tempIndex++;
                 }
             } catch (ConcurrentModificationException e){
-                e.printStackTrace();
+                System.err.println("ConcurrentModificationException in graphScreen");
             } catch (NullPointerException e){
-                e.printStackTrace();
+                System.err.println("Null pointer in graphScreen");
             }
             if(!drawn){
                 for(Graph g : graphSet){

@@ -60,7 +60,7 @@ public class ImageCrawler extends Thread {
     }
 
     PImage findPhoto(Business b) {
-        /*
+
         String urlPhotoBing = imageSearch(bingKey2, bingKey3, b);
         if (urlPhotoBing != null) {
             System.out.println("Binged it!");
@@ -71,11 +71,11 @@ public class ImageCrawler extends Thread {
             try {
                 PImage returnImage = canvas.loadImage(urlPhotoGoogle, "jpg");
                 return returnImage;
-            } catch(Exception e) {
+            } catch (Exception e) {
                 System.err.println("Caughht unloaded Image");
             }
         }
-        */
+
         return Main.placeHolderImage;
     }
 
@@ -146,9 +146,9 @@ public class ImageCrawler extends Thread {
                     if ((photoReference = xmlPlace.getChild("result").getChild("photo").getChild("photo_reference").getContent()) != null)
                         urlPhoto = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=180&maxheight=180&photoreference=" + photoReference + "&key=AIzaSyAdNw5lE_KJe9uhRRb2fKi2U8Ex63HfYL8";
                 } catch (Exception e) {
-                    try{
+                    try {
                         urlPhoto = xmlPlace.getChild("result").getChild("icon").getContent();
-                    } catch (Exception eAAAAA){
+                    } catch (Exception eAAAAA) {
                         System.err.println("Caught XML");
                     }
                 }
@@ -156,7 +156,7 @@ public class ImageCrawler extends Thread {
             } else {
                 return urlPhoto;
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Caught!!");
         }
         return null;
