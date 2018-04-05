@@ -456,6 +456,7 @@ public class Main extends PApplet {
 
     public void Filter(int n) {
         selectedFilter = n;
+        currentReview = 0;
         reviewScroll = null;
 
         switch (selectedFilter) {

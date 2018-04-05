@@ -109,6 +109,7 @@ public class UI {
         Drawable.previousReviewMouseY = 0;
         Main.reviews = new ArrayList<Review>();
         Main.reviewsToShow = new ArrayList<Review>();
+        Main.currentReview = 0;
         Main.graphScreen.setGraphs(new LinkedHashMap<Graph, Boolean>());
         Main.zoom = 10;
         switch (Main.currentController) {
