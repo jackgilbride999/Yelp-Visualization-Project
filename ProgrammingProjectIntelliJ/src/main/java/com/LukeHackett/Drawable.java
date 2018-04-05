@@ -82,6 +82,8 @@ public class Drawable {
 
         for (ImageCrawler image : Main.businessesSearch) {
             if (image != null) {
+                canvas.fill(255);
+                canvas.rect(x + 15 + 250-5, y + 90 + 15 - (searchRatio * offsetFromTopSearch)-5, 160, 160);
                 //Draw images
                 try {
                     canvas.image(image.getBusiness().getImage(), x + 15 + 250, y + 90 + 15 - (searchRatio * offsetFromTopSearch), 150, 150);

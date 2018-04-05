@@ -28,7 +28,7 @@ class queries {
                     + "user=root&password=Carrot!4!5&"
                     + "autoReconnect=true&useSSL=false";
 
-            connection = DriverManager.getConnection(connectionUrlCUSTOM);
+            connection = DriverManager.getConnection(connectionUrlAWS);
             System.out.println("Connected.");
 
         } catch (Exception e) {
