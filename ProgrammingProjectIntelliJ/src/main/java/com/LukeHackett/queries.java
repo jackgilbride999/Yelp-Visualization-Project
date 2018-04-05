@@ -3,7 +3,6 @@ package com.LukeHackett;
 import processing.core.PApplet;
 
 import java.sql.*;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
@@ -293,6 +292,14 @@ class queries {
 
     public Business getBusinessInfoName(String business_name) {
         try {
+            StringBuilder cleanedString = new StringBuilder();
+
+            for(char s : business_name.toCharArray()){
+                if(s >= 32){
+                    cleanedString.append(s);
+                }
+            }
+            business_name = cleanedString.toString();
             String businessQuery = "SELECT * " +
                     "FROM yelp_business " +
                     "WHERE MATCH(name) " +
@@ -371,6 +378,14 @@ class queries {
     public ArrayList<Business> categorySearch(String category, int start, int limit) {
         ArrayList<Business> businesses = new ArrayList<Business>();
         try {
+            StringBuilder cleanedString = new StringBuilder();
+
+            for(char s : category.toCharArray()){
+                if(s >= 32){
+                    cleanedString.append(s);
+                }
+            }
+            category = cleanedString.toString();
             String businessQuery = "SELECT * " +
                     "FROM yelp_business " +
                     "WHERE (categories) " +
@@ -392,6 +407,14 @@ class queries {
         println(canvas.millis());
         ArrayList<Business> businesses = new ArrayList<Business>();
         try {
+            StringBuilder cleanedString = new StringBuilder();
+
+            for(char s : name.toCharArray()){
+                if(s >= 32){
+                    cleanedString.append(s);
+                }
+            }
+            name = cleanedString.toString();
             String businessQuery = "SELECT * " +
                     "FROM yelp_business " +
                     "WHERE MATCH(name) " +
@@ -413,6 +436,14 @@ class queries {
     public ArrayList<Business> citySearch(String city, int start, int limit) {
         ArrayList<Business> businesses = new ArrayList<Business>();
         try {
+            StringBuilder cleanedString = new StringBuilder();
+
+            for(char s : city.toCharArray()){
+                if(s >= 32){
+                    cleanedString.append(s);
+                }
+            }
+            city = cleanedString.toString();
             String businessQuery = "SELECT * " +
                     "FROM yelp_business " +
                     "WHERE MATCH(city) " +
