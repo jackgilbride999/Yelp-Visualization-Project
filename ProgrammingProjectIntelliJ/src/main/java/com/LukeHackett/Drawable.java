@@ -71,7 +71,6 @@ public class Drawable {
             }
         }
         else {
-            canvas.fill(0, 127);
             canvas.textFont(Main.searchFont);
             canvas.text("No results!", (SCREEN_X / 2) + 70, SCREEN_Y / 2 + 20);
         }
