@@ -225,7 +225,7 @@ class BusinessHoursChart implements Graph{
                 }
                 canvas.rect(graphX+hourCount* boxWidth, graphY+dayCount* boxHeight + 2*boxHeight, boxWidth, boxHeight);
                 if(hourCount%2==1){
-                    canvas.stroke(0);
+                    canvas.stroke(0, 80);
                     canvas.noFill();
                     canvas.rect(graphX+hourCount* boxWidth-boxWidth, graphY+dayCount* boxHeight + 2*boxHeight, 2*boxWidth, boxHeight);
                 }
