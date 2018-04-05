@@ -112,16 +112,7 @@ public class Drawable {
                 canvas.image((parking ? Main.parking : Main.noParking), x + 15 + 1045, y + 90 + 130 - (searchRatio * offsetFromTopSearch), 40, 40);
                 canvas.image((wifi ? Main.wifi : Main.noWifi), x + 15 + 1095, y + 90 + 130 - (searchRatio * offsetFromTopSearch), 40, 40);
                 canvas.image((wheelchair ? Main.wheelchair : Main.noWheelchair), x + 15 + 1145, y + 90 + 130 - (searchRatio * offsetFromTopSearch), 40, 40);
-                /*
-                ATTRIBUTE BUTTONS IN PROGRESS - LH
 
-                if(parking){
-                    //canvas.image(Main.Parking, 100, y, 20, 20);
-                }
-                else{
-                    //canvas.image(Main.noParking, 100, y, 20, 20);
-                }
-                */
                 //Increment y for business
                 y = y + 200 + Main.BORDER_OFFSET_Y;
             }
@@ -131,7 +122,7 @@ public class Drawable {
         canvas.rect(0, 0, Main.SCREEN_X, 75);
         canvas.fill(255);
         canvas.textFont(searchFont);
-        canvas.text("Search results for " + Main.searchString, Main.SCREEN_X / 2 - canvas.textWidth("Search results for " + Main.searchString) / 2, 45);
+        canvas.text("Search results for \'" + Main.searchString + "\'", Main.SCREEN_X / 2 - canvas.textWidth("Search results for \'" + Main.searchString + "\'") / 2, 45);
         canvas.fill(255);
         canvas.textFont(reviewFont);
         canvas.text("Pages", SCREEN_X - 125, 45);
@@ -259,7 +250,7 @@ public class Drawable {
             }
 
             if (Main.reviewScroll == null) {
-                Main.reviewScroll = new Scrollbar(canvas, 20, reviewOffset, canvas.color(150), SCROLLBAR_EVENT);
+                Main.reviewScroll = new Scrollbar(canvas, 10, reviewOffset, canvas.color(150), SCROLLBAR_EVENT);
                 reviewRatio = Main.reviewScroll.getRatio();
             }
         } else {
