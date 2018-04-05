@@ -60,7 +60,7 @@ public class ImageCrawler extends Thread {
     }
 
     PImage findPhoto(Business b) {
-        String urlPhotoBing = imageSearch(bingKey0, bingKey1, b);
+        String urlPhotoBing = imageSearch(bingKey2, bingKey3, b);
         if (urlPhotoBing != null) {
             System.out.println("Binged it!");
             return canvas.loadImage(urlPhotoBing);
@@ -133,7 +133,7 @@ public class ImageCrawler extends Thread {
             String url = "https://maps.googleapis.com/maps/api/place/nearbysearch/xml?"
                     + "location=" + b.getLatitude() + ',' + b.getLongitude()
                     + "&name=" + b.getName().replaceAll(" ", "%20").replaceAll("'", "")
-                    + "&radius=500&key=" + googleKey0;
+                    + "&radius=500&key=" + googleKey1;
 
             //Make XML object and parse photo reference and load the image
             XML xmlPlace = canvas.loadXML(url);

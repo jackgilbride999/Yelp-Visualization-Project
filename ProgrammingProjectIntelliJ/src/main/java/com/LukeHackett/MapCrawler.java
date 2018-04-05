@@ -22,7 +22,7 @@ public class MapCrawler extends Thread{
 
         String apiRequest = "https://maps.googleapis.com/maps/api/staticmap?center=" + selectedBusiness.getAddress().replaceAll(" ", "%20") + "," + selectedBusiness.getCity().replaceAll(" ", "%20") +
                 "&zoom=" + zoom + "&size=" + Main.SCREEN_X/4 + "x" + Main.SCREEN_X/4 + "&maptype=roadmap&markers=color:red%7C" + selectedBusiness.getLatitude() + "," + selectedBusiness.getLongitude() +
-                "&key=" + apiKey1;
+                "&key=" + apiKey3;
 
         PImage mapImage = canvas.loadImage(apiRequest, "jpg");
 
