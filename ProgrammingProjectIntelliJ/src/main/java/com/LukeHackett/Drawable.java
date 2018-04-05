@@ -192,7 +192,7 @@ public class Drawable {
         reviewHeaders.draw();
         canvas.fill(255);
         canvas.textFont(reviewFont);
-        canvas.text("Pages", SCREEN_X - 125, 34);
+        canvas.text("Reviews", SCREEN_X - 134, 34);
         if (Main.reviewScroll != null && reviewRatio > 1) Main.reviewScroll.draw();
 
     }

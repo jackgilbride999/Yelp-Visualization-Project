@@ -40,6 +40,7 @@ public class GraphCrawler extends Thread {
                 graph = new CheckinsBarChart(canvas, inputList, name);
                 if (graph != null) {
                     graphScreen.addGraph(graph, false);
+                    Main.checkInGraphButton.setImage(Main.checkInPressed);
                     Main.checkinLoaded = true;
                 }
                 else{
@@ -69,6 +70,7 @@ public class GraphCrawler extends Thread {
                 graph = new StarLineChart(canvas, monthMap, name);
                 if (graph != null) {
                     graphScreen.addGraph(graph, false);
+                    Main.starsChartButton.setImage(Main.starPressed);
                     Main.starLoaded = true;
                 }
                 else{
@@ -86,6 +88,7 @@ public class GraphCrawler extends Thread {
                 else {
                     graph.setName("" + Main.qControl.getBusinessName(id) + " Opening Hours (A.M., P.M.):");
                     graphScreen.addGraph(graph, false);
+                    Main.openingTimesButton.setImage(Main.timesPressed);
                     Main.hoursLoaded = true;
                 }
             } catch (Exception nullPointerException) {

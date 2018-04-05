@@ -60,6 +60,7 @@ public class ImageCrawler extends Thread {
     }
 
     PImage findPhoto(Business b) {
+        /*
         String urlPhotoBing = imageSearch(bingKey2, bingKey3, b);
         if (urlPhotoBing != null) {
             System.out.println("Binged it!");
@@ -74,6 +75,7 @@ public class ImageCrawler extends Thread {
                 System.err.println("Caughht unloaded Image");
             }
         }
+        */
         return Main.placeHolderImage;
     }
 

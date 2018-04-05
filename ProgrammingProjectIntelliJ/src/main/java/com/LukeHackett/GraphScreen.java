@@ -188,6 +188,8 @@ public class GraphScreen {
                 }
             } catch (ConcurrentModificationException e){
                 e.printStackTrace();
+            } catch (NullPointerException e){
+                e.printStackTrace();
             }
             if(!drawn){
                 for(Graph g : graphSet){
