@@ -15,6 +15,8 @@ import processing.data.XML;
 import java.io.IOException;
 
 /*
+Written by LH - Image fetcher for a given business that searches bing then google.
+
 Keys for presentation
 --------------------
 Bing 1: 15b4e1c7594b4495abb62b178ff83593
