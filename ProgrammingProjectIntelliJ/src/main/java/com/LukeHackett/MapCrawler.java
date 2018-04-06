@@ -4,6 +4,10 @@ import processing.core.PApplet;
 import processing.core.PImage;
 
 public class MapCrawler extends Thread{
+    /*
+    Written by LH -loads google static map on different thread
+     */
+
     private PApplet canvas;
     private Business selectedBusiness;
     private int zoom;
