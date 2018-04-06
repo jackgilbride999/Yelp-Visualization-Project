@@ -7,6 +7,10 @@ import java.util.LinkedHashMap;
 import java.util.Set;
 
 public class GraphScreen {
+    /*
+    Written by LH - GraphScreen object to hold graphs and flick between them
+     */
+
     private PApplet canvas;
     private float xPos;
     private float yPos;

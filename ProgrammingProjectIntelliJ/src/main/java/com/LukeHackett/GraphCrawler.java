@@ -1,9 +1,11 @@
 package com.LukeHackett;
 
 /*
+Written by LH -
+
 Basically the same as the review and image crawler. Purpose of this is
 to speed up the program by running graph queries on separate threads
-to stop queueing and improve overall feel of the program - LH
+to stop queueing and improve overall feel of the program
  */
 
 import processing.core.PApplet;

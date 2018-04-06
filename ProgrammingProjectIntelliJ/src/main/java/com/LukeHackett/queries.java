@@ -14,6 +14,7 @@ class queries {
     java.sql.Connection connection;
 
     queries(PApplet canvas) {
+        //LH- connect to server at beginning of program
         this.canvas = canvas;
 
         try {
@@ -182,6 +183,7 @@ class queries {
         }
     }
 
+    //Start LH queries - all queries written by Luke
     public ResultSet getQueryResult(String query) {
 
         try {
@@ -502,4 +504,5 @@ class queries {
         println("null : " + business_id);
         return null;
     }
+    //End LH queries
 }

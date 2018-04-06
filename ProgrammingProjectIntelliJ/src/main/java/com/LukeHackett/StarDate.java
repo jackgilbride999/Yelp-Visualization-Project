@@ -1,6 +1,10 @@
 package com.LukeHackett;
 
 public class StarDate {
+    /*
+    Written by LH - object to simplify calculating average stars per month in graph
+     */
+
     private final float star;
     private final int date;
 
